@@ -1,7 +1,7 @@
 import type { Response } from "express";
 import { Router } from "express";
 
-import type { IStore, IManagementRequest } from "../types";
+import type { IStore, IManagementRequest } from "~/types";
 
 function managementRouter(store: IStore) {
     const router = Router();

@@ -2,8 +2,8 @@ import type { Express } from "express";
 import express, { json } from "express";
 import cors from "cors";
 
-import type { IRouterFunction, IStore } from "../types";
-import config from "../config";
+import type { IRouterFunction, IStore } from "types";
+import config from "~/config";
 
 function AppFactory(
     port: number,
@@ -22,7 +22,7 @@ function AppFactory(
     app.use(router(store));
 
     app.listen(port, () => {
-        console.log(`Server listening on port ${port}`);
+        console.log(`Server started at port ${port}`);
     });
 
     return app;

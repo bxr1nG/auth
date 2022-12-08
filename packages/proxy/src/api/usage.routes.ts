@@ -2,8 +2,8 @@ import type { Request, Response, NextFunction } from "express";
 import { Router } from "express";
 import proxy from "express-http-proxy";
 
-import type { IStore } from "../types";
-import config from "../config";
+import type { IStore } from "~/types";
+import config from "~/config";
 
 function usageRouter(store: IStore) {
     const router = Router();

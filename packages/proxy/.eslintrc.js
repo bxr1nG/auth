@@ -24,6 +24,7 @@ module.exports = {
     },
     plugins: ["@typescript-eslint"],
     rules: {
-        "@typescript-eslint/no-unused-vars": "error"
+        "@typescript-eslint/no-unused-vars": "error",
+        "import/no-unresolved": "off"
     }
 };
