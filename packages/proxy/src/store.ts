@@ -1,8 +1,11 @@
-const store = {
+import { IStore } from "~/types";
+
+const store: IStore = {
     rights: {
-        login: "",
-        roles: ""
-    }
+        login: "admin",
+        roles: "admin"
+    },
+    logs: []
 };
 
 export default store;
