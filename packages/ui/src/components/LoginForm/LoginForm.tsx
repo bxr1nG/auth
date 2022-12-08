@@ -16,8 +16,21 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     const formik = useFormik<FormikProps>({
         initialValues,
         validationSchema,
-        onSubmit: (values) => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit: async (values) => {
+            const url = process.env.PROXY_URL ?? "http://localhost:8080";
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(values)
+            });
+
+            if (response.ok) {
+                alert(JSON.stringify(await response.json(), null, 2));
+            } else {
+                alert(`HTTP error: ${response.status}`);
+            }
         }
     });
 

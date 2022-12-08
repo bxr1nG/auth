@@ -5,8 +5,12 @@ dotenv({
 });
 
 const config = {
-    port: process.env.PORT || 4000,
-    host: process.env.HOST || "www.google.com"
+    management_port: process.env.MANAGEMENT_PORT
+        ? +process.env.MANAGEMENT_PORT
+        : 8081,
+    usage_port: process.env.USAGE_PORT ? +process.env.USAGE_PORT : 80,
+    host_url: process.env.HOST_URL || "www.google.com",
+    client_url: process.env.CLIENT_URL || "www.google.com"
 };
 
 export default config;

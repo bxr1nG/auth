@@ -1,5 +1,5 @@
 {
-    "!(**/components/**/index).ts": "npx tsc --noEmit --skipLibCheck --esModuleInterop",
+    "!(**/components/**/index).ts": "npx tsc --noEmit --skipLibCheck --esModuleInterop --allowSyntheticDefaultImports",
     "*.{js,jsx,ts,tsx}": "npx eslint",
     "*.{js,jsx,ts,tsx,html,css}": "npx prettier --check"
 }
