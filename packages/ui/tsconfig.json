@@ -111,6 +111,11 @@
             "module": "CommonJS"
         }
     },
-    "include": ["src", "webpack.config.ts"],
+    "include": [
+        "src",
+        "webpack.dev.ts",
+        "webpack.prod.ts",
+        "webpack.common.ts"
+    ],
     "exclude": ["node_modules", "build"]
 }
