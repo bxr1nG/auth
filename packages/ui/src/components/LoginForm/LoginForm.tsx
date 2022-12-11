@@ -1,24 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
 
-import { validationSchema, initialValues } from "./LoginForm.constants";
+import config from "~/config";
+
+import {
+    defaultValues,
+    emptyValues,
+    validationSchema
+} from "./LoginForm.constants";
 import styles from "./LoginForm.scss";
 
 type LoginFormProps = Record<string, never>;
-type FormikProps = {
+type FormikFields = {
     login: string;
     roles: string;
 };
 
 const LoginForm: React.FC<LoginFormProps> = () => {
-    const formik = useFormik<FormikProps>({
+    const stored = localStorage.getItem("history")
+        ? (JSON.parse(
+              localStorage.getItem("history") as string
+          ) as FormikFields)
+        : [emptyValues, defaultValues];
+    const [history, setHistory] = useState<Array<FormikFields>>(
+        stored as Array<FormikFields>
+    );
+    const [initialValues, setInitialValues] = useState<FormikFields>(
+        history[0] || emptyValues
+    );
+
+    const formik = useFormik<FormikFields>({
+        enableReinitialize: true,
         initialValues,
         validationSchema,
         onSubmit: async (values) => {
-            const url = process.env.PROXY_URL ?? "http://localhost:8080";
-            const response = await fetch(url, {
+            const newHistory = [...new Set([values, ...history])].slice(0, 10);
+            setHistory(newHistory);
+            setInitialValues(values);
+            localStorage.setItem("history", JSON.stringify(newHistory));
+
+            const response = await fetch(config.proxy_url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -39,6 +63,25 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             className={styles.form}
             onSubmit={formik.handleSubmit}
         >
+            <TextField
+                select
+                label="State"
+                value={JSON.stringify(initialValues)}
+                onChange={(event) => {
+                    const cred = JSON.parse(event.target.value) as FormikFields;
+                    setInitialValues(cred);
+                }}
+            >
+                {history.map((state) => (
+                    <MenuItem
+                        key={JSON.stringify(state)}
+                        value={JSON.stringify(state)}
+                    >
+                        {JSON.stringify(state)}
+                    </MenuItem>
+                ))}
+            </TextField>
+
             <TextField
                 fullWidth
                 id="login"

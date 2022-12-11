@@ -1,8 +1,13 @@
 import * as yup from "yup";
 
-export const initialValues = {
+export const defaultValues = {
     login: "loginlogin",
     roles: "role1, role2, role3"
+};
+
+export const emptyValues = {
+    login: "",
+    roles: ""
 };
 
 export const validationSchema = yup.object({
