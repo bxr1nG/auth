@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const defaultValues = {
-    login: "loginlogin",
+    login: "login",
     roles: "role1, role2, role3"
 };
 
