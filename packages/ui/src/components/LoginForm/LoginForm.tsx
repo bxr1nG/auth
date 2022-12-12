@@ -24,12 +24,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         ? (JSON.parse(
               localStorage.getItem("history") as string
           ) as FormikFields)
-        : [emptyValues, defaultValues];
+        : [defaultValues];
     const [history, setHistory] = useState<Array<FormikFields>>(
         stored as Array<FormikFields>
     );
     const [initialValues, setInitialValues] = useState<FormikFields>(
-        history[0] || emptyValues
+        history[0] || defaultValues
     );
 
     const formik = useFormik<FormikFields>({
@@ -37,7 +37,15 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         initialValues,
         validationSchema,
         onSubmit: async (values) => {
-            const newHistory = [...new Set([values, ...history])].slice(0, 10);
+            const newHistory = [
+                ...new Set([
+                    JSON.stringify(values),
+                    ...history.map((state) => JSON.stringify(state))
+                ])
+            ]
+                .map((state) => JSON.parse(state) as FormikFields)
+                .slice(0, 10);
+
             setHistory(newHistory);
             setInitialValues(values);
             localStorage.setItem("history", JSON.stringify(newHistory));
@@ -72,6 +80,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                     setInitialValues(cred);
                 }}
             >
+                <MenuItem
+                    key={JSON.stringify(emptyValues)}
+                    value={JSON.stringify(emptyValues)}
+                >
+                    {JSON.stringify(emptyValues)}
+                </MenuItem>
                 {history.map((state) => (
                     <MenuItem
                         key={JSON.stringify(state)}
