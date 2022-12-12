@@ -1,7 +1,7 @@
 import { config as dotenv } from "dotenv";
 
 dotenv({
-    path: `src/environments/.env.${process.env.NODE_ENV ?? "development"}`
+    path: `./environments/.env.${process.env.NODE_ENV ?? "development"}`
 });
 
 const config = {
@@ -9,8 +9,8 @@ const config = {
         ? +process.env.MANAGEMENT_PORT
         : 8081,
     usage_port: process.env.USAGE_PORT ? +process.env.USAGE_PORT : 80,
-    host_url: process.env.HOST_URL || "www.google.com",
-    client_url: process.env.CLIENT_URL || "www.google.com"
+    host_url: process.env.HOST_URL ?? "http://localhost:10000",
+    client_url: process.env.CLIENT_URL ?? "http://localhost:8080"
 };
 
 export default config;

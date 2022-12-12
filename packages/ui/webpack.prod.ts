@@ -40,7 +40,7 @@ const config: webpack.Configuration = merge(common, {
             chunkFilename: "[id].css"
         }),
         new Dotenv({
-            path: "./src/environments/.env.production"
+            path: "./environments/.env.production"
         })
     ]
 });
