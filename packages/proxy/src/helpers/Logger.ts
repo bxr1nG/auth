@@ -1,4 +1,5 @@
-import type { ILog, IStore } from "~/types";
+import type ILog from "~/types/ILog";
+import type IStore from "~/types/IStore";
 
 function Logger(store: IStore, log: ILog) {
     store.logs.unshift(log);

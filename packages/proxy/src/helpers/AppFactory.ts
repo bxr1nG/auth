@@ -2,7 +2,7 @@ import type { Express } from "express";
 import express, { json } from "express";
 import cors from "cors";
 
-import type { IRouterFunction } from "types";
+import type IRouterFunction from "~/types/IRouterFunction";
 import config from "~/config";
 
 function AppFactory(port: number, router: IRouterFunction): Express {

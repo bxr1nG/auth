@@ -1,5 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
-import { Logger } from "~/helpers";
+
+import Logger from "~/helpers/Logger";
 import store from "~/store";
 
 function LoggerMiddleware(req: Request, res: Response, next: NextFunction) {

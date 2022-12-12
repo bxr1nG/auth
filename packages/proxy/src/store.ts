@@ -1,4 +1,4 @@
-import { IStore } from "~/types";
+import IStore from "~/types/IStore";
 
 const store: IStore = {
     rights: {

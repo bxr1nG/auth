@@ -1,4 +1,4 @@
-import { AppFactory } from "~/helpers";
+import AppFactory from "~/helpers/AppFactory";
 import managementRouter from "~/api/management.routes";
 import usageRouter from "~/api/usage.routes";
 import config from "~/config";

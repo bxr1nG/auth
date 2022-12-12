@@ -1,4 +1,4 @@
-import ILog from "./ILog";
+import type ILog from "./ILog";
 
 type IStore = {
     rights: {

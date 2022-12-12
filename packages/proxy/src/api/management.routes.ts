@@ -1,7 +1,7 @@
 import type { Response } from "express";
 import { Router } from "express";
 
-import type { IManagementRequest } from "~/types";
+import type IManagementRequest from "~/types/IManagementRequest";
 import store from "~/store";
 import config from "~/config";
 
