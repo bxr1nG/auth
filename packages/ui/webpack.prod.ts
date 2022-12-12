@@ -1,4 +1,3 @@
-import path from "path";
 import merge from "webpack-merge";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import Dotenv from "dotenv-webpack";
@@ -9,13 +8,6 @@ import common from "./webpack.common";
 
 const config: webpack.Configuration = merge(common, {
     devtool: false,
-    devServer: {
-        static: {
-            directory: path.join(__dirname, "build")
-        },
-        port: 8080,
-        compress: true
-    },
     performance: {
         hints: false,
         maxEntrypointSize: 512000,
