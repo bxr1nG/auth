@@ -1,10 +1,8 @@
 import type { Request } from "express";
+import IRights from "./IRights";
 
 interface IManagementRequest extends Request {
-    body: {
-        login: string;
-        roles: string;
-    };
+    body: IRights;
 }
 
 export default IManagementRequest;

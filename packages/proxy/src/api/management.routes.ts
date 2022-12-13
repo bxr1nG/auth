@@ -9,10 +9,7 @@ function managementRouter() {
     const router = Router();
 
     router.post("/", (req: IManagementRequest, res: Response) => {
-        store.rights = {
-            login: req.body.login,
-            roles: req.body.roles
-        };
+        store.rights = req.body;
         res.json(req.body);
     });
 

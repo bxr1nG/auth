@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
+import Box from "@mui/material/Box";
 
 import type FormikFields from "~/types/FormikFields";
 
@@ -54,13 +55,76 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             />
 
             <TextField
-                name="login"
-                label="Login"
+                name="X-Shib-Profile-UserPrincipalName"
+                label="UserPrincipalName"
+                formik={formik}
+            />
+            <Box className={styles.horizontalBox}>
+                <TextField
+                    name="X-Shib-Profile-BoxUserID"
+                    label="BoxUserID"
+                    type={"number"}
+                    formik={formik}
+                />
+                <TextField
+                    name="X-Shib-Profile-IAMUserID"
+                    label="IAMUserID"
+                    type={"number"}
+                    formik={formik}
+                />
+            </Box>
+            <Box className={styles.horizontalBox}>
+                <TextField
+                    name="X-Shib-Profile-FirstName"
+                    label="FirstName"
+                    formik={formik}
+                />
+                <TextField
+                    name="X-Shib-Profile-LastName"
+                    label="LastName"
+                    formik={formik}
+                />
+            </Box>
+            <TextField
+                name="X-Shib-Profile-Email"
+                label="Email"
                 formik={formik}
             />
             <TextField
-                name="roles"
+                name="X-Shib-Profile-Affiliation"
+                label="Affiliation"
+                formik={formik}
+            />
+            <TextField
+                name="X-Shib-Profile-ApplicationNames"
+                label="ApplicationNames"
+                formik={formik}
+            />
+            <Box className={styles.horizontalBox}>
+                <TextField
+                    name="X-Shib-Profile-AffiliatedNHLTeam-ID"
+                    label="AffiliatedNHLTeam-ID"
+                    formik={formik}
+                />
+                <TextField
+                    name="X-Shib-Profile-AffiliatedNHLTeam-Abbrev"
+                    label="AffiliatedNHLTeam-Abbrev"
+                    formik={formik}
+                />
+            </Box>
+            <TextField
+                name="X-Shib-Profile-AffiliatedNHLTeam-FullName"
+                label="AffiliatedNHLTeam-FullName"
+                formik={formik}
+            />
+            <TextField
+                name="X-Shib-Authorization-Roles"
                 label="Roles"
+                formik={formik}
+            />
+            <TextField
+                name="X-Shib-Authorization-Permissions"
+                label="Permissions"
                 formik={formik}
             />
 

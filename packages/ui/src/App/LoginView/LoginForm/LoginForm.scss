@@ -3,9 +3,19 @@
     flex-direction: column;
     gap: 1rem;
     width: 60%;
-    margin: 2rem;
+    padding: 2rem;
 
     @media (max-width: 767.98px) {
-        width: 100%;
+        width: 90%;
+    }
+}
+
+.horizontalBox {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+
+    @media (max-width: 767.98px) {
+        flex-direction: column;
     }
 }

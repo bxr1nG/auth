@@ -1,4 +1,4 @@
-type FormikFields = {
+type IRights = {
     "X-Shib-Profile-UserPrincipalName": string;
     "X-Shib-Profile-BoxUserID": number;
     "X-Shib-Profile-IAMUserID": number;
@@ -14,4 +14,4 @@ type FormikFields = {
     "X-Shib-Authorization-Permissions": string;
 };
 
-export default FormikFields;
+export default IRights;

@@ -1,10 +1,8 @@
 import type ILog from "./ILog";
+import type IRights from "./IRights";
 
 type IStore = {
-    rights: {
-        login: string;
-        roles: string;
-    };
+    rights: IRights;
     logs: Array<ILog>;
 };
 
