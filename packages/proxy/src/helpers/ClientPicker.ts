@@ -6,7 +6,7 @@ import config from "~/config";
 
 function ClientPicker(app: Express): void {
     if (config.mode === "production") {
-        app.use("/auth", express.static(__dirname + "/../../ui/build"));
+        app.use("/auth", express.static(__dirname + "/../../../ui/build"));
     } else {
         app.use(
             cors({
