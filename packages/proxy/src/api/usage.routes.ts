@@ -9,14 +9,14 @@ function usageRouter() {
     const router = Router();
 
     router.use(
-        "/api/*",
+        "/*",
         LoggerMiddleware,
         HeadersMiddleware,
         createProxyMiddleware({
             target: config.host_url,
             changeOrigin: true,
             pathRewrite: {
-                "^/api": "/"
+                "^/proxy": "/"
             },
             onProxyReq: fixRequestBody
         })

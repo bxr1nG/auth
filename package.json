@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "concurrently \"npm run dev -w packages/listener\" \"npm run dev -w packages/proxy\" \"npm run dev -w packages/ui\"",
-        "start": "concurrently \"npm run start -w packages/listener\" \"npm run start -w packages/proxy\" \"npm run start -w packages/ui\"",
+        "start": "concurrently \"npm run start -w packages/listener\" \"npm run build -w packages/ui && npm run start -w packages/proxy\"",
         "build": "concurrently \"npm run build -w packages/listener\" \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\""
     },
     "keywords": [],

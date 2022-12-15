@@ -1,9 +1,8 @@
-import type { Response } from "express";
+import type { Request, Response } from "express";
 import { Router } from "express";
 
 import type IManagementRequest from "~/types/IManagementRequest";
 import store from "~/store";
-import config from "~/config";
 
 function managementRouter() {
     const router = Router();
@@ -13,12 +12,12 @@ function managementRouter() {
         res.json(req.body);
     });
 
-    router.get("/", (_req: IManagementRequest, res: Response) => {
-        res.redirect(config.client_url);
+    router.get("/logs", (_req: Request, res: Response) => {
+        res.json(store.logs);
     });
 
-    router.get("/logs", (_req: IManagementRequest, res: Response) => {
-        res.json(store.logs);
+    router.get("/rights", (_req: Request, res: Response) => {
+        res.json(store.rights);
     });
 
     return router;
