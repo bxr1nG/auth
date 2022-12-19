@@ -19,3 +19,10 @@
         flex-direction: column;
     }
 }
+
+.horizontalRightBox {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    justify-content: end;
+}

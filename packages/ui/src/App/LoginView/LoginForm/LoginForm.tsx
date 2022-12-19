@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 
 import type FormikFields from "~/types/FormikFields";
+import config from "~/config";
 
 import {
     defaultValues,
@@ -14,6 +15,7 @@ import styles from "./LoginForm.scss";
 import TextField from "./TextField/TextField";
 import HistoryField from "./HistoryField/HistoryField";
 import SubmitButton from "./SubmitButton/SubmitButton";
+import Link from "./Link/Link";
 
 type LoginFormProps = Record<string, never>;
 
@@ -129,6 +131,14 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             />
 
             <SubmitButton />
+
+            <Box className={styles.horizontalRightBox}>
+                <Link to={`${config.proxy_url}/auth/manage/logs`}>Logs</Link>
+                <Link to={`${config.proxy_url}/auth/manage/rights`}>
+                    Rights
+                </Link>
+                <Link to={`${config.proxy_url}/proxy`}>Proxy</Link>
+            </Box>
         </form>
     );
 };

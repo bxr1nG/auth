@@ -28,7 +28,7 @@ export const addValues: (
 export const sendRequest: (values: FormikFields) => Promise<Response> = async (
     values
 ) => {
-    return await fetch(config.proxy_url, {
+    return await fetch(`${config.proxy_url}/auth/manage`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
