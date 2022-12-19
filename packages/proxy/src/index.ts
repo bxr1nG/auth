@@ -26,4 +26,12 @@ if (config.mode === "production") {
 
 app.listen(config.port, () => {
     console.log(`Server started at port ${config.port}`);
+    console.log(`Manage rights page: http://localhost:${config.port}/auth`);
+    console.log(
+        `Last 10k logs page: http://localhost:${config.port}/auth/manage/logs`
+    );
+    console.log(
+        `Current rights page: http://localhost:${config.port}/auth/manage/rights`
+    );
+    console.log(`Proxy page: http://localhost:${config.port}/proxy`);
 });
