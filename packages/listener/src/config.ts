@@ -5,7 +5,7 @@ dotenv({
 });
 
 const config = {
-    port: process.env.PORT ?? 10000
+    port: process.env.LISTENER_APP_PORT ? +process.env.LISTENER_APP_PORT : 10000
 };
 
 export default config;

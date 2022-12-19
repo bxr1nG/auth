@@ -6,9 +6,9 @@ dotenv({
 
 const config = {
     mode: process.env.NODE_ENV ?? "development",
-    port: process.env.PORT ? +process.env.PORT : 80,
-    host_url: process.env.HOST_URL ?? "http://localhost:10000",
-    client_url: process.env.HOST_URL ?? "http://localhost:8080"
+    port: process.env.PROXY_APP_PORT ? +process.env.PROXY_APP_PORT : 80,
+    host_url: process.env.PROXY_APP_HOST_URL ?? "http://localhost:10000",
+    client_url: process.env.PROXY_APP_CLIENT_URL ?? "http://localhost:8080"
 };
 
 export default config;

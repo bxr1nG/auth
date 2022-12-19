@@ -1,6 +1,6 @@
 const config = {
     proxy_url:
-        process.env.PROXY_URL ?? process.env.NODE_ENV === "development"
+        process.env.UI_APP_PROXY_URL ?? process.env.NODE_ENV === "development"
             ? "http://localhost/auth/manage"
             : "/auth/manage"
 };
