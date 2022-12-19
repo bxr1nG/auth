@@ -1,4 +1,4 @@
-FROM node:18.12.1-alpine3.16
+FROM node:lts-alpine
 
 WORKDIR /app
 
@@ -13,6 +13,8 @@ COPY /packages/listener/package.json /app/packages/listener/package.json
 RUN npm install
 
 COPY . .
+
+RUN npm run build
 
 EXPOSE 80
 
