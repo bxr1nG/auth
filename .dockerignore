@@ -2,8 +2,11 @@
 **/build
 **/.idea
 /.git
+/.husky
 
 **/.env.*
+**/README.md
+.lintstagedrc.json
 .gitignore
 .dockerignore
 Dockerfile
