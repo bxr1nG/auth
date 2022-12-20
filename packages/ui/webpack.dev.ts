@@ -13,6 +13,9 @@ const config: webpack.Configuration = merge(common, {
         static: {
             directory: path.join(__dirname, "build")
         },
+        historyApiFallback: {
+            index: "/"
+        },
         port: 8080,
         compress: true
     },
