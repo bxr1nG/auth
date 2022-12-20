@@ -15,9 +15,6 @@ function usageRouter() {
         createProxyMiddleware({
             target: config.host_url,
             changeOrigin: true,
-            pathRewrite: {
-                "^/proxy": "/"
-            },
             onProxyReq: fixRequestBody
         })
     );

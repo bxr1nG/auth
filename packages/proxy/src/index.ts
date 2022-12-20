@@ -1,4 +1,4 @@
-import express, { json, Request, Response } from "express";
+import express, { json } from "express";
 import cors from "cors";
 
 import managementRouter from "~/api/management.routes";
@@ -14,24 +14,17 @@ app.use(
         origin: config.client_url
     })
 );
-app.use("/auth/manage", managementRouter());
-app.use("/proxy", usageRouter());
-if (config.mode === "production") {
-    app.use("/auth", express.static(__dirname + "/../../ui/build"));
-} else {
-    app.use("/auth", (_req: Request, res: Response) => {
-        res.redirect(config.client_url);
-    });
-}
+app.use("/auth", managementRouter());
+app.use("/", usageRouter());
 
 app.listen(config.port, () => {
     console.log(`Server started at port ${config.port}`);
     console.log(`Manage rights page: http://localhost:${config.port}/auth`);
     console.log(
-        `Last 10k logs page: http://localhost:${config.port}/auth/manage/logs`
+        `Last 10k logs page: http://localhost:${config.port}/auth/logs`
     );
     console.log(
-        `Current rights page: http://localhost:${config.port}/auth/manage/rights`
+        `Current rights page: http://localhost:${config.port}/auth/rights`
     );
-    console.log(`Proxy page: http://localhost:${config.port}/proxy`);
+    console.log(`Proxy page: http://localhost:${config.port}`);
 });

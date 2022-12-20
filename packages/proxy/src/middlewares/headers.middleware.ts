@@ -2,8 +2,13 @@ import type { NextFunction, Request, Response } from "express";
 
 import store from "~/store";
 import IRights from "~/types/IRights";
+import config from "~/config";
 
-function HeadersMiddleware(req: Request, _res: Response, next: NextFunction) {
+function HeadersMiddleware(req: Request, res: Response, next: NextFunction) {
+    if (!store.rights) {
+        res.redirect(config.mode === "production" ? "/" : config.client_url);
+        return;
+    }
     for (const header in store.rights) {
         req.headers[header] = store.rights[header as keyof IRights].toString();
     }
