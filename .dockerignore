@@ -5,6 +5,7 @@
 /.husky
 
 **/.env*
+**/testusers.ini
 **/README.md
 **/.eslintrc.js
 **/nodemon.json
