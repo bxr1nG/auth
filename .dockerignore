@@ -1,12 +1,15 @@
 **/node_modules
-**/build
 **/.idea
+**/environments
 /.git
 /.husky
 
-**/.env.*
+**/.env*
 **/README.md
+**/.eslintrc.js
+**/nodemon.json
 .lintstagedrc.json
+.prettierrc.json
 .gitignore
 .dockerignore
 Dockerfile

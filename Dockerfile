@@ -12,9 +12,11 @@ COPY /packages/listener/package.json /app/packages/listener/package.json
 
 RUN npm install
 
-COPY . .
+COPY /packages/ui/build /app/packages/ui/build
 
-RUN npm run build
+COPY /packages/proxy/build /app/packages/proxy/build
+
+COPY /packages/listener/build /app/packages/listener/build
 
 EXPOSE 80
 
