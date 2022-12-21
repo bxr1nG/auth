@@ -33,7 +33,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             const newHistory = addValues(values, history);
             setHistory(newHistory);
             setInitialValues(values);
-            localStorage.setItem("history", JSON.stringify(newHistory));
+            localStorage.setItem(config.ls_scope, JSON.stringify(newHistory));
 
             const response = await sendRequest(values);
             if (response.ok) {

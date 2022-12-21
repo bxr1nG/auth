@@ -4,9 +4,9 @@ import config from "~/config";
 import { defaultValues } from "./LoginForm.constants";
 
 export const getStored: () => Array<FormikFields> = () => {
-    return localStorage.getItem("history")
+    return localStorage.getItem(config.ls_scope)
         ? (JSON.parse(
-              localStorage.getItem("history") as string
+              localStorage.getItem(config.ls_scope) as string
           ) as Array<FormikFields>)
         : ([defaultValues] as Array<FormikFields>);
 };

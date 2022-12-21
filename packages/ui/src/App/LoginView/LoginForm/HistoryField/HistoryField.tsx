@@ -29,14 +29,14 @@ const HistoryField: React.FC<HistoryFieldProps> = (props) => {
                 key={JSON.stringify(emptyValues)}
                 value={JSON.stringify(emptyValues)}
             >
-                {JSON.stringify(emptyValues)}
+                Empty values
             </MenuItem>
             {history.map((state) => (
                 <MenuItem
                     key={JSON.stringify(state)}
                     value={JSON.stringify(state)}
                 >
-                    {JSON.stringify(state)}
+                    {`Name: ${state["X-Shib-Profile-UserPrincipalName"]}, permissions: ${state["X-Shib-Authorization-Permissions"]}}`}
                 </MenuItem>
             ))}
         </TextField>
