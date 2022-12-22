@@ -4,3 +4,4 @@
 
 **/.env.*
 **/testusers.ini
+docker-compose.yml
