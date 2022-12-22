@@ -25,14 +25,19 @@ export const addValues: (
         .slice(0, 10);
 };
 
-export const sendRequest: (values: FormikFields) => Promise<Response> = async (
-    values
-) => {
-    return await fetch(`${config.proxy_url}/auth`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(values)
-    });
+export const sendRequest: (values: FormikFields) => void = (values) => {
+    void (async () => {
+        const response = await fetch(`${config.proxy_url}/auth`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(values)
+        });
+        if (response.ok) {
+            alert(JSON.stringify(await response.json(), null, 2));
+        } else {
+            alert(`HTTP error: ${response.status}`);
+        }
+    })();
 };

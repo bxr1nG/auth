@@ -29,18 +29,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         enableReinitialize: true,
         initialValues,
         validationSchema,
-        onSubmit: async (values) => {
+        onSubmit: (values) => {
             const newHistory = addValues(values, history);
             setHistory(newHistory);
             setInitialValues(values);
             localStorage.setItem(config.ls_scope, JSON.stringify(newHistory));
-
-            const response = await sendRequest(values);
-            if (response.ok) {
-                alert(JSON.stringify(await response.json(), null, 2));
-            } else {
-                alert(`HTTP error: ${response.status}`);
-            }
+            sendRequest(values);
         }
     });
 

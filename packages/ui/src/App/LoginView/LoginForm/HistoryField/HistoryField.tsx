@@ -1,8 +1,10 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
 import type FormikFields from "~/types/FormikFields";
+
+import { parseResponse, sendRequest } from "./HistoryField.helpers";
 
 type HistoryFieldProps = {
     history: Array<FormikFields>;
@@ -13,6 +15,18 @@ type HistoryFieldProps = {
 
 const HistoryField: React.FC<HistoryFieldProps> = (props) => {
     const { history, initialValues, setInitialValues, emptyValues } = props;
+    const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await sendRequest();
+            if (data) {
+                const testusersArray = parseResponse(data, initialValues);
+                setTestusers(testusersArray);
+            }
+        };
+        fetchData().catch(alert);
+    }, [initialValues]);
 
     return (
         <TextField
@@ -31,12 +45,20 @@ const HistoryField: React.FC<HistoryFieldProps> = (props) => {
             >
                 Empty values
             </MenuItem>
+            {testusers.map((state) => (
+                <MenuItem
+                    key={JSON.stringify(state)}
+                    value={JSON.stringify(state)}
+                >
+                    {`(ini) Name: ${state["X-Shib-Profile-UserPrincipalName"]}; Roles: ${state["X-Shib-Authorization-Roles"]}`}
+                </MenuItem>
+            ))}
             {history.map((state) => (
                 <MenuItem
                     key={JSON.stringify(state)}
                     value={JSON.stringify(state)}
                 >
-                    {`Name: ${state["X-Shib-Profile-UserPrincipalName"]}, permissions: ${state["X-Shib-Authorization-Permissions"]}}`}
+                    {`Name: ${state["X-Shib-Profile-UserPrincipalName"]}; Roles: ${state["X-Shib-Authorization-Roles"]}`}
                 </MenuItem>
             ))}
         </TextField>

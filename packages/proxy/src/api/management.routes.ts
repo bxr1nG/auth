@@ -24,7 +24,6 @@ router.get("/testusers", (_req: Request, res: Response) => {
                 "utf8"
             )
         );
-        console.log(data);
         res.json(data);
     } else {
         res.json(null);
