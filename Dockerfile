@@ -12,11 +12,13 @@ COPY /packages/listener/package.json /app/packages/listener/package.json
 
 RUN npm install
 
-COPY /packages/ui/build /app/packages/ui/build
+COPY . .
 
-COPY /packages/proxy/build /app/packages/proxy/build
-
-COPY /packages/listener/build /app/packages/listener/build
+RUN npm run build && \
+    find ./packages/ui ! \( -name "build" -or -name "node_modules" -or -name "package.json" \) -delete && \
+    find ./packages/proxy ! \( -name "build" -or -name "node_modules" -or -name "package.json" \) -delete && \
+    find ./packages/listener ! \( -name "build" -or -name "node_modules" -or -name "package.json" \) -delete && \
+    find ./ -name "tsconfig.json" -maxdepth 1 -delete
 
 EXPOSE 80
 

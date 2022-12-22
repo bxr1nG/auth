@@ -1,6 +1,7 @@
 **/node_modules
 **/.idea
 **/environments
+**/build
 /.git
 /.husky
 
