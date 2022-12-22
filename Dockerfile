@@ -14,11 +14,10 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build && \
-    find ./packages/ui ! \( -name "build" -or -name "node_modules" -or -name "package.json" \) -delete && \
-    find ./packages/proxy ! \( -name "build" -or -name "node_modules" -or -name "package.json" \) -delete && \
-    find ./packages/listener ! \( -name "build" -or -name "node_modules" -or -name "package.json" \) -delete && \
-    find ./ -name "tsconfig.json" -maxdepth 1 -delete
+RUN npm run build &&\
+    rm -rf packages/ui/src &&\
+    rm -rf packages/proxy/src &&\
+    rm -rf packages/listener/src
 
 EXPOSE 80
 
