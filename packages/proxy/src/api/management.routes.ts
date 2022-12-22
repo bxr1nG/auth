@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
 import express, { Router } from "express";
+import * as path from "path";
+import * as fs from "fs";
+import * as ini from "ini";
 
 import type IManagementRequest from "~/types/IManagementRequest";
 import store from "~/store";
 import config from "~/config";
-import * as path from "path";
-import * as fs from "fs";
-import * as ini from "ini";
 
 const router = Router();
 
@@ -17,14 +17,17 @@ router.post("/", (req: IManagementRequest, res: Response) => {
 
 router.get("/testusers", (_req: Request, res: Response) => {
     if (config.testusers_file) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-        const data = ini.parse(
-            fs.readFileSync(
-                path.resolve(__dirname, "../../", config.testusers_file),
-                "utf8"
-            )
-        );
-        res.json(data);
+        try {
+            if (fs.existsSync(config.testusers_file)) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+                const data = ini.parse(
+                    fs.readFileSync(config.testusers_file, "utf8")
+                );
+                res.json(data);
+            }
+        } catch (e) {
+            res.json(null);
+        }
     } else {
         res.json(null);
     }
