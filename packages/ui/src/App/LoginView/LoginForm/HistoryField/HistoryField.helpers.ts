@@ -9,12 +9,26 @@ export const parseTestusers: (
     const { users, roles } = response;
     const testusers: Array<FormikFields> = [];
     for (const key in users) {
+        let go = true;
         const permissions = (users[key] as string)
             .replace(/\s/g, "")
             .split(",")
             .filter((role) => roles[role])
             .map((role) => (roles[role] as string).replace(/\s/g, ""))
-            .join(",");
+            .join(",")
+            .split("")
+            .map((char) => {
+                // eslint-disable-next-line quotes
+                if (char === '"') {
+                    go = !go;
+                    return;
+                }
+                if (char === "," && go) {
+                    return ";";
+                }
+                return char;
+            })
+            .join("");
 
         testusers.push({
             ...values,
