@@ -15,6 +15,12 @@ router.post("/", (req: IManagementRequest, res: Response) => {
     res.json(req.body);
 });
 
+router.get("/environment", (_req: Request, res: Response) => {
+    res.json({
+        ls_scope: config.ls_scope
+    });
+});
+
 router.get("/testusers", (_req: Request, res: Response) => {
     if (config.testusers_file) {
         try {

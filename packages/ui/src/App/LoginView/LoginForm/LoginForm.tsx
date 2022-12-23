@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 
 import type FormikFields from "~/types/FormikFields";
 import config from "~/config";
+import Context from "~/context";
 
 import {
     defaultValues,
     emptyValues,
     validationSchema
 } from "./LoginForm.constants";
-import { getStored, addValues, sendRequest } from "./LoginForm.helpers";
+import { getStored, addValues, fetchData } from "./LoginForm.helpers";
 import styles from "./LoginForm.scss";
 import TextField from "./TextField/TextField";
 import HistoryField from "./HistoryField/HistoryField";
@@ -20,7 +21,10 @@ import Link from "./Link/Link";
 type LoginFormProps = Record<string, never>;
 
 const LoginForm: React.FC<LoginFormProps> = () => {
-    const [history, setHistory] = useState<Array<FormikFields>>(getStored());
+    const { environment } = useContext(Context);
+    const [history, setHistory] = useState<Array<FormikFields>>(
+        getStored(environment.ls_scope)
+    );
     const [initialValues, setInitialValues] = useState<FormikFields>(
         history[0] || defaultValues
     );
@@ -33,8 +37,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             const newHistory = addValues(values, history);
             setHistory(newHistory);
             setInitialValues(values);
-            localStorage.setItem(config.ls_scope, JSON.stringify(newHistory));
-            sendRequest(values);
+            localStorage.setItem(
+                environment.ls_scope,
+                JSON.stringify(newHistory)
+            );
+            fetchData(values).catch(console.error);
         }
     });
 

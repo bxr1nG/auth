@@ -1,29 +1,13 @@
 import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
-import config from "~/config";
+import getTestusers from "~/api/getTestusers";
 
-export const sendRequest: () => Promise<TestusersFields | null | void> =
-    async () => {
-        const response = await fetch(`${config.proxy_url}/auth/testusers`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        if (response.ok) {
-            return (await response.json()) as TestusersFields | null;
-        } else {
-            alert(`HTTP error: ${response.status}`);
-            return undefined;
-        }
-    };
-
-export const parseResponse: (
+export const parseTestusers: (
     response: TestusersFields,
     values: FormikFields
 ) => Array<FormikFields> = (response, values) => {
     const { users, roles } = response;
-    const testusersArray: Array<FormikFields> = [];
+    const testusers: Array<FormikFields> = [];
     for (const key in users) {
         const permissions = (users[key] as string)
             .replace(/\s/g, "")
@@ -32,12 +16,22 @@ export const parseResponse: (
             .map((role) => (roles[role] as string).replace(/\s/g, ""))
             .join(",");
 
-        testusersArray.push({
+        testusers.push({
             ...values,
             "X-Shib-Profile-UserPrincipalName": key,
             "X-Shib-Authorization-Roles": users[key] as string,
             "X-Shib-Authorization-Permissions": permissions
         });
     }
-    return testusersArray;
+    return testusers;
+};
+
+export const fetchData: (
+    setTestusers: (testusers: Array<FormikFields>) => void,
+    values: FormikFields
+) => Promise<void> = async (setTestusers, values) => {
+    const data = await getTestusers();
+    if (data) {
+        setTestusers(parseTestusers(data, values));
+    }
 };

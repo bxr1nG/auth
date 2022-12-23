@@ -1,10 +1,13 @@
 import type FormikFields from "~/types/FormikFields";
+import updateRights from "~/api/updateRights";
 import config from "~/config";
 
 import { defaultValues } from "./LoginForm.constants";
 
-export const getStored: () => Array<FormikFields> = () => {
-    return localStorage.getItem(config.ls_scope)
+export const getStored: (ls_scope: string) => Array<FormikFields> = (
+    ls_scope
+) => {
+    return localStorage.getItem(ls_scope)
         ? (JSON.parse(
               localStorage.getItem(config.ls_scope) as string
           ) as Array<FormikFields>)
@@ -25,19 +28,8 @@ export const addValues: (
         .slice(0, 10);
 };
 
-export const sendRequest: (values: FormikFields) => void = (values) => {
-    void (async () => {
-        const response = await fetch(`${config.proxy_url}/auth`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(values)
-        });
-        if (response.ok) {
-            alert(JSON.stringify(await response.json(), null, 2));
-        } else {
-            alert(`HTTP error: ${response.status}`);
-        }
-    })();
+export const fetchData: (values: FormikFields) => Promise<void> = async (
+    values
+) => {
+    alert(JSON.stringify(await updateRights(values), null, 2));
 };

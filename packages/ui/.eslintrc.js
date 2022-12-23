@@ -28,6 +28,6 @@ module.exports = {
     rules: {
         quotes: ["error", "double"],
         semi: ["error", "always"],
-        "no-console": "error"
+        "no-console": ["error", { allow: ["info", "error"] }]
     }
 };

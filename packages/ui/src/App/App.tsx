@@ -1,31 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
+import Context from "~/context";
+import config from "~/config";
+
+import { fetchData } from "./App.helpers";
 import LoginView from "./LoginView/LoginView";
 
 type AppProps = Record<string, never>;
 
 const App: React.FC<AppProps> = () => {
+    const [environment, setEnvironment] = useState({
+        ls_scope: config.ls_scope
+    });
+
+    useEffect(() => {
+        fetchData(setEnvironment).catch(console.error);
+    }, []);
+
     return (
-        <Routes>
-            <Route
-                path="/auth"
-                element={<LoginView />}
-            >
+        <Context.Provider
+            value={{
+                environment,
+                setEnvironment
+            }}
+        >
+            <Routes>
                 <Route
-                    path="login"
+                    path="/auth"
                     element={<LoginView />}
-                />
+                >
+                    <Route
+                        path="login"
+                        element={<LoginView />}
+                    />
+                    <Route
+                        path="logs"
+                        element={<LoginView />}
+                    />
+                </Route>
                 <Route
-                    path="logs"
-                    element={<LoginView />}
+                    path="*"
+                    element={<Navigate to="/auth" />}
                 />
-            </Route>
-            <Route
-                path="*"
-                element={<Navigate to="/auth" />}
-            />
-        </Routes>
+            </Routes>
+        </Context.Provider>
     );
 };
 

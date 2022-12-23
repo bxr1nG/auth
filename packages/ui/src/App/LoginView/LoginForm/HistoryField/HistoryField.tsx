@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import type FormikFields from "~/types/FormikFields";
 
-import { parseResponse, sendRequest } from "./HistoryField.helpers";
+import { fetchData } from "./HistoryField.helpers";
 
 type HistoryFieldProps = {
     history: Array<FormikFields>;
@@ -18,14 +18,7 @@ const HistoryField: React.FC<HistoryFieldProps> = (props) => {
     const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const data = await sendRequest();
-            if (data) {
-                const testusersArray = parseResponse(data, initialValues);
-                setTestusers(testusersArray);
-            }
-        };
-        fetchData().catch(alert);
+        fetchData(setTestusers, initialValues).catch(console.error);
     }, [initialValues]);
 
     return (
