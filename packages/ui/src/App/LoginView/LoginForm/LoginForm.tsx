@@ -79,7 +79,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 formik={formik}
             />
 
-            <Divider variant="middle" />
+            <Divider />
 
             <TextField
                 name="X-Shib-Profile-ApplicationNames"
