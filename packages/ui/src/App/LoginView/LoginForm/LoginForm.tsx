@@ -45,7 +45,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             );
             fetchData(values)
                 .then(() => {
-                    window.location.href = config.proxy_url;
+                    window.location.href = `${config.proxy_url}/`;
                 })
                 .catch(console.error);
         }
