@@ -1,6 +1,7 @@
 import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
 import getTestusers from "~/api/getTestusers";
+import config from "~/config";
 
 export const parseTestusers: (
     response: TestusersFields,
@@ -30,11 +31,17 @@ export const parseTestusers: (
             })
             .join("");
 
+        const number = +(key.match(/\d/g) ?? [0]).join("");
+
         testusers.push({
             ...values,
             "X-Shib-Profile-UserPrincipalName": key,
             "X-Shib-Authorization-Roles": users[key] as string,
-            "X-Shib-Authorization-Permissions": permissions
+            "X-Shib-Authorization-Permissions": permissions,
+            "X-Shib-Profile-IAMUserID": 500 + number,
+            "X-Shib-Profile-LastName": `Doe${number}`,
+            "X-Shib-Profile-ApplicationNames":
+                config.ls_scope.slice(0, -7) || "none"
         });
     }
     return testusers;
