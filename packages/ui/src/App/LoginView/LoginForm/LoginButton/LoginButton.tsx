@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 
 type SubmitButtonProps = Record<string, never>;
 
-const SubmitButton: React.FC<SubmitButtonProps> = () => {
+const LoginButton: React.FC<SubmitButtonProps> = () => {
     return (
         <Button
             color="primary"
@@ -12,9 +12,9 @@ const SubmitButton: React.FC<SubmitButtonProps> = () => {
             size="large"
             type="submit"
         >
-            Submit
+            Login
         </Button>
     );
 };
 
-export default SubmitButton;
+export default LoginButton;

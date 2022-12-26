@@ -1,30 +1,38 @@
 @mixin flexGap {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
+}
+
+@mixin flexRow {
+    @include flexGap;
+    flex-direction: row;
 }
 
 .form {
     @include flexGap;
     flex-direction: column;
-    width: 60%;
-    padding: 2rem;
-
-    @media (max-width: 767.98px) {
-        width: 90%;
-    }
+    width: 100%;
+    margin: 2rem 0;
 }
 
 .horizontalBox {
-    @include flexGap;
-    flex-direction: row;
+    @include flexRow;
 
     @media (max-width: 767.98px) {
         flex-direction: column;
     }
 }
 
+.horizontalMiniBox {
+    @include flexRow;
+    width: 100%;
+
+    @media (max-width: 575.98px) {
+        flex-direction: column;
+    }
+}
+
 .horizontalRightBox {
-    @include flexGap;
-    flex-direction: row;
+    @include flexRow;
     justify-content: end;
 }

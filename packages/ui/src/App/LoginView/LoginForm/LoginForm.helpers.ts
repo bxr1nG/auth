@@ -31,5 +31,5 @@ export const addValues: (
 export const fetchData: (values: FormikFields) => Promise<void> = async (
     values
 ) => {
-    alert(JSON.stringify(await updateRights(values), null, 2));
+    await updateRights(values);
 };

@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 
 import type FormikFields from "~/types/FormikFields";
 import config from "~/config";
@@ -13,9 +14,10 @@ import {
 } from "./LoginForm.constants";
 import { getStored, addValues, fetchData } from "./LoginForm.helpers";
 import styles from "./LoginForm.scss";
+import StateField from "./StateField/StateField";
 import TextField from "./TextField/TextField";
-import HistoryField from "./HistoryField/HistoryField";
-import SubmitButton from "./SubmitButton/SubmitButton";
+import PermissionsField from "~/App/LoginView/LoginForm/PermissionsField/PermissionsField";
+import LoginButton from "./LoginButton/LoginButton";
 import Link from "./Link/Link";
 
 type LoginFormProps = Record<string, never>;
@@ -41,7 +43,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 environment.ls_scope,
                 JSON.stringify(newHistory)
             );
-            fetchData(values).catch(console.error);
+            fetchData(values)
+                .then(() => {
+                    window.location.href = config.proxy_url;
+                })
+                .catch(console.error);
         }
     });
 
@@ -50,7 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             className={styles.form}
             onSubmit={formik.handleSubmit}
         >
-            <HistoryField
+            <StateField
                 history={history}
                 initialValues={initialValues}
                 setInitialValues={setInitialValues}
@@ -62,83 +68,95 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 label="UserPrincipalName"
                 formik={formik}
             />
-            <Box className={styles.horizontalBox}>
-                <TextField
-                    name="X-Shib-Profile-BoxUserID"
-                    label="BoxUserID"
-                    type={"number"}
-                    formik={formik}
-                />
-                <TextField
-                    name="X-Shib-Profile-IAMUserID"
-                    label="IAMUserID"
-                    type={"number"}
-                    formik={formik}
-                />
-            </Box>
-            <Box className={styles.horizontalBox}>
-                <TextField
-                    name="X-Shib-Profile-FirstName"
-                    label="FirstName"
-                    formik={formik}
-                />
-                <TextField
-                    name="X-Shib-Profile-LastName"
-                    label="LastName"
-                    formik={formik}
-                />
-            </Box>
             <TextField
-                name="X-Shib-Profile-Email"
-                label="Email"
+                name="X-Shib-Authorization-Roles"
+                label="Roles"
                 formik={formik}
             />
-            <TextField
-                name="X-Shib-Profile-Affiliation"
-                label="Affiliation"
+            <PermissionsField
+                name="X-Shib-Authorization-Permissions"
+                label="Permissions"
                 formik={formik}
             />
+
+            <Divider variant="middle" />
+
             <TextField
                 name="X-Shib-Profile-ApplicationNames"
                 label="ApplicationNames"
                 formik={formik}
             />
             <Box className={styles.horizontalBox}>
+                <Box className={styles.horizontalMiniBox}>
+                    <TextField
+                        name="X-Shib-Profile-BoxUserID"
+                        label="BoxUserID"
+                        type={"number"}
+                        formik={formik}
+                    />
+                    <TextField
+                        name="X-Shib-Profile-IAMUserID"
+                        label="IAMUserID"
+                        type={"number"}
+                        formik={formik}
+                    />
+                </Box>
+                <Box className={styles.horizontalMiniBox}>
+                    <TextField
+                        name="X-Shib-Profile-FirstName"
+                        label="FirstName"
+                        formik={formik}
+                    />
+                    <TextField
+                        name="X-Shib-Profile-LastName"
+                        label="LastName"
+                        formik={formik}
+                    />
+                </Box>
                 <TextField
-                    name="X-Shib-Profile-AffiliatedNHLTeam-ID"
-                    label="AffiliatedNHLTeam-ID"
-                    formik={formik}
-                />
-                <TextField
-                    name="X-Shib-Profile-AffiliatedNHLTeam-Abbrev"
-                    label="AffiliatedNHLTeam-Abbrev"
+                    name="X-Shib-Profile-Email"
+                    label="Email"
                     formik={formik}
                 />
             </Box>
-            <TextField
-                name="X-Shib-Profile-AffiliatedNHLTeam-FullName"
-                label="AffiliatedNHLTeam-FullName"
-                formik={formik}
-            />
-            <TextField
-                name="X-Shib-Authorization-Roles"
-                label="Roles"
-                formik={formik}
-            />
-            <TextField
-                name="X-Shib-Authorization-Permissions"
-                label="Permissions"
-                formik={formik}
-            />
 
-            <SubmitButton />
+            <Box className={styles.horizontalBox}>
+                <Box className={styles.horizontalMiniBox}>
+                    <TextField
+                        name="X-Shib-Profile-Affiliation"
+                        label="Affiliation"
+                        formik={formik}
+                    />
+                    <TextField
+                        name="X-Shib-Profile-AffiliatedNHLTeam-ID"
+                        label="AffiliatedNHLTeam-ID"
+                        formik={formik}
+                    />
+                </Box>
+                <Box className={styles.horizontalMiniBox}>
+                    <TextField
+                        name="X-Shib-Profile-AffiliatedNHLTeam-Abbrev"
+                        label="AffiliatedNHLTeam-Abbrev"
+                        formik={formik}
+                    />
+                    <TextField
+                        name="X-Shib-Profile-AffiliatedNHLTeam-FullName"
+                        label="AffiliatedNHLTeam-FullName"
+                        formik={formik}
+                    />
+                </Box>
+            </Box>
+
+            <LoginButton />
 
             <Box className={styles.horizontalRightBox}>
-                <Link to={`${config.proxy_url}/auth/manage/logs`}>Logs</Link>
-                <Link to={`${config.proxy_url}/auth/manage/rights`}>
-                    Rights
+                <Link to={`${config.proxy_url}/auth/logs`}>Logs</Link>
+                <Link
+                    to={`${config.proxy_url}/auth/logout`}
+                    color="error"
+                >
+                    Logout
                 </Link>
-                <Link to={`${config.proxy_url}/proxy`}>Proxy</Link>
             </Box>
         </form>
     );

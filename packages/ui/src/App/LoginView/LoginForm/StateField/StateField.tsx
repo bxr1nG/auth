@@ -4,7 +4,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import type FormikFields from "~/types/FormikFields";
 
-import { fetchData } from "./HistoryField.helpers";
+import { fetchData } from "./StateField.helpers";
 
 type HistoryFieldProps = {
     history: Array<FormikFields>;
@@ -13,7 +13,7 @@ type HistoryFieldProps = {
     emptyValues: FormikFields;
 };
 
-const HistoryField: React.FC<HistoryFieldProps> = (props) => {
+const StateField: React.FC<HistoryFieldProps> = (props) => {
     const { history, initialValues, setInitialValues, emptyValues } = props;
     const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
 
@@ -58,4 +58,4 @@ const HistoryField: React.FC<HistoryFieldProps> = (props) => {
     );
 };
 
-export default HistoryField;
+export default StateField;

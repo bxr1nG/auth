@@ -5,10 +5,19 @@ import StyledLink from "@mui/material/Link";
 type LinkProps = {
     to: string;
     children: string;
+    color?:
+        | "inherit"
+        | "primary"
+        | "secondary"
+        | "success"
+        | "error"
+        | "info"
+        | "warning"
+        | undefined;
 };
 
 const Link: React.FC<LinkProps> = (props) => {
-    const { to, children } = props;
+    const { to, children, color } = props;
 
     return (
         <StyledButton
@@ -16,6 +25,7 @@ const Link: React.FC<LinkProps> = (props) => {
             variant="outlined"
             href={to}
             target="_blank"
+            color={color}
         >
             {children}
         </StyledButton>
