@@ -1,19 +1,24 @@
 import type { Request, Response } from "express";
 import express, { Router } from "express";
-import * as path from "path";
-import * as fs from "fs";
-import * as ini from "ini";
+import path from "path";
+import fs from "fs";
+import ini from "ini";
 
 import type IManagementRequest from "~/types/IManagementRequest";
 import store from "~/store";
 import config from "~/config";
+import CookiesCleanerMiddleware from "~/middlewares/cookiesCleaner.middleware";
 
 const router = Router();
 
-router.post("/", (req: IManagementRequest, res: Response) => {
-    store.rights = req.body;
-    res.json(req.body);
-});
+router.post(
+    "/",
+    CookiesCleanerMiddleware,
+    (req: IManagementRequest, res: Response) => {
+        store.rights = req.body;
+        res.json(req.body);
+    }
+);
 
 router.get("/environment", (_req: Request, res: Response) => {
     res.json({
@@ -47,11 +52,15 @@ if (config.mode === "production") {
     });
 }
 
-router.get("/logout", (_req: Request, res: Response) => {
-    const rights = store.rights;
-    store.rights = null;
-    res.json(rights);
-});
+router.get(
+    "/logout",
+    CookiesCleanerMiddleware,
+    (_req: Request, res: Response) => {
+        const rights = store.rights;
+        store.rights = null;
+        res.json(rights);
+    }
+);
 
 router.get("/logs", (_req: Request, res: Response) => {
     res.json(store.logs);

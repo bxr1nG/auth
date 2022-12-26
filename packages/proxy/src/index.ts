@@ -1,4 +1,5 @@
 import express, { json } from "express";
+import cookieParser from "cookie-parser";
 import cors from "cors";
 
 import managementRouter from "~/api/management.routes";
@@ -7,6 +8,8 @@ import config from "~/config";
 
 const app = express();
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-call
+app.use(cookieParser());
 app.use(json());
 app.use(
     cors({
