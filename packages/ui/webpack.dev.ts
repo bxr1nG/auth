@@ -13,11 +13,12 @@ const config: webpack.Configuration = merge(common, {
         static: {
             directory: path.join(__dirname, "build")
         },
-        historyApiFallback: {
-            index: "/"
-        },
+        historyApiFallback: true,
         port: 8080,
         compress: true
+    },
+    output: {
+        publicPath: "/"
     },
     mode: "development",
     plugins: [

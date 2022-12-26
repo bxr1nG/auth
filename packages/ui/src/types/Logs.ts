@@ -1,7 +1,7 @@
-type ILog = {
+type Logs = Array<{
     time: number;
     url: string;
     at: number;
-};
+}>;
 
-export default ILog;
+export default Logs;

@@ -10,9 +10,10 @@ import config from "~/config";
 import CookiesCleanerMiddleware from "~/middlewares/cookiesCleaner.middleware";
 
 const router = Router();
+const manageRouter = Router();
 
-router.post(
-    "/",
+manageRouter.post(
+    "/login",
     CookiesCleanerMiddleware,
     (req: IManagementRequest, res: Response) => {
         store.rights = req.body;
@@ -20,13 +21,13 @@ router.post(
     }
 );
 
-router.get("/environment", (_req: Request, res: Response) => {
+manageRouter.get("/environment", (_req: Request, res: Response) => {
     res.json({
         ls_scope: config.ls_scope
     });
 });
 
-router.get("/testusers", (_req: Request, res: Response) => {
+manageRouter.get("/testusers", (_req: Request, res: Response) => {
     if (config.testusers_file) {
         try {
             if (fs.existsSync(config.testusers_file)) {
@@ -44,15 +45,7 @@ router.get("/testusers", (_req: Request, res: Response) => {
     }
 });
 
-if (config.mode === "production") {
-    router.use(express.static(path.resolve(__dirname, "../../../ui/build/")));
-} else {
-    router.get("/", (_req: Request, res: Response) => {
-        res.redirect(config.client_url);
-    });
-}
-
-router.get(
+manageRouter.post(
     "/logout",
     CookiesCleanerMiddleware,
     (_req: Request, res: Response) => {
@@ -62,13 +55,23 @@ router.get(
     }
 );
 
-router.get("/logs", (_req: Request, res: Response) => {
+manageRouter.get("/logs", (_req: Request, res: Response) => {
     res.json(store.logs);
 });
 
-router.get("/rights", (_req: Request, res: Response) => {
+manageRouter.get("/rights", (_req: Request, res: Response) => {
     res.json(store.rights);
 });
+
+router.use("/manage", manageRouter);
+
+if (config.mode === "production") {
+    router.use(express.static(path.resolve(__dirname, "../../../ui/build/")));
+} else {
+    router.get("/", (_req: Request, res: Response) => {
+        res.redirect(config.client_url);
+    });
+}
 
 router.get("*", (_req: Request, res: Response) => {
     res.sendFile(path.resolve(__dirname, "../../../ui/build/", "index.html"));

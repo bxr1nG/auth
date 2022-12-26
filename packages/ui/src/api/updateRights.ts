@@ -4,7 +4,7 @@ import config from "~/config";
 const updateRights: (values: FormikFields) => Promise<FormikFields> = async (
     values
 ) => {
-    const response = await fetch(`${config.proxy_url}/auth`, {
+    const response = await fetch(`${config.proxy_url}/auth/manage/login`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

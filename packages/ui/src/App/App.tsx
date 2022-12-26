@@ -6,6 +6,7 @@ import config from "~/config";
 
 import { fetchData } from "./App.helpers";
 import LoginView from "./LoginView/LoginView";
+import LogsView from "./LogsView/LogsView";
 
 type AppProps = Record<string, never>;
 
@@ -27,21 +28,16 @@ const App: React.FC<AppProps> = () => {
         >
             <Routes>
                 <Route
-                    path="/auth"
+                    path="/auth/login"
                     element={<LoginView />}
-                >
-                    <Route
-                        path="login"
-                        element={<LoginView />}
-                    />
-                    <Route
-                        path="logs"
-                        element={<LoginView />}
-                    />
-                </Route>
+                />
+                <Route
+                    path="/auth/logs"
+                    element={<LogsView />}
+                />
                 <Route
                     path="*"
-                    element={<Navigate to="/auth" />}
+                    element={<Navigate to="/auth/login" />}
                 />
             </Routes>
         </Context.Provider>

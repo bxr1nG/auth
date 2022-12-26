@@ -150,9 +150,14 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             <LoginButton />
 
             <Box className={styles.horizontalRightBox}>
-                <Link to={`${config.proxy_url}/auth/logs`}>Logs</Link>
                 <Link
-                    to={`${config.proxy_url}/auth/logout`}
+                    to={"/auth/logs"}
+                    internal
+                >
+                    Logs
+                </Link>
+                <Link
+                    to={`${config.proxy_url}/auth/manage/logout`}
                     color="error"
                 >
                     Logout

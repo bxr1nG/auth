@@ -5,6 +5,9 @@ export const theme = createTheme({
         borderRadius: 32
     },
     palette: {
+        background: {
+            default: "#f0f2f5"
+        },
         primary: {
             light: "#0299ff",
             main: "#0183da",
@@ -16,6 +19,15 @@ export const theme = createTheme({
             main: "#76ff03",
             dark: "#52b202",
             contrastText: "#000"
+        }
+    },
+    components: {
+        MuiOutlinedInput: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: "#fff"
+                }
+            }
         }
     }
 });
