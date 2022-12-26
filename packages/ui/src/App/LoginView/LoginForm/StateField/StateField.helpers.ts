@@ -1,12 +1,12 @@
 import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
 import getTestusers from "~/api/getTestusers";
-import config from "~/config";
 
 export const parseTestusers: (
     response: TestusersFields,
-    values: FormikFields
-) => Array<FormikFields> = (response, values) => {
+    values: FormikFields,
+    ls_scope: string
+) => Array<FormikFields> = (response, values, ls_scope) => {
     const { users, roles } = response;
     const testusers: Array<FormikFields> = [];
     for (const key in users) {
@@ -40,19 +40,19 @@ export const parseTestusers: (
             "X-Shib-Authorization-Permissions": permissions,
             "X-Shib-Profile-IAMUserID": 500 + number,
             "X-Shib-Profile-LastName": `Doe${number}`,
-            "X-Shib-Profile-ApplicationNames":
-                config.ls_scope.slice(0, -7) || "none"
+            "X-Shib-Profile-ApplicationNames": ls_scope.slice(0, -8) || "none"
         });
     }
     return testusers;
 };
 
 export const fetchData: (
-    setTestusers: (testusers: Array<FormikFields>) => void,
-    values: FormikFields
-) => Promise<void> = async (setTestusers, values) => {
+    setRawTestusers: (testusers: TestusersFields) => void,
+    values: FormikFields,
+    ls_scope: string
+) => Promise<void> = async (setRawTestusers) => {
     const data = await getTestusers();
     if (data) {
-        setTestusers(parseTestusers(data, values));
+        setRawTestusers(data);
     }
 };

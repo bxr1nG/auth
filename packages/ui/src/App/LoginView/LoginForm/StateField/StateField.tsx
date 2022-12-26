@@ -1,10 +1,18 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+    Dispatch,
+    SetStateAction,
+    useContext,
+    useEffect,
+    useState
+} from "react";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
 import type FormikFields from "~/types/FormikFields";
+import type TestusersFields from "~/types/TestusersFields";
 
-import { fetchData } from "./StateField.helpers";
+import { fetchData, parseTestusers } from "./StateField.helpers";
+import Context from "~/context";
 
 type HistoryFieldProps = {
     history: Array<FormikFields>;
@@ -16,10 +24,28 @@ type HistoryFieldProps = {
 const StateField: React.FC<HistoryFieldProps> = (props) => {
     const { history, initialValues, setInitialValues, emptyValues } = props;
     const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
+    const [rawTestusers, setRawTestusers] = useState<TestusersFields | null>(
+        null
+    );
+    const { environment } = useContext(Context);
 
     useEffect(() => {
-        fetchData(setTestusers, initialValues).catch(console.error);
-    }, [initialValues]);
+        fetchData(setRawTestusers, initialValues, environment.ls_scope).catch(
+            console.error
+        );
+    }, []);
+
+    useEffect(() => {
+        if (rawTestusers) {
+            setTestusers(
+                parseTestusers(
+                    rawTestusers,
+                    initialValues,
+                    environment.ls_scope
+                )
+            );
+        }
+    }, [initialValues, rawTestusers]);
 
     return (
         <TextField

@@ -7,6 +7,7 @@ import config from "~/config";
 import { fetchData } from "./App.helpers";
 import LoginView from "./LoginView/LoginView";
 import LogsView from "./LogsView/LogsView";
+import LogoutView from "./LogoutView/LogoutView";
 
 type AppProps = Record<string, never>;
 
@@ -34,6 +35,10 @@ const App: React.FC<AppProps> = () => {
                 <Route
                     path="/auth/logs"
                     element={<LogsView />}
+                />
+                <Route
+                    path="/auth/logout"
+                    element={<LogoutView />}
                 />
                 <Route
                     path="*"

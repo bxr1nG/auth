@@ -1,7 +1,6 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import StyledButton from "@mui/material/Button";
-import StyledLink from "@mui/material/Link";
 
 type LinkProps = {
     to: string;
@@ -15,27 +14,16 @@ type LinkProps = {
         | "info"
         | "warning"
         | undefined;
-    internal?: boolean;
 };
 
 const Link: React.FC<LinkProps> = (props) => {
-    const { to, children, color, internal } = props;
+    const { to, children, color } = props;
 
-    return internal ? (
+    return (
         <StyledButton
             component={RouterLink}
             variant="outlined"
             to={to}
-            color={color}
-        >
-            {children}
-        </StyledButton>
-    ) : (
-        <StyledButton
-            component={StyledLink}
-            variant="outlined"
-            href={to}
-            target="_blank"
             color={color}
         >
             {children}
