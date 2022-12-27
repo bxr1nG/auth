@@ -2,8 +2,9 @@ import express, { json } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import managementRouter from "~/api/management.routes";
-import usageRouter from "~/api/usage.routes";
+import managementRouter from "~/api/management/management.routes";
+import clientRouter from "~/api/management/client.routes";
+import usageRouter from "~/api/usage/usage.routes";
 import config from "~/config";
 
 const app = express();
@@ -17,7 +18,8 @@ app.use(
         origin: config.client_url
     })
 );
-app.use("/auth", managementRouter);
+app.use("/auth/manage", managementRouter);
+app.use("/auth", clientRouter);
 app.use("/", usageRouter);
 
 app.listen(config.port, () => {

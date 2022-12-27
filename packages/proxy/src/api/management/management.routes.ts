@@ -1,6 +1,5 @@
 import type { Request, Response } from "express";
-import express, { Router } from "express";
-import path from "path";
+import { Router } from "express";
 import fs from "fs";
 import ini from "ini";
 
@@ -10,9 +9,8 @@ import config from "~/config";
 import CookiesCleanerMiddleware from "~/middlewares/cookiesCleaner.middleware";
 
 const router = Router();
-const manageRouter = Router();
 
-manageRouter.post(
+router.post(
     "/login",
     CookiesCleanerMiddleware,
     (req: IManagementRequest, res: Response) => {
@@ -21,13 +19,13 @@ manageRouter.post(
     }
 );
 
-manageRouter.get("/environment", (_req: Request, res: Response) => {
+router.get("/environment", (_req: Request, res: Response) => {
     res.json({
         ls_scope: config.ls_scope
     });
 });
 
-manageRouter.get("/testusers", (_req: Request, res: Response) => {
+router.get("/testusers", (_req: Request, res: Response) => {
     if (config.testusers_file) {
         try {
             if (fs.existsSync(config.testusers_file)) {
@@ -45,7 +43,7 @@ manageRouter.get("/testusers", (_req: Request, res: Response) => {
     }
 });
 
-manageRouter.post(
+router.post(
     "/logout",
     CookiesCleanerMiddleware,
     (_req: Request, res: Response) => {
@@ -55,26 +53,12 @@ manageRouter.post(
     }
 );
 
-manageRouter.get("/logs", (_req: Request, res: Response) => {
+router.get("/logs", (_req: Request, res: Response) => {
     res.json(store.logs);
 });
 
-manageRouter.get("/rights", (_req: Request, res: Response) => {
+router.get("/rights", (_req: Request, res: Response) => {
     res.json(store.rights);
-});
-
-router.use("/manage", manageRouter);
-
-if (config.mode === "production") {
-    router.use(express.static(path.resolve(__dirname, "../../../ui/build/")));
-} else {
-    router.get("/", (_req: Request, res: Response) => {
-        res.redirect(config.client_url);
-    });
-}
-
-router.get("*", (_req: Request, res: Response) => {
-    res.sendFile(path.resolve(__dirname, "../../../ui/build/", "index.html"));
 });
 
 export default router;
