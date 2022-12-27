@@ -46,6 +46,10 @@
 
 **mini-css-extract-plugin** - extracts CSS into separate files, supports hot reloading of actual css files in development
 
+**process** - provides the env property which hosts all the environment variables that were set at the moment the process was started
+
+**react-router-dom** - declarative routing for React web applications
+
 **sass** - provides a JavaScript API that can be used to drive Sass compilations from JavaScript
 
 **sass-loader** - uses Sass's custom importer feature to pass all queries to the Webpack resolving engine

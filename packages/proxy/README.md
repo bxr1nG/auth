@@ -1,12 +1,22 @@
 # Dependencies
 
+**@types/cookie-parser** - type declarations for cookie-parser
+
 **@types/cors** - type declarations for cors
+
+**@types/ini** - type declarations for ini
+
+**cookie-parser** - parsing Cookie header and populating req.cookies with an object keyed by the cookie names
 
 **cors** - bypassing the Access-Control-Allow-Origin headers, which specify which origins can access the API
 
 **dotenv** - loads environment variables from .env file
 
 **express** - Node.js web application framework
+
+**ini** - an ini format parser and serializer for testusers
+
+**winston** - logger for usage route
 
 # Dev dependencies
 
