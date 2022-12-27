@@ -7,9 +7,11 @@
         "dev": "concurrently \"npm run dev -w packages/listener\" \"npm run dev -w packages/proxy\" \"npm run dev -w packages/ui\"",
         "start": "concurrently \"npm run start -w packages/listener\" \"npm run start -w packages/proxy\"",
         "build": "concurrently \"npm run build -w packages/listener\" \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\"",
-        "deploy": "npm run build && npm run docker-build && npm run docker-push",
-        "docker-build": "docker compose build app",
-        "docker-push": "docker push bxr1ng/auth:latest"
+        "deploy": "npm run docker-build && npm run docker-push",
+        "docker-build": "cross-var docker build -t bxr1ng/$npm_package_name:$npm_package_version -t bxr1ng/$npm_package_name:latest .",
+        "docker-push": "npm run docker-push-version && npm run docker-push-latest",
+        "docker-push-version": "cross-var docker push bxr1ng/$npm_package_name:$npm_package_version",
+        "docker-push-latest": "cross-var docker push bxr1ng/$npm_package_name:latest"
     },
     "keywords": [],
     "author": "",
@@ -25,6 +27,7 @@
         "@typescript-eslint/parser": "^5.45.1",
         "concurrently": "^7.6.0",
         "cross-env": "^7.0.3",
+        "cross-var": "^1.1.0",
         "eslint": "8.22.0",
         "eslint-config-prettier": "^8.5.0",
         "husky": "^8.0.0",

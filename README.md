@@ -10,6 +10,8 @@
 
 **cross-env** - set and use environment variables across platforms
 
+**cross-var** - creates a lot of environment variables that are available to leverage when executing scripts
+
 **eslint** - statically analyzes code to quickly find problems
 
 **eslint-config-prettier** - turns off all rules that are unnecessary or might conflict with Prettier
