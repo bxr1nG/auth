@@ -7,7 +7,9 @@ import config from "~/config";
 const router = Router();
 
 if (config.mode === "production") {
-    router.use(express.static(path.resolve(__dirname, "../../../ui/build/")));
+    router.use(
+        express.static(path.resolve(__dirname, "../../../../ui/build/"))
+    );
 } else {
     router.get("/", (_req: Request, res: Response) => {
         res.redirect(config.client_url);
@@ -15,7 +17,9 @@ if (config.mode === "production") {
 }
 
 router.get("*", (_req: Request, res: Response) => {
-    res.sendFile(path.resolve(__dirname, "../../../ui/build/", "index.html"));
+    res.sendFile(
+        path.resolve(__dirname, "../../../../ui/build/", "index.html")
+    );
 });
 
 export default router;
