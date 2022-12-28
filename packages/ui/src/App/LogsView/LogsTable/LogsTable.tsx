@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import Logs from "~/types/Logs";
+import { theme } from "~/theme";
 
 import { fetchData } from "./LogsTable.helpers";
 import styles from "./LogsTable.scss";
@@ -24,19 +25,34 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     return (
         <TableContainer
             component={Paper}
-            className={styles.table}
+            className={styles.tableContainer}
         >
-            <Table>
+            <Table stickyHeader>
                 <TableHead>
                     <TableRow>
-                        <TableCell>URL</TableCell>
-                        <TableCell align="right">Time (ms)</TableCell>
+                        <TableCell
+                            style={{
+                                backgroundColor: theme.palette.common.white
+                            }}
+                        >
+                            URL
+                        </TableCell>
+                        <TableCell
+                            align="right"
+                            style={{
+                                backgroundColor: theme.palette.common.white
+                            }}
+                        >
+                            Time (ms)
+                        </TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {logs.map((log) => (
                         <TableRow key={log.at}>
-                            <TableCell>{log.url}</TableCell>
+                            <TableCell className={styles.urlColumn}>
+                                {log.url}
+                            </TableCell>
                             <TableCell align="right">{log.time}</TableCell>
                         </TableRow>
                     ))}

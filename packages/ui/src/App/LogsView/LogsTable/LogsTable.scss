@@ -1,5 +1,9 @@
-.table {
+.tableContainer {
     margin: 2rem 0;
-    max-width: 100%;
-    overflow: hidden;
+}
+
+.urlColumn {
+    max-width: 200px;
+    white-space: normal;
+    word-wrap: break-word;
 }
