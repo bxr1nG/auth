@@ -10,8 +10,11 @@
 **/README.md
 **/.eslintrc.js
 **/nodemon.json
+DOCKERHUB.md
+CHANGELOG.md
 .lintstagedrc.json
 .prettierrc.json
+.commitlintrc.json
 .gitignore
 .dockerignore
 Dockerfile

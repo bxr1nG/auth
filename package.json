@@ -11,7 +11,10 @@
         "docker-build": "cross-var docker build -t bxr1ng/$npm_package_name:$npm_package_version -t bxr1ng/$npm_package_name:latest .",
         "docker-push": "npm run docker-push-version && npm run docker-push-latest",
         "docker-push-version": "cross-var docker push bxr1ng/$npm_package_name:$npm_package_version",
-        "docker-push-latest": "cross-var docker push bxr1ng/$npm_package_name:latest"
+        "docker-push-latest": "cross-var docker push bxr1ng/$npm_package_name:latest",
+        "release": "standard-version",
+        "cm": "cz",
+        "prepare": "husky install"
     },
     "keywords": [],
     "author": "",
@@ -22,18 +25,28 @@
         "packages\\listener"
     ],
     "devDependencies": {
+        "@commitlint/cli": "^17.3.0",
+        "@commitlint/config-conventional": "^17.3.0",
         "@types/node": "^18.11.11",
         "@typescript-eslint/eslint-plugin": "^5.45.1",
         "@typescript-eslint/parser": "^5.45.1",
+        "commitizen": "^4.2.6",
         "concurrently": "^7.6.0",
         "cross-env": "^7.0.3",
         "cross-var": "^1.1.0",
+        "cz-conventional-changelog": "^3.3.0",
         "eslint": "8.22.0",
         "eslint-config-prettier": "^8.5.0",
         "husky": "^8.0.0",
         "lint-staged": "^13.1.0",
         "prettier": "^2.8.0",
+        "standard-version": "^9.5.0",
         "ts-node": "^10.9.1",
         "typescript": "^4.9.3"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     }
 }
