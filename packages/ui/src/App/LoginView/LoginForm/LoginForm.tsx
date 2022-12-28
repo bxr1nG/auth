@@ -151,12 +151,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
             <Box className={styles.horizontalRightBox}>
                 <Link to={"/auth/logs"}>Logs</Link>
-                <Link
-                    to={"/auth/logout"}
-                    color="error"
-                >
-                    Logout
-                </Link>
             </Box>
         </form>
     );
