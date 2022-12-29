@@ -27,9 +27,8 @@ const LoginForm: React.FC<LoginFormProps> = () => {
     const [history, setHistory] = useState<Array<FormikFields>>(
         getStored(environment.ls_scope)
     );
-    const [initialValues, setInitialValues] = useState<FormikFields>(
-        history[0] || defaultValues
-    );
+    const [initialValues, setInitialValues] =
+        useState<FormikFields>(defaultValues);
 
     const formik = useFormik<FormikFields>({
         enableReinitialize: true,
@@ -62,7 +61,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             onSubmit={formik.handleSubmit}
         >
             <StateField
-                history={history}
                 initialValues={initialValues}
                 setInitialValues={setInitialValues}
                 emptyValues={emptyValues}

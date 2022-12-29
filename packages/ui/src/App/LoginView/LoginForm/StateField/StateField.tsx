@@ -16,14 +16,13 @@ import { fetchData, parseTestusers } from "./StateField.helpers";
 import styles from "./StateField.scss";
 
 type HistoryFieldProps = {
-    history: Array<FormikFields>;
     initialValues: FormikFields;
     setInitialValues: Dispatch<SetStateAction<FormikFields>>;
     emptyValues: FormikFields;
 };
 
 const StateField: React.FC<HistoryFieldProps> = (props) => {
-    const { history, initialValues, setInitialValues, emptyValues } = props;
+    const { initialValues, setInitialValues, emptyValues } = props;
     const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
     const [rawTestusers, setRawTestusers] = useState<TestusersFields | null>(
         null
@@ -74,14 +73,6 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                     <div className={styles.helpText}>
                         {state["X-Shib-Authorization-Roles"]}
                     </div>
-                </MenuItem>
-            ))}
-            {history.map((state) => (
-                <MenuItem
-                    key={JSON.stringify(state)}
-                    value={JSON.stringify(state)}
-                >
-                    {`Name: ${state["X-Shib-Profile-UserPrincipalName"]}; Roles: ${state["X-Shib-Authorization-Roles"]}`}
                 </MenuItem>
             ))}
         </TextField>
