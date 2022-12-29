@@ -86,35 +86,30 @@ const LoginForm: React.FC<LoginFormProps> = () => {
 
             <Divider />
 
-            <TextField
-                name="X-Shib-Profile-ApplicationNames"
-                label="ApplicationNames"
-                formik={formik}
-            />
             <Box className={styles.horizontalBox}>
                 <Box className={styles.horizontalMiniBox}>
-                    <TextField
-                        name="X-Shib-Profile-BoxUserID"
-                        label="BoxUserID"
-                        type={"number"}
-                        formik={formik}
-                    />
                     <TextField
                         name="X-Shib-Profile-IAMUserID"
                         label="IAMUserID"
                         type={"number"}
                         formik={formik}
                     />
-                </Box>
-                <Box className={styles.horizontalMiniBox}>
                     <TextField
                         name="X-Shib-Profile-FirstName"
                         label="FirstName"
                         formik={formik}
                     />
+                </Box>
+                <Box className={styles.horizontalMiniBox}>
                     <TextField
                         name="X-Shib-Profile-LastName"
                         label="LastName"
+                        formik={formik}
+                    />
+                    <TextField
+                        name="X-Shib-Profile-BoxUserID"
+                        label="BoxUserID"
+                        type={"number"}
                         formik={formik}
                     />
                 </Box>
@@ -124,6 +119,12 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                     formik={formik}
                 />
             </Box>
+
+            <TextField
+                name="X-Shib-Profile-ApplicationNames"
+                label="ApplicationNames"
+                formik={formik}
+            />
 
             <Box className={styles.horizontalBox}>
                 <Box className={styles.horizontalMiniBox}>
