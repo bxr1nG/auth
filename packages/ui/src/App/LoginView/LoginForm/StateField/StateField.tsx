@@ -9,10 +9,9 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
 import type FormikFields from "~/types/FormikFields";
-import type TestusersFields from "~/types/TestusersFields";
 import Context from "~/context";
 
-import { fetchData, parseTestusers } from "./StateField.helpers";
+import { fetchData } from "./StateField.helpers";
 import styles from "./StateField.scss";
 
 type HistoryFieldProps = {
@@ -24,28 +23,13 @@ type HistoryFieldProps = {
 const StateField: React.FC<HistoryFieldProps> = (props) => {
     const { initialValues, setInitialValues, emptyValues } = props;
     const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
-    const [rawTestusers, setRawTestusers] = useState<TestusersFields | null>(
-        null
-    );
     const { environment } = useContext(Context);
 
     useEffect(() => {
-        fetchData(setRawTestusers, initialValues, environment.ls_scope).catch(
+        fetchData(setTestusers, emptyValues, environment.ls_scope).catch(
             console.error
         );
     }, []);
-
-    useEffect(() => {
-        if (rawTestusers) {
-            setTestusers(
-                parseTestusers(
-                    rawTestusers,
-                    initialValues,
-                    environment.ls_scope
-                )
-            );
-        }
-    }, [initialValues, rawTestusers]);
 
     return (
         <TextField
@@ -58,10 +42,7 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                 setInitialValues(state);
             }}
         >
-            <MenuItem
-                key={JSON.stringify(emptyValues)}
-                value={JSON.stringify(emptyValues)}
-            >
+            <MenuItem value={JSON.stringify(emptyValues)}>
                 Empty values
             </MenuItem>
             {testusers.map((state) => (

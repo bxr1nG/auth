@@ -7,16 +7,12 @@ import type FormikFields from "~/types/FormikFields";
 import config from "~/config";
 import Context from "~/context";
 
-import {
-    defaultValues,
-    emptyValues,
-    validationSchema
-} from "./LoginForm.constants";
+import { emptyValues, validationSchema } from "./LoginForm.constants";
 import { getStored, addValues, fetchData } from "./LoginForm.helpers";
 import styles from "./LoginForm.scss";
 import StateField from "./StateField/StateField";
 import TextField from "./TextField/TextField";
-import PermissionsField from "~/App/LoginView/LoginForm/PermissionsField/PermissionsField";
+import PermissionsField from "./PermissionsField/PermissionsField";
 import LoginButton from "./LoginButton/LoginButton";
 import Link from "./Link/Link";
 
@@ -28,7 +24,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         getStored(environment.ls_scope)
     );
     const [initialValues, setInitialValues] =
-        useState<FormikFields>(defaultValues);
+        useState<FormikFields>(emptyValues);
 
     const formik = useFormik<FormikFields>({
         enableReinitialize: true,

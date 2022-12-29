@@ -40,19 +40,19 @@ export const parseTestusers: (
             "X-Shib-Authorization-Permissions": permissions,
             "X-Shib-Profile-IAMUserID": 500 + number,
             "X-Shib-Profile-LastName": `Doe${number}`,
-            "X-Shib-Profile-ApplicationNames": ls_scope.slice(0, -8) || "none"
+            "X-Shib-Profile-ApplicationNames": ls_scope.slice(0, -8) || ""
         });
     }
     return testusers;
 };
 
 export const fetchData: (
-    setRawTestusers: (testusers: TestusersFields) => void,
+    setTestusers: (testusers: Array<FormikFields>) => void,
     values: FormikFields,
     ls_scope: string
-) => Promise<void> = async (setRawTestusers) => {
+) => Promise<void> = async (setTestusers, values, ls_scope) => {
     const data = await getTestusers();
     if (data) {
-        setRawTestusers(data);
+        setTestusers(parseTestusers(data, values, ls_scope));
     }
 };
