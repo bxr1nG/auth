@@ -10,9 +10,10 @@ import MenuItem from "@mui/material/MenuItem";
 
 import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
+import Context from "~/context";
 
 import { fetchData, parseTestusers } from "./StateField.helpers";
-import Context from "~/context";
+import styles from "./StateField.scss";
 
 type HistoryFieldProps = {
     history: Array<FormikFields>;
@@ -69,7 +70,10 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                     key={JSON.stringify(state)}
                     value={JSON.stringify(state)}
                 >
-                    {`(ini) Name: ${state["X-Shib-Profile-UserPrincipalName"]}; Roles: ${state["X-Shib-Authorization-Roles"]}`}
+                    {state["X-Shib-Profile-UserPrincipalName"]}&nbsp;
+                    <div className={styles.helpText}>
+                        {state["X-Shib-Authorization-Roles"]}
+                    </div>
                 </MenuItem>
             ))}
             {history.map((state) => (
