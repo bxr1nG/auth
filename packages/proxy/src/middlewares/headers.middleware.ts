@@ -12,7 +12,10 @@ function HeadersMiddleware(req: Request, res: Response, next: NextFunction) {
         return;
     }
     for (const header in store.rights) {
-        req.headers[header] = store.rights[header as keyof IRights].toString();
+        const value = store.rights[header as keyof IRights];
+        if (value) {
+            req.headers[header] = value.toString();
+        }
     }
     next();
 }

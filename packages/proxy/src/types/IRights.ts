@@ -1,17 +1,17 @@
 type IRights = {
-    "X-Shib-Profile-UserPrincipalName": string;
-    "X-Shib-Profile-BoxUserID": number;
-    "X-Shib-Profile-IAMUserID": number;
-    "X-Shib-Profile-FirstName": string;
-    "X-Shib-Profile-LastName": string;
-    "X-Shib-Profile-Email": string;
-    "X-Shib-Profile-Affiliation": string;
-    "X-Shib-Profile-ApplicationNames": string;
-    "X-Shib-Profile-AffiliatedNHLTeam-ID": number;
-    "X-Shib-Profile-AffiliatedNHLTeam-Abbrev": string;
-    "X-Shib-Profile-AffiliatedNHLTeam-FullName": string;
-    "X-Shib-Authorization-Roles": string;
-    "X-Shib-Authorization-Permissions": string;
+    "X-Shib-Profile-UserPrincipalName": string | undefined;
+    "X-Shib-Profile-BoxUserID": number | undefined;
+    "X-Shib-Profile-IAMUserID": number | undefined;
+    "X-Shib-Profile-FirstName": string | undefined;
+    "X-Shib-Profile-LastName": string | undefined;
+    "X-Shib-Profile-Email": string | undefined;
+    "X-Shib-Profile-Affiliation": string | undefined;
+    "X-Shib-Profile-ApplicationNames": string | undefined;
+    "X-Shib-Profile-AffiliatedNHLTeam-ID": number | undefined;
+    "X-Shib-Profile-AffiliatedNHLTeam-Abbrev": string | undefined;
+    "X-Shib-Profile-AffiliatedNHLTeam-FullName": string | undefined;
+    "X-Shib-Authorization-Roles": string | undefined;
+    "X-Shib-Authorization-Permissions": string | undefined;
 };
 
 export default IRights;
