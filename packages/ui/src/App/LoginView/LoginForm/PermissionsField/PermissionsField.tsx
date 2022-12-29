@@ -25,10 +25,7 @@ const PermissionsField: React.FC<TextFieldProps> = (props) => {
             value={(formik.values[name as keyof typeof formik.values] as string)
                 .split(";")
                 .join("\n")}
-            onChange={(e) => {
-                e.target.value = e.target.value.split("\n").join(";");
-                formik.handleChange(e);
-            }}
+            onChange={formik.handleChange}
             error={
                 formik.touched[name as keyof typeof formik.touched] &&
                 Boolean(formik.errors[name as keyof typeof formik.errors])

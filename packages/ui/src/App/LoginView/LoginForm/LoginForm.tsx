@@ -36,6 +36,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         initialValues,
         validationSchema,
         onSubmit: (values) => {
+            values["X-Shib-Authorization-Permissions"] = values[
+                "X-Shib-Authorization-Permissions"
+            ]
+                .split("\n")
+                .join(";");
             const newHistory = addValues(values, history);
             setHistory(newHistory);
             setInitialValues(values);
