@@ -24,6 +24,7 @@ const PermissionsField: React.FC<TextFieldProps> = (props) => {
             maxRows={rows ?? "10"}
             value={(formik.values[name as keyof typeof formik.values] as string)
                 .split(";")
+                .sort()
                 .join("\n")}
             onChange={formik.handleChange}
             error={
