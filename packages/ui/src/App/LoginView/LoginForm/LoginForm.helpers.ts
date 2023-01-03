@@ -25,6 +25,12 @@ export const addValues: (
         ])
     ]
         .map((state) => JSON.parse(state) as FormikFields)
+        .filter(
+            (item) =>
+                Object.keys(item).filter(
+                    (key) => item[key as keyof FormikFields]
+                ).length > 0
+        )
         .slice(0, 10);
 };
 

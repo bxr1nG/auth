@@ -46,51 +46,41 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                     }}
                 >
                     <Typography variant="h6">History</Typography>
-                    {history
-                        .filter(
-                            (item) =>
-                                Object.keys(item).filter(
+                    {history.map((item, index) => (
+                        <Box
+                            key={index}
+                            className={styles.item}
+                        >
+                            {Object.keys(item)
+                                .filter(
                                     (key) => item[key as keyof FormikFields]
-                                ).length > 0
-                        )
-                        .map((item, index) => (
-                            <Box
-                                key={index}
-                                className={styles.item}
+                                )
+                                .map((key, index) => (
+                                    <Box key={index}>
+                                        <Typography
+                                            display="inline"
+                                            sx={{ fontWeight: "bold" }}
+                                        >
+                                            {key.split("-").splice(3).join("-")}
+                                            :&nbsp;
+                                        </Typography>
+                                        {formatFields(
+                                            key as keyof FormikFields,
+                                            item
+                                        )}
+                                    </Box>
+                                ))}
+                            <Button
+                                fullWidth
+                                onClick={() => {
+                                    setInitialValues(item);
+                                    handleClose();
+                                }}
                             >
-                                {Object.keys(item)
-                                    .filter(
-                                        (key) => item[key as keyof FormikFields]
-                                    )
-                                    .map((key, index) => (
-                                        <Box key={index}>
-                                            <Typography
-                                                display="inline"
-                                                sx={{ fontWeight: "bold" }}
-                                            >
-                                                {key
-                                                    .split("-")
-                                                    .splice(3)
-                                                    .join("-")}
-                                                :&nbsp;
-                                            </Typography>
-                                            {formatFields(
-                                                key as keyof FormikFields,
-                                                item
-                                            )}
-                                        </Box>
-                                    ))}
-                                <Button
-                                    fullWidth
-                                    onClick={() => {
-                                        setInitialValues(item);
-                                        handleClose();
-                                    }}
-                                >
-                                    Use
-                                </Button>
-                            </Box>
-                        ))}
+                                Use
+                            </Button>
+                        </Box>
+                    ))}
                 </Box>
             </Modal>
         </>

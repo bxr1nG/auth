@@ -39,7 +39,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 .join(";");
             const newHistory = addValues(values, history);
             setHistory(newHistory);
-            setInitialValues(values);
             localStorage.setItem(
                 environment.ls_scope,
                 JSON.stringify(newHistory)
