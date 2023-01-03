@@ -6,6 +6,8 @@
 
 **@fontsource/roboto** - MUI is designed to use the Roboto font by default
 
+**@mui/icons-material** - icons for MUI
+
 **@mui/material** - library of React UI components
 
 **formik** - forms library for React

@@ -14,6 +14,7 @@ import StateField from "./StateField/StateField";
 import TextField from "./TextField/TextField";
 import PermissionsField from "./PermissionsField/PermissionsField";
 import LoginButton from "./LoginButton/LoginButton";
+import HistoryButton from "./HistoryButton/HistoryButton";
 import Link from "./Link/Link";
 
 type LoginFormProps = Record<string, never>;
@@ -56,11 +57,17 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             className={styles.form}
             onSubmit={formik.handleSubmit}
         >
-            <StateField
-                initialValues={initialValues}
-                setInitialValues={setInitialValues}
-                emptyValues={emptyValues}
-            />
+            <Box className={styles.horizontalBox}>
+                <StateField
+                    initialValues={initialValues}
+                    setInitialValues={setInitialValues}
+                    emptyValues={emptyValues}
+                />
+                <HistoryButton
+                    history={history}
+                    setInitialValues={setInitialValues}
+                />
+            </Box>
 
             <TextField
                 name="X-Shib-Profile-UserPrincipalName"
