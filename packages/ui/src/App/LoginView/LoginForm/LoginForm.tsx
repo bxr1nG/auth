@@ -76,7 +76,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 <TextField
                     name="X-Shib-Profile-IAMUserID"
                     label="IAMUserID"
-                    type={"number"}
                     formik={formik}
                     fullWidth={false}
                 />
@@ -134,7 +133,6 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                             <TextField
                                 name="X-Shib-Profile-BoxUserID"
                                 label="BoxUserID"
-                                type={"number"}
                                 formik={formik}
                             />
                             <TextField
