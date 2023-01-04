@@ -5,7 +5,9 @@ function CookiesCleanerMiddleware(
     next: NextFunction
 ) {
     for (const prop in req.cookies) {
-        res.clearCookie(prop);
+        res.cookie(prop, "", {
+            expires: new Date(0)
+        });
     }
     next();
 }
