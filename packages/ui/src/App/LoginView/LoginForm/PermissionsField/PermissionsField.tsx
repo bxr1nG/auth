@@ -17,6 +17,7 @@ const PermissionsField: React.FC<TextFieldProps> = (props) => {
     return (
         <StyledTextField
             fullWidth
+            inputProps={{ spellCheck: "false" }}
             id={name}
             name={name}
             label={label}
