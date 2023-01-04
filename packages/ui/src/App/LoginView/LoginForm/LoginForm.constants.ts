@@ -1,5 +1,7 @@
 import * as yup from "yup";
 
+import { theme } from "~/theme";
+
 export const defaultValues = {
     "X-Shib-Profile-UserPrincipalName": "user1",
     "X-Shib-Profile-BoxUserID": 1234567890,
@@ -47,3 +49,22 @@ export const validationSchema = yup.object({
     "X-Shib-Authorization-Roles": yup.string(),
     "X-Shib-Authorization-Permissions": yup.string()
 });
+
+export const sx = {
+    accordion: {
+        backgroundColor: "transparent",
+        boxShadow: "none",
+        "&::before": {
+            display: "none"
+        }
+    },
+    accordionSummary: {
+        borderTop: `1px solid ${theme.palette.divider}`,
+        padding: 0
+    },
+    accordionDetails: {
+        padding: 0,
+        borderTop: `1px solid ${theme.palette.divider}`,
+        paddingTop: "1.5rem"
+    }
+};

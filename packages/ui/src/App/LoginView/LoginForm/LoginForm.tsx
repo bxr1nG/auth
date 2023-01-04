@@ -1,13 +1,17 @@
 import React, { useContext, useState } from "react";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import type FormikFields from "~/types/FormikFields";
 import config from "~/config";
 import Context from "~/context";
 
-import { emptyValues, validationSchema } from "./LoginForm.constants";
+import { emptyValues, validationSchema, sx } from "./LoginForm.constants";
 import { getStored, addValues, fetchData } from "./LoginForm.helpers";
 import styles from "./LoginForm.scss";
 import StateField from "./StateField/StateField";
@@ -93,68 +97,87 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 formik={formik}
             />
 
-            <Divider />
+            <Accordion
+                disableGutters
+                sx={sx.accordion}
+            >
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    sx={sx.accordionSummary}
+                >
+                    <Typography
+                        variant="button"
+                        color="grey"
+                    >
+                        Extra fields
+                    </Typography>
+                </AccordionSummary>
+                <AccordionDetails
+                    className={styles.verticalBox}
+                    sx={sx.accordionDetails}
+                >
+                    <Box className={styles.horizontalBox}>
+                        <Box className={styles.horizontalMiniBox}>
+                            <TextField
+                                name="X-Shib-Profile-FirstName"
+                                label="FirstName"
+                                formik={formik}
+                            />
+                            <TextField
+                                name="X-Shib-Profile-LastName"
+                                label="LastName"
+                                formik={formik}
+                            />
+                        </Box>
+                        <Box className={styles.horizontalMiniBox}>
+                            <TextField
+                                name="X-Shib-Profile-BoxUserID"
+                                label="BoxUserID"
+                                type={"number"}
+                                formik={formik}
+                            />
+                            <TextField
+                                name="X-Shib-Profile-Email"
+                                label="Email"
+                                formik={formik}
+                            />
+                        </Box>
+                    </Box>
 
-            <Box className={styles.horizontalBox}>
-                <Box className={styles.horizontalMiniBox}>
                     <TextField
-                        name="X-Shib-Profile-FirstName"
-                        label="FirstName"
+                        name="X-Shib-Profile-ApplicationNames"
+                        label="ApplicationNames"
                         formik={formik}
                     />
-                    <TextField
-                        name="X-Shib-Profile-LastName"
-                        label="LastName"
-                        formik={formik}
-                    />
-                </Box>
-                <Box className={styles.horizontalMiniBox}>
-                    <TextField
-                        name="X-Shib-Profile-BoxUserID"
-                        label="BoxUserID"
-                        type={"number"}
-                        formik={formik}
-                    />
-                    <TextField
-                        name="X-Shib-Profile-Email"
-                        label="Email"
-                        formik={formik}
-                    />
-                </Box>
-            </Box>
 
-            <TextField
-                name="X-Shib-Profile-ApplicationNames"
-                label="ApplicationNames"
-                formik={formik}
-            />
-
-            <Box className={styles.horizontalBox}>
-                <Box className={styles.horizontalMiniBox}>
-                    <TextField
-                        name="X-Shib-Profile-Affiliation"
-                        label="Affiliation"
-                        formik={formik}
-                    />
-                    <TextField
-                        name="X-Shib-Profile-AffiliatedNHLTeam-ID"
-                        label="AffiliatedNHLTeam-ID"
-                        formik={formik}
-                    />
-                </Box>
-                <Box className={styles.horizontalMiniBox}>
-                    <TextField
-                        name="X-Shib-Profile-AffiliatedNHLTeam-Abbrev"
-                        label="AffiliatedNHLTeam-Abbrev"
-                        formik={formik}
-                    />
-                    <TextField
-                        name="X-Shib-Profile-AffiliatedNHLTeam-FullName"
-                        label="AffiliatedNHLTeam-FullName"
-                        formik={formik}
-                    />
-                </Box>
-            </Box>
+                    <Box className={styles.horizontalBox}>
+                        <Box className={styles.horizontalMiniBox}>
+                            <TextField
+                                name="X-Shib-Profile-Affiliation"
+                                label="Affiliation"
+                                formik={formik}
+                            />
+                            <TextField
+                                name="X-Shib-Profile-AffiliatedNHLTeam-ID"
+                                label="AffiliatedNHLTeam-ID"
+                                formik={formik}
+                            />
+                        </Box>
+                        <Box className={styles.horizontalMiniBox}>
+                            <TextField
+                                name="X-Shib-Profile-AffiliatedNHLTeam-Abbrev"
+                                label="AffiliatedNHLTeam-Abbrev"
+                                formik={formik}
+                            />
+                            <TextField
+                                name="X-Shib-Profile-AffiliatedNHLTeam-FullName"
+                                label="AffiliatedNHLTeam-FullName"
+                                formik={formik}
+                            />
+                        </Box>
+                    </Box>
+                </AccordionDetails>
+            </Accordion>
 
             <LoginButton />
 

@@ -16,6 +16,11 @@
     max-width: 900px;
 }
 
+.verticalBox {
+    @include flexGap;
+    flex-direction: column;
+}
+
 .horizontalBox {
     @include flexRow;
 
