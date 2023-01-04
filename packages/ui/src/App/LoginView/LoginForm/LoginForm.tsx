@@ -60,7 +60,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             className={styles.form}
             onSubmit={formik.handleSubmit}
         >
-            <Box className={styles.horizontalBox}>
+            <Box className={styles.alwaysHorizontalBox}>
                 <StateField
                     initialValues={initialValues}
                     setInitialValues={setInitialValues}
@@ -72,7 +72,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 />
             </Box>
 
-            <Box className={styles.horizontalBox}>
+            <Box className={styles.horizontalMiniBox}>
                 <TextField
                     name="X-Shib-Profile-IAMUserID"
                     label="IAMUserID"

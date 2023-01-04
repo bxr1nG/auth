@@ -21,6 +21,10 @@
     flex-direction: column;
 }
 
+.alwaysHorizontalBox {
+    @include flexRow;
+}
+
 .horizontalBox {
     @include flexRow;
 
