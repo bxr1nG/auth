@@ -39,6 +39,7 @@ export const parseTestusers: (
             "X-Shib-Authorization-Roles": users[key] as string,
             "X-Shib-Authorization-Permissions": permissions,
             "X-Shib-Profile-IAMUserID": 500 + number,
+            "X-Shib-Profile-FirstName": "John",
             "X-Shib-Profile-LastName": `Doe${number}`,
             "X-Shib-Profile-ApplicationNames": ls_scope.slice(0, -8) || ""
         });
