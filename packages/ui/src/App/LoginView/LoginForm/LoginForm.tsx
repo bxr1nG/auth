@@ -68,11 +68,20 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 />
             </Box>
 
-            <TextField
-                name="X-Shib-Profile-UserPrincipalName"
-                label="UserPrincipalName"
-                formik={formik}
-            />
+            <Box className={styles.horizontalBox}>
+                <TextField
+                    name="X-Shib-Profile-IAMUserID"
+                    label="IAMUserID"
+                    type={"number"}
+                    formik={formik}
+                />
+                <TextField
+                    name="X-Shib-Profile-UserPrincipalName"
+                    label="UserPrincipalName"
+                    formik={formik}
+                />
+            </Box>
+
             <TextField
                 name="X-Shib-Authorization-Roles"
                 label="Roles"
@@ -89,35 +98,29 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             <Box className={styles.horizontalBox}>
                 <Box className={styles.horizontalMiniBox}>
                     <TextField
-                        name="X-Shib-Profile-IAMUserID"
-                        label="IAMUserID"
-                        type={"number"}
-                        formik={formik}
-                    />
-                    <TextField
                         name="X-Shib-Profile-FirstName"
                         label="FirstName"
                         formik={formik}
                     />
-                </Box>
-                <Box className={styles.horizontalMiniBox}>
                     <TextField
                         name="X-Shib-Profile-LastName"
                         label="LastName"
                         formik={formik}
                     />
+                </Box>
+                <Box className={styles.horizontalMiniBox}>
                     <TextField
                         name="X-Shib-Profile-BoxUserID"
                         label="BoxUserID"
                         type={"number"}
                         formik={formik}
                     />
+                    <TextField
+                        name="X-Shib-Profile-Email"
+                        label="Email"
+                        formik={formik}
+                    />
                 </Box>
-                <TextField
-                    name="X-Shib-Profile-Email"
-                    label="Email"
-                    formik={formik}
-                />
             </Box>
 
             <TextField
