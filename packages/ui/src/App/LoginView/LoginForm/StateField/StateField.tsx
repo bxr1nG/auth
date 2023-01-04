@@ -52,7 +52,10 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                 >
                     {state["X-Shib-Profile-UserPrincipalName"]}&nbsp;
                     <div className={styles.helpText}>
-                        {state["X-Shib-Authorization-Roles"]}
+                        {state["X-Shib-Authorization-Roles"]
+                            .split(", ")
+                            .filter((item) => item !== "Password1")
+                            .join(", ")}
                     </div>
                 </MenuItem>
             ))}
