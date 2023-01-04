@@ -9,14 +9,15 @@ type TextFieldProps = {
     name: string;
     label: string;
     type?: string;
+    fullWidth?: boolean;
 };
 
 const TextField: React.FC<TextFieldProps> = (props) => {
-    const { formik, name, label, type } = props;
+    const { formik, name, label, type, fullWidth } = props;
 
     return (
         <StyledTextField
-            fullWidth
+            fullWidth={fullWidth ?? true}
             id={name}
             name={name}
             label={label}

@@ -78,6 +78,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                     label="IAMUserID"
                     type={"number"}
                     formik={formik}
+                    fullWidth={false}
                 />
                 <TextField
                     name="X-Shib-Profile-UserPrincipalName"
