@@ -4,14 +4,14 @@ import { theme } from "~/theme";
 
 export const defaultValues = {
     "X-Shib-Profile-UserPrincipalName": "user1",
-    "X-Shib-Profile-BoxUserID": 1234567890,
-    "X-Shib-Profile-IAMUserID": 501,
+    "X-Shib-Profile-BoxUserID": "1234567890",
+    "X-Shib-Profile-IAMUserID": "501",
     "X-Shib-Profile-FirstName": "John",
     "X-Shib-Profile-LastName": "Doe",
     "X-Shib-Profile-Email": "user1@example.com",
     "X-Shib-Profile-Affiliation": "Affiliation",
     "X-Shib-Profile-ApplicationNames": "ApplicationNames",
-    "X-Shib-Profile-AffiliatedNHLTeam-ID": 15,
+    "X-Shib-Profile-AffiliatedNHLTeam-ID": "15",
     "X-Shib-Profile-AffiliatedNHLTeam-Abbrev": "NYJ",
     "X-Shib-Profile-AffiliatedNHLTeam-FullName": "AffiliatedNHLTeamFullName;",
     "X-Shib-Authorization-Roles": "admin;user;",
