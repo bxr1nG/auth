@@ -1,5 +1,6 @@
 import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
+import type RarelyUsedFields from "~/types/RarelyUsedFields";
 import getTestusers from "~/api/getTestusers";
 
 export const parseTestusers: (
@@ -8,7 +9,11 @@ export const parseTestusers: (
     ls_scope: string
 ) => Array<FormikFields> = (response, values, ls_scope) => {
     const { users, roles } = response;
+    const rarelyUsedValues = JSON.parse(
+        localStorage.getItem("rarelyUsedValues") ?? "{}"
+    ) as RarelyUsedFields | Record<string, never>;
     const testusers: Array<FormikFields> = [];
+
     for (const key in users) {
         let go = true;
         const permissions = (users[key] as string)
@@ -38,10 +43,14 @@ export const parseTestusers: (
             "X-Shib-Profile-UserPrincipalName": key,
             "X-Shib-Authorization-Roles": users[key] as string,
             "X-Shib-Authorization-Permissions": permissions,
-            "X-Shib-Profile-IAMUserID": 500 + number,
+            "X-Shib-Profile-IAMUserID": (500 + number).toString(),
             "X-Shib-Profile-FirstName": "John",
             "X-Shib-Profile-LastName": `Doe${number}`,
-            "X-Shib-Profile-ApplicationNames": ls_scope.slice(0, -8) || ""
+            ...rarelyUsedValues,
+            "X-Shib-Profile-ApplicationNames":
+                ls_scope.slice(0, -8) ||
+                rarelyUsedValues["X-Shib-Profile-ApplicationNames"] ||
+                ""
         });
     }
     return testusers;

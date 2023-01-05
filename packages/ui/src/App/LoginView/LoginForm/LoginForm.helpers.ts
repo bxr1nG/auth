@@ -39,3 +39,20 @@ export const fetchData: (values: FormikFields) => Promise<void> = async (
 ) => {
     await updateRights(values);
 };
+
+export function storeRarelyUsedValues(values: FormikFields): void {
+    const rarelyUsedValues = {
+        "X-Shib-Profile-BoxUserID": values["X-Shib-Profile-BoxUserID"],
+        "X-Shib-Profile-Email": values["X-Shib-Profile-Email"],
+        "X-Shib-Profile-Affiliation": values["X-Shib-Profile-Affiliation"],
+        "X-Shib-Profile-ApplicationNames":
+            values["X-Shib-Profile-ApplicationNames"],
+        "X-Shib-Profile-AffiliatedNHLTeam-ID":
+            values["X-Shib-Profile-AffiliatedNHLTeam-ID"],
+        "X-Shib-Profile-AffiliatedNHLTeam-Abbrev":
+            values["X-Shib-Profile-AffiliatedNHLTeam-Abbrev"],
+        "X-Shib-Profile-AffiliatedNHLTeam-FullName":
+            values["X-Shib-Profile-AffiliatedNHLTeam-FullName"]
+    };
+    localStorage.setItem("rarelyUsedValues", JSON.stringify(rarelyUsedValues));
+}
