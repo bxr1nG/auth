@@ -12,7 +12,12 @@ import config from "~/config";
 import Context from "~/context";
 
 import { emptyValues, validationSchema, sx } from "./LoginForm.constants";
-import { getStored, addValues, fetchData } from "./LoginForm.helpers";
+import {
+    getStored,
+    addValues,
+    fetchData,
+    storeRarelyUsedValues
+} from "./LoginForm.helpers";
 import styles from "./LoginForm.scss";
 import StateField from "./StateField/StateField";
 import TextField from "./TextField/TextField";
@@ -43,6 +48,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 .join(";");
             const newHistory = addValues(values, history);
             setHistory(newHistory);
+            storeRarelyUsedValues(values);
             localStorage.setItem(
                 environment.ls_scope,
                 JSON.stringify(newHistory)
