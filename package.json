@@ -13,6 +13,9 @@
         "docker-push-version": "cross-var docker push bxr1ng/$npm_package_name:$npm_package_version",
         "docker-push-latest": "cross-var docker push bxr1ng/$npm_package_name:latest",
         "release": "standard-version",
+        "release-patch": "standard-version --release-as patch",
+        "release-minor": "standard-version --release-as minor",
+        "release-major": "standard-version --release-as major",
         "cm": "cz",
         "prepare": "husky install"
     },
