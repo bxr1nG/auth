@@ -19,7 +19,7 @@ export const formatFields = (key: keyof FormikFields, item: FormikFields) => {
         case "X-Shib-Authorization-Roles":
             return sortMap(item[key].split(", "));
         case "X-Shib-Authorization-Permissions":
-            return sortMap(item[key].split(";"));
+            return sortMap(item[key].split("\n"));
         default:
             return <Typography display="inline">{item[key]}</Typography>;
     }
