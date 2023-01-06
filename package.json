@@ -1,10 +1,10 @@
 {
     "name": "auth",
     "version": "1.1.2",
-    "description": "",
-    "main": "index.js",
+    "private": true,
     "scripts": {
         "dev": "concurrently \"npm run dev -w packages/listener\" \"npm run dev -w packages/proxy\" \"npm run dev -w packages/ui\"",
+        "prod": "npm run build && npm run start",
         "start": "concurrently \"npm run start -w packages/listener\" \"npm run start -w packages/proxy\"",
         "build": "concurrently \"npm run build -w packages/listener\" \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\"",
         "deploy": "npm run docker-build && npm run docker-push",
@@ -19,8 +19,6 @@
         "cm": "cz",
         "prepare": "husky install"
     },
-    "keywords": [],
-    "author": "",
     "license": "ISC",
     "workspaces": [
         "packages\\ui",
