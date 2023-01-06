@@ -1,7 +1,7 @@
-import FormikFields from "~/types/FormikFields";
+import type FormikFields from "~/types/FormikFields";
 import config from "~/config";
 
-const updateRights: (values: FormikFields) => Promise<FormikFields> = async (
+const login: (values: FormikFields) => Promise<FormikFields> = async (
     values
 ) => {
     const response = await fetch(`${config.proxy_url}/auth/manage/login`, {
@@ -14,4 +14,4 @@ const updateRights: (values: FormikFields) => Promise<FormikFields> = async (
     return (await response.json()) as FormikFields;
 };
 
-export default updateRights;
+export default login;
