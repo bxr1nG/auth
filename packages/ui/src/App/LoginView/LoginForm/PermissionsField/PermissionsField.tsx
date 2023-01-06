@@ -1,21 +1,21 @@
 import React from "react";
 import { FormikProps } from "formik";
-import StyledTextField from "@mui/material/TextField";
+import TextField from "@mui/material/TextField";
 
 import type FormikFields from "~/types/FormikFields";
 
-type TextFieldProps = {
+type PermissionsFieldProps = {
     formik: FormikProps<FormikFields>;
     name: string;
     label: string;
     rows?: number;
 };
 
-const PermissionsField: React.FC<TextFieldProps> = (props) => {
+const PermissionsField: React.FC<PermissionsFieldProps> = (props) => {
     const { formik, name, label, rows } = props;
 
     return (
-        <StyledTextField
+        <TextField
             fullWidth
             inputProps={{ spellCheck: "false" }}
             id={name}

@@ -47,7 +47,9 @@ export const validationSchema = yup.object({
     "X-Shib-Profile-AffiliatedNHLTeam-Abbrev": yup.string(),
     "X-Shib-Profile-AffiliatedNHLTeam-FullName": yup.string(),
     "X-Shib-Authorization-Roles": yup.string(),
-    "X-Shib-Authorization-Permissions": yup.string()
+    "X-Shib-Authorization-Permissions": yup
+        .string()
+        .matches(/^[^;]*$/, "Use 'new line' instead of semicolons")
 });
 
 export const sx = {
