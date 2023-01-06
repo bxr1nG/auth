@@ -1,6 +1,7 @@
 import type FormikFields from "~/types/FormikFields";
-import updateRights from "~/api/updateRights";
+import login from "~/api/login";
 import config from "~/config";
+import { objectToDisplayable } from "~/utils/parsePermissions";
 
 import { defaultValues } from "./LoginForm.constants";
 
@@ -8,9 +9,11 @@ export const getStored: (ls_scope: string) => Array<FormikFields> = (
     ls_scope
 ) => {
     return localStorage.getItem(ls_scope)
-        ? (JSON.parse(
-              localStorage.getItem(config.ls_scope) as string
-          ) as Array<FormikFields>)
+        ? (
+              JSON.parse(
+                  localStorage.getItem(config.ls_scope) as string
+              ) as Array<FormikFields>
+          ).map(objectToDisplayable)
         : ([defaultValues] as Array<FormikFields>);
 };
 
@@ -37,7 +40,7 @@ export const addValues: (
 export const fetchData: (values: FormikFields) => Promise<void> = async (
     values
 ) => {
-    await updateRights(values);
+    await login(values);
 };
 
 export function storeRarelyUsedValues(values: FormikFields): void {

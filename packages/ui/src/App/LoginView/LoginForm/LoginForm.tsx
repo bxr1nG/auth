@@ -10,6 +10,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import type FormikFields from "~/types/FormikFields";
 import config from "~/config";
 import Context from "~/context";
+import { stringToUsable } from "~/utils/parsePermissions";
 
 import { emptyValues, validationSchema, sx } from "./LoginForm.constants";
 import {
@@ -41,11 +42,9 @@ const LoginForm: React.FC<LoginFormProps> = () => {
         initialValues,
         validationSchema,
         onSubmit: (values) => {
-            values["X-Shib-Authorization-Permissions"] = values[
-                "X-Shib-Authorization-Permissions"
-            ]
-                .split("\n")
-                .join(";");
+            values["X-Shib-Authorization-Permissions"] = stringToUsable(
+                values["X-Shib-Authorization-Permissions"]
+            );
             const newHistory = addValues(values, history);
             setHistory(newHistory);
             storeRarelyUsedValues(values);

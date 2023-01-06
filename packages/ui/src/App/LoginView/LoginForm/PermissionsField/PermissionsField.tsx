@@ -23,10 +23,7 @@ const PermissionsField: React.FC<TextFieldProps> = (props) => {
             label={label}
             multiline
             maxRows={rows ?? "10"}
-            value={(formik.values[name as keyof typeof formik.values] as string)
-                .split(";")
-                .sort()
-                .join("\n")}
+            value={formik.values[name as keyof typeof formik.values]}
             onChange={formik.handleChange}
             error={
                 formik.touched[name as keyof typeof formik.touched] &&
