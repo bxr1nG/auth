@@ -42,6 +42,13 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                 setInitialValues(state);
             }}
         >
+            {![...testusers, emptyValues]
+                .map((state) => JSON.stringify(state))
+                .includes(JSON.stringify(initialValues)) && (
+                <MenuItem value={JSON.stringify(initialValues)}>
+                    History value
+                </MenuItem>
+            )}
             <MenuItem value={JSON.stringify(emptyValues)}>
                 Empty values
             </MenuItem>
