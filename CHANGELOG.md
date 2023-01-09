@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.3](https://github.com/bxr1nG/auth/compare/v1.1.1...v1.1.3) (2023-01-09)
+
+
+### Features
+
+* **loginform:** save rarely used fields in localStorage ([7828678](https://github.com/bxr1nG/auth/commit/78286789d2d4e5011edcea931b37e040ed837522))
+
+
+### Bug Fixes
+
+* **historybutton:** change history modal styles ([10c9a33](https://github.com/bxr1nG/auth/commit/10c9a33d257a75499f582b9f91665b8cbaa30351))
+* **loginform:** add validation of semicolons in permissions field ([8d56f8a](https://github.com/bxr1nG/auth/commit/8d56f8aa844461312f73d1b30d7978fff0fbb858))
+* **loginform:** fix input in permissions field ([b1f6bff](https://github.com/bxr1nG/auth/commit/b1f6bff0a6a46dc8b00dd39f339583146ade254d))
+* **loginform:** fix state 'out of range' warning when using values from history ([cd97745](https://github.com/bxr1nG/auth/commit/cd97745afd7227d9e07c416ba3cb0ade45ec4226))
+* **logstable:** change logs table styles, add copy and open buttons ([7f667ec](https://github.com/bxr1nG/auth/commit/7f667ec384cafd3873fbc3c24aee88f58b97a547))
+
 ### 1.1.2 (2023-01-05)
 
 
