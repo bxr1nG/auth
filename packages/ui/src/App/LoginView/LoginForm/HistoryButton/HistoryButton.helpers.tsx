@@ -8,7 +8,8 @@ const sortMap = (item: Array<string>) =>
     item.sort().map((roles, index) => (
         <Typography
             key={index}
-            className={styles.indent}
+            variant="body2"
+            className={styles.wordBreak}
         >
             {roles}
         </Typography>
@@ -21,6 +22,13 @@ export const formatFields = (key: keyof FormikFields, item: FormikFields) => {
         case "X-Shib-Authorization-Permissions":
             return sortMap(item[key].split("\n"));
         default:
-            return <Typography display="inline">{item[key]}</Typography>;
+            return (
+                <Typography
+                    variant="body2"
+                    className={styles.wordBreak}
+                >
+                    {item[key]}
+                </Typography>
+            );
     }
 };

@@ -5,8 +5,13 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import HistoryIcon from "@mui/icons-material/History";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
 import type FormikFields from "~/types/FormikFields";
+import { theme } from "~/theme";
 
 import styles from "./HistoryButton.scss";
 import { formatFields } from "./HistoryButton.helpers";
@@ -42,7 +47,7 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                     className={styles.modal}
                     sx={{
                         borderRadius: 1,
-                        backgroundColor: "background.paper"
+                        backgroundColor: theme.palette.background.default
                     }}
                 >
                     <Typography variant="h6">History</Typography>
@@ -51,34 +56,63 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                             key={index}
                             className={styles.item}
                         >
-                            {Object.keys(item)
-                                .filter(
-                                    (key) => item[key as keyof FormikFields]
-                                )
-                                .map((key, index) => (
-                                    <Box key={index}>
-                                        <Typography
-                                            display="inline"
-                                            sx={{ fontWeight: "bold" }}
-                                        >
-                                            {key.split("-").splice(3).join("-")}
-                                            :&nbsp;
-                                        </Typography>
-                                        {formatFields(
-                                            key as keyof FormikFields,
-                                            item
-                                        )}
-                                    </Box>
-                                ))}
-                            <Button
-                                fullWidth
-                                onClick={() => {
-                                    setInitialValues(item);
-                                    handleClose();
+                            <Table
+                                sx={{
+                                    borderRadius: 1,
+                                    backgroundColor: "#fff"
                                 }}
                             >
-                                Use
-                            </Button>
+                                <TableBody>
+                                    {Object.keys(item)
+                                        .filter(
+                                            (key) =>
+                                                item[key as keyof FormikFields]
+                                        )
+                                        .map((key, index) => (
+                                            <TableRow key={index}>
+                                                <TableCell>
+                                                    <Typography
+                                                        variant="subtitle2"
+                                                        className={
+                                                            styles.wordBreak
+                                                        }
+                                                    >
+                                                        {key
+                                                            .split("-")
+                                                            .splice(3)
+                                                            .join("-")}
+                                                    </Typography>
+                                                </TableCell>
+                                                <TableCell>
+                                                    {formatFields(
+                                                        key as keyof FormikFields,
+                                                        item
+                                                    )}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    <TableRow>
+                                        <TableCell
+                                            colSpan={2}
+                                            sx={{
+                                                padding: 0,
+                                                border: 0
+                                            }}
+                                        >
+                                            <Button
+                                                size="large"
+                                                fullWidth
+                                                onClick={() => {
+                                                    setInitialValues(item);
+                                                    handleClose();
+                                                }}
+                                            >
+                                                Use
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
                         </Box>
                     ))}
                 </Box>
