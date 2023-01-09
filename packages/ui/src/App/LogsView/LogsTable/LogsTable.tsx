@@ -6,12 +6,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
+import LaunchIcon from "@mui/icons-material/Launch";
 
 import Logs from "~/types/Logs";
-import { theme } from "~/theme";
+import config from "~/config";
 
 import { fetchData } from "./LogsTable.helpers";
 import styles from "./LogsTable.scss";
+import { sx } from "./LogsTable.constants";
+import CopyButton from "./CopyButton/CopyButton";
 
 type LogsTableProps = Record<string, never>;
 
@@ -30,17 +34,24 @@ const LogsTable: React.FC<LogsTableProps> = () => {
             <Table stickyHeader>
                 <TableHead>
                     <TableRow>
+                        <TableCell sx={sx.whiteBackground}>URL</TableCell>
                         <TableCell
-                            style={{
-                                backgroundColor: theme.palette.common.white
-                            }}
+                            align="center"
+                            sx={sx.whiteBackground}
                         >
-                            URL
+                            Open
+                        </TableCell>
+                        <TableCell
+                            align="center"
+                            sx={sx.whiteBackground}
+                        >
+                            Copy
                         </TableCell>
                         <TableCell
                             align="right"
-                            style={{
-                                backgroundColor: theme.palette.common.white
+                            sx={{
+                                ...sx.whiteBackground,
+                                whiteSpace: "nowrap"
                             }}
                         >
                             Time (ms)
@@ -53,7 +64,23 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                             <TableCell className={styles.urlColumn}>
                                 {log.url}
                             </TableCell>
-                            <TableCell align="right">{log.time}</TableCell>
+                            <TableCell align="center">
+                                <IconButton
+                                    color="primary"
+                                    onClick={() => {
+                                        window.location.href =
+                                            config.proxy_url + log.url;
+                                    }}
+                                >
+                                    <LaunchIcon />
+                                </IconButton>
+                            </TableCell>
+                            <TableCell align="center">
+                                <CopyButton copyText={log.url} />
+                            </TableCell>
+                            <TableCell align="right">
+                                {Math.round(log.time * 1e3) / 1e3}
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
