@@ -46,7 +46,7 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                 .map((state) => JSON.stringify(state))
                 .includes(JSON.stringify(initialValues)) && (
                 <MenuItem value={JSON.stringify(initialValues)}>
-                    History value
+                    History values
                 </MenuItem>
             )}
             <MenuItem value={JSON.stringify(emptyValues)}>
