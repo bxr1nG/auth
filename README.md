@@ -16,8 +16,6 @@
 
 **cross-env** - set and use environment variables across platforms
 
-**cross-var** - creates a lot of environment variables that are available to leverage when executing scripts
-
 **cz-conventional-changelog** - prompts for conventional changelog standard
 
 **eslint** - statically analyzes code to quickly find problems
