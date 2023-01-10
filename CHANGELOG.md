@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.4](https://github.com/bxr1nG/auth/compare/v1.1.3...v1.1.4) (2023-01-10)
+
+
+### Features
+
+* add URL parser and modal for logs table ([8d87475](https://github.com/bxr1nG/auth/commit/8d87475fc6bd9335a6666a223b66e1c1829a617a))
+
 ### [1.1.3](https://github.com/bxr1nG/auth/compare/v1.1.1...v1.1.3) (2023-01-09)
 
 
