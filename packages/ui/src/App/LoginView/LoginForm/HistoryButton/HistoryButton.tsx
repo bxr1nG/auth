@@ -9,6 +9,7 @@ import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 import type FormikFields from "~/types/FormikFields";
 import { theme } from "~/theme";
@@ -43,10 +44,9 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Box
+                <Paper
                     className={styles.modal}
                     sx={{
-                        borderRadius: 1,
                         backgroundColor: theme.palette.background.default
                     }}
                 >
@@ -57,6 +57,7 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                             className={styles.item}
                         >
                             <Table
+                                size="small"
                                 sx={{
                                     borderRadius: 1,
                                     backgroundColor: "#fff"
@@ -100,7 +101,6 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                                             }}
                                         >
                                             <Button
-                                                size="large"
                                                 fullWidth
                                                 onClick={() => {
                                                     setInitialValues(item);
@@ -115,7 +115,7 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                             </Table>
                         </Box>
                     ))}
-                </Box>
+                </Paper>
             </Modal>
         </>
     );

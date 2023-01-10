@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
+import Link from "@mui/material/Link";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import LaunchIcon from "@mui/icons-material/Launch";
 
 import Logs from "~/types/Logs";
 import config from "~/config";
@@ -16,6 +15,7 @@ import { fetchData } from "./LogsTable.helpers";
 import styles from "./LogsTable.scss";
 import { sx } from "./LogsTable.constants";
 import CopyButton from "./CopyButton/CopyButton";
+import InfoButton from "./InfoButton/InfoButton";
 
 type LogsTableProps = Record<string, never>;
 
@@ -39,7 +39,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                             align="center"
                             sx={sx.whiteBackground}
                         >
-                            Open
+                            Info
                         </TableCell>
                         <TableCell
                             align="center"
@@ -62,18 +62,12 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                     {logs.map((log) => (
                         <TableRow key={log.at}>
                             <TableCell className={styles.urlColumn}>
-                                {log.url}
+                                <Link href={config.proxy_url + log.url}>
+                                    {log.url}
+                                </Link>
                             </TableCell>
                             <TableCell align="center">
-                                <IconButton
-                                    color="primary"
-                                    onClick={() => {
-                                        window.location.href =
-                                            config.proxy_url + log.url;
-                                    }}
-                                >
-                                    <LaunchIcon />
-                                </IconButton>
+                                <InfoButton url={log.url} />
                             </TableCell>
                             <TableCell align="center">
                                 <CopyButton copyText={log.url} />
