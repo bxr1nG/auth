@@ -3,7 +3,7 @@ import { Router } from "express";
 import fs from "fs";
 import ini from "ini";
 
-import type IManagementRequest from "~/types/IManagementRequest";
+import type IRights from "~/types/IRights";
 import store from "~/store";
 import config from "~/config";
 import CookiesCleanerMiddleware from "~/middlewares/cookiesCleaner.middleware";
@@ -13,11 +13,39 @@ const router = Router();
 router.post(
     "/login",
     CookiesCleanerMiddleware,
-    (req: IManagementRequest, res: Response) => {
-        store.rights = req.body;
+    (req: Request, res: Response) => {
+        if (config.is_scoped) {
+            req.session.rights = req.body as IRights;
+        } else {
+            store.rights = req.body as IRights;
+        }
         res.json(req.body);
     }
 );
+
+router.post(
+    "/logout",
+    CookiesCleanerMiddleware,
+    (req: Request, res: Response) => {
+        let rights: IRights | null | undefined;
+        if (config.is_scoped) {
+            rights = req.session.rights;
+            req.session.rights = undefined;
+        } else {
+            rights = store.rights;
+            store.rights = null;
+        }
+        res.json(rights);
+    }
+);
+
+router.get("/logs", (_req: Request, res: Response) => {
+    res.json(store.logs);
+});
+
+router.get("/rights", (req: Request, res: Response) => {
+    res.json(config.is_scoped ? req.session.rights : store.rights);
+});
 
 router.get("/environment", (_req: Request, res: Response) => {
     res.json({
@@ -41,24 +69,6 @@ router.get("/testusers", (_req: Request, res: Response) => {
     } else {
         res.json(null);
     }
-});
-
-router.post(
-    "/logout",
-    CookiesCleanerMiddleware,
-    (_req: Request, res: Response) => {
-        const rights = store.rights;
-        store.rights = null;
-        res.json(rights);
-    }
-);
-
-router.get("/logs", (_req: Request, res: Response) => {
-    res.json(store.logs);
-});
-
-router.get("/rights", (_req: Request, res: Response) => {
-    res.json(store.rights);
 });
 
 export default router;

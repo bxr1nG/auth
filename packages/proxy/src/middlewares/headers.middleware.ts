@@ -1,22 +1,26 @@
 import type { NextFunction, Request, Response } from "express";
 
-import store from "~/store";
-import IRights from "~/types/IRights";
+import type IRights from "~/types/IRights";
 import config from "~/config";
+import store from "~/store";
 
 function HeadersMiddleware(req: Request, res: Response, next: NextFunction) {
-    if (!store.rights) {
+    const rightsStore = config.is_scoped ? req.session.rights : store.rights;
+
+    if (!rightsStore) {
         res.redirect(
             config.mode === "production" ? "/auth/login" : config.client_url
         );
         return;
     }
-    for (const header in store.rights) {
-        const value = store.rights[header as keyof IRights];
+
+    for (const header in rightsStore) {
+        const value = rightsStore[header as keyof IRights];
         if (value) {
             req.headers[header] = value.toString();
         }
     }
+
     next();
 }
 
