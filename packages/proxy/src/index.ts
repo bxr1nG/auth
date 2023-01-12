@@ -13,15 +13,17 @@ const app = express();
 const sessionStore = new session.MemoryStore();
 
 app.use(cookieParser());
-app.use(
-    session({
-        secret: config.session_secret,
-        saveUninitialized: false,
-        store: sessionStore,
-        resave: false,
-        cookie: { maxAge: 1000 * 60 * 60 * 24 }
-    })
-);
+if (config.is_scoped) {
+    app.use(
+        session({
+            secret: config.session_secret,
+            saveUninitialized: false,
+            store: sessionStore,
+            resave: false,
+            cookie: { maxAge: 1000 * 60 * 60 * 24 }
+        })
+    );
+}
 app.use(json());
 app.use(
     cors({
