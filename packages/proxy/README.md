@@ -4,6 +4,8 @@
 
 **@types/cors** - type declarations for cors
 
+**@types/express-session** - type declarations for express-session
+
 **@types/ini** - type declarations for ini
 
 **cookie-parser** - parsing Cookie header and populating req.cookies with an object keyed by the cookie names
@@ -13,6 +15,8 @@
 **dotenv** - loads environment variables from .env file
 
 **express** - Node.js web application framework
+
+**express-session** - session middleware
 
 **ini** - an ini format parser and serializer for testusers
 
