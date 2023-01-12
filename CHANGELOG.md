@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/bxr1nG/auth/compare/v1.1.4...v1.1.5) (2023-01-12)
+
+
+### Features
+
+* **proxy:** add browser session scoped mode for login rights ([7bcad2b](https://github.com/bxr1nG/auth/commit/7bcad2b8380c7125e52243cba962ba24c69c0b8f))
+
 ### [1.1.4](https://github.com/bxr1nG/auth/compare/v1.1.3...v1.1.4) (2023-01-10)
 
 
