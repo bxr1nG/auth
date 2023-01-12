@@ -7,7 +7,6 @@ version: "3.9"
 services:
   auth-proxy:
     image: bxr1ng/auth:latest
-    build: .
     ports:
       - "80:80"
     volumes:
