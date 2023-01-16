@@ -1,5 +1,16 @@
+.paper {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 .tableContainer {
-    margin: 2rem 0;
+    flex: 0 1 1000px;
+}
+
+.tablePagination {
+    flex-shrink: 0;
 }
 
 .urlColumn {

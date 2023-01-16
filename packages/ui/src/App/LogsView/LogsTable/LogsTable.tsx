@@ -6,6 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
 
 import Logs from "~/types/Logs";
@@ -26,60 +27,88 @@ const LogsTable: React.FC<LogsTableProps> = () => {
         fetchData(setLogs).catch(console.error);
     }, []);
 
+    const [page, setPage] = React.useState(0);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    const handleChangePage = (_event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
+
     return (
-        <TableContainer
-            component={Paper}
-            className={styles.tableContainer}
-        >
-            <Table stickyHeader>
-                <TableHead>
-                    <TableRow>
-                        <TableCell sx={sx.whiteBackground}>URL</TableCell>
-                        <TableCell
-                            align="center"
-                            sx={sx.whiteBackground}
-                        >
-                            Info
-                        </TableCell>
-                        <TableCell
-                            align="center"
-                            sx={sx.whiteBackground}
-                        >
-                            Copy
-                        </TableCell>
-                        <TableCell
-                            align="right"
-                            sx={{
-                                ...sx.whiteBackground,
-                                whiteSpace: "nowrap"
-                            }}
-                        >
-                            Time (ms)
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {logs.map((log) => (
-                        <TableRow key={log.at}>
-                            <TableCell className={styles.urlColumn}>
-                                <Link href={config.proxy_url + log.url}>
-                                    {log.url}
-                                </Link>
+        <Paper className={styles.paper}>
+            <TableContainer className={styles.tableContainer}>
+                <Table stickyHeader>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell sx={sx.whiteBackground}>URL</TableCell>
+                            <TableCell
+                                align="center"
+                                sx={sx.whiteBackground}
+                            >
+                                Info
                             </TableCell>
-                            <TableCell align="center">
-                                <InfoButton url={log.url} />
+                            <TableCell
+                                align="center"
+                                sx={sx.whiteBackground}
+                            >
+                                Copy
                             </TableCell>
-                            <TableCell align="center">
-                                <CopyButton copyText={log.url} />
-                            </TableCell>
-                            <TableCell align="right">
-                                {Math.round(log.time * 1e3) / 1e3}
+                            <TableCell
+                                align="right"
+                                sx={{
+                                    ...sx.whiteBackground,
+                                    whiteSpace: "nowrap"
+                                }}
+                            >
+                                Time (ms)
                             </TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {logs
+                            .slice(
+                                page * rowsPerPage,
+                                page * rowsPerPage + rowsPerPage
+                            )
+                            .map((log) => (
+                                <TableRow key={log.at}>
+                                    <TableCell className={styles.urlColumn}>
+                                        <Link href={config.proxy_url + log.url}>
+                                            {log.url}
+                                        </Link>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <InfoButton url={log.url} />
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <CopyButton copyText={log.url} />
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        {Math.round(log.time * 1e3) / 1e3}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                className={styles.tablePagination}
+                rowsPerPageOptions={[10, 25, 50, 100]}
+                component="div"
+                count={logs.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+        </Paper>
     );
 };
 
