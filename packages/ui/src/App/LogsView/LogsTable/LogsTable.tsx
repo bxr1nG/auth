@@ -8,8 +8,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import Logs from "~/types/Logs";
+import type Logs from "~/types/Logs";
 import config from "~/config";
 
 import { fetchData } from "./LogsTable.helpers";
@@ -22,13 +25,20 @@ type LogsTableProps = Record<string, never>;
 
 const LogsTable: React.FC<LogsTableProps> = () => {
     const [logs, setLogs] = useState<Logs>([]);
+    const [currentClient, setCurrentClient] = useState("All");
+    const [clients, setClients] = useState<string[]>([]);
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
-        fetchData(setLogs).catch(console.error);
+        fetchData(setLogs)
+            .then(() => setClients([...new Set(logs.map((log) => log.client))]))
+            .catch(console.error);
     }, []);
 
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    useEffect(() => {
+        setClients([...new Set(logs.map((log) => log.client))]);
+    }, [logs]);
 
     const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
@@ -41,8 +51,35 @@ const LogsTable: React.FC<LogsTableProps> = () => {
         setPage(0);
     };
 
+    const handleChangeClient = (event: SelectChangeEvent) => {
+        setCurrentClient(event.target.value);
+        setPage(0);
+    };
+
     return (
         <Paper className={styles.paper}>
+            {!(clients.length === 1 && clients[0] === "global") && (
+                <FormControl
+                    size="small"
+                    sx={sx.clientSelectControl}
+                >
+                    <Select
+                        value={currentClient}
+                        onChange={handleChangeClient}
+                        sx={sx.clientSelect}
+                    >
+                        <MenuItem value={"All"}>All</MenuItem>
+                        {clients.map((client) => (
+                            <MenuItem
+                                key={client}
+                                value={client}
+                            >
+                                {client}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            )}
             <TableContainer className={styles.tableContainer}>
                 <Table stickyHeader>
                     <TableHead>
@@ -73,6 +110,11 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                     </TableHead>
                     <TableBody>
                         {logs
+                            .filter((log) =>
+                                currentClient === "All"
+                                    ? true
+                                    : log.client === currentClient
+                            )
                             .slice(
                                 page * rowsPerPage,
                                 page * rowsPerPage + rowsPerPage
@@ -100,7 +142,13 @@ const LogsTable: React.FC<LogsTableProps> = () => {
             </TableContainer>
             <TablePagination
                 className={styles.tablePagination}
-                rowsPerPageOptions={[10, 25, 50, 100]}
+                rowsPerPageOptions={[
+                    10,
+                    25,
+                    50,
+                    100,
+                    { label: "All", value: -1 }
+                ]}
                 component="div"
                 count={logs.length}
                 rowsPerPage={rowsPerPage}
