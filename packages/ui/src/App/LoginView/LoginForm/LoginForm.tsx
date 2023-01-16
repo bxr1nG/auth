@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -30,6 +31,7 @@ import Link from "./Link/Link";
 type LoginFormProps = Record<string, never>;
 
 const LoginForm: React.FC<LoginFormProps> = () => {
+    const [searchParams] = useSearchParams();
     const { environment } = useContext(Context);
     const [history, setHistory] = useState<Array<FormikFields>>(
         getStored(environment.ls_scope)
@@ -54,7 +56,8 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             );
             fetchData(values)
                 .then(() => {
-                    window.location.href = `${config.proxy_url}/`;
+                    const path = searchParams.get("path");
+                    window.location.href = `${config.proxy_url}${path || "/"}`;
                 })
                 .catch(console.error);
         }

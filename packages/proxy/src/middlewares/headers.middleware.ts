@@ -9,7 +9,9 @@ function HeadersMiddleware(req: Request, res: Response, next: NextFunction) {
 
     if (!rightsStore) {
         res.redirect(
-            config.mode === "production" ? "/auth/login" : config.client_url
+            config.mode === "production"
+                ? `/auth/login?path=${req.originalUrl}`
+                : `${config.client_url}/auth/login?path=${req.originalUrl}`
         );
         return;
     }
