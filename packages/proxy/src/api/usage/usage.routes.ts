@@ -9,8 +9,8 @@ const router = Router();
 
 router.use(
     "/*",
-    LoggerMiddleware,
     HeadersMiddleware,
+    LoggerMiddleware,
     createProxyMiddleware({
         target: config.host_url,
         changeOrigin: true,

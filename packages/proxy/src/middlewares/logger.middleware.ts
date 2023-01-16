@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 
 import StateLogger from "~/helpers/StateLogger";
-import store from "~/store";
 import logger from "~/logger";
+import config from "~/config";
 
 function LoggerMiddleware(req: Request, res: Response, next: NextFunction) {
     logger.info(req.originalUrl);
@@ -11,10 +11,11 @@ function LoggerMiddleware(req: Request, res: Response, next: NextFunction) {
     res.on("finish", () => {
         const endTime = process.hrtime(startTime);
         const totalTimeInMs = endTime[0] * 1000 + endTime[1] / 1e6;
-        StateLogger(store, {
+        StateLogger({
             time: totalTimeInMs,
             url: req.originalUrl,
-            at: Date.now()
+            at: Date.now(),
+            client: config.is_scoped ? req.session.id : "global"
         });
     });
 
