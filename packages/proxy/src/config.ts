@@ -26,7 +26,8 @@ const config = {
         ? `${process.env.LOCAL_STORAGE_SCOPE}-history`
         : "history",
     session_secret: process.env.SESSION_SECRET ?? "session secret",
-    is_scoped: process.env.APP_SCOPE === "session"
+    is_scoped: process.env.APP_SCOPE === "session",
+    default_context: process.env.DEFAULT_CONTEXT ?? "/"
 };
 
 export default config;

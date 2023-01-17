@@ -17,6 +17,7 @@ services:
       - PROXY_URL=http://localhost:10000
       - APP_SCOPE=session
       - SESSION_SECRET=session secret
+      - DEFAULT_CONTEXT=/
 ```
 
 ### Environment variables
@@ -28,3 +29,4 @@ services:
 | PROXY_URL           | `string`            | "http://localhost:10000" | Proxy delivery URL                                                     |
 | APP_SCOPE           | "session", "global" | "global"                 | Identity scope (globally for all requests or at browser session level) |
 | SESSION_SECRET      | `string`            | "session secret"         | Secret used to sign the session ID cookie when `APP_SCOPE=session`     |
+| DEFAULT_CONTEXT     | `string`            | "/"                      | Default path for Login button                                          |

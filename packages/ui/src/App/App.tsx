@@ -13,7 +13,8 @@ type AppProps = Record<string, never>;
 
 const App: React.FC<AppProps> = () => {
     const [environment, setEnvironment] = useState({
-        ls_scope: config.ls_scope
+        ls_scope: config.ls_scope,
+        default_context: config.default_context
     });
 
     useEffect(() => {

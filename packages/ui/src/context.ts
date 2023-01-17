@@ -8,7 +8,8 @@ const Context = createContext<{
     setEnvironment: (environment: Environment) => void;
 }>({
     environment: {
-        ls_scope: config.ls_scope
+        ls_scope: config.ls_scope,
+        default_context: config.default_context
     },
     setEnvironment: () => {
         return;
