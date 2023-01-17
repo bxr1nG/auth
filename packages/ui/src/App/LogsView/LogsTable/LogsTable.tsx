@@ -31,9 +31,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     useEffect(() => {
-        fetchData(setLogs)
-            .then(() => setClients([...new Set(logs.map((log) => log.client))]))
-            .catch(console.error);
+        fetchData(setLogs).catch(console.error);
     }, []);
 
     useEffect(() => {
@@ -150,7 +148,13 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                     { label: "All", value: -1 }
                 ]}
                 component="div"
-                count={logs.length}
+                count={
+                    logs.filter((log) =>
+                        currentClient === "All"
+                            ? true
+                            : log.client === currentClient
+                    ).length
+                }
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onPageChange={handleChangePage}
