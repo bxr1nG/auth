@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.7](https://github.com/bxr1nG/auth/compare/v1.1.2...v1.1.7) (2023-01-18)
+
+
+### Features
+
+* add URL parser and modal for logs table ([8d87475](https://github.com/bxr1nG/auth/commit/8d87475fc6bd9335a6666a223b66e1c1829a617a))
+* **listener:** separate listener project to different docker image ([69b352e](https://github.com/bxr1nG/auth/commit/69b352eb3d4d8f6ef6ceeed449a6d8cbb9703aad))
+* **proxy:** add browser session scoped mode for login rights ([7bcad2b](https://github.com/bxr1nG/auth/commit/7bcad2b8380c7125e52243cba962ba24c69c0b8f))
+* **proxy:** add client field to logs ([537ea9d](https://github.com/bxr1nG/auth/commit/537ea9df8faafc666f5a4dfbc21b4d92d6667bb3))
+* remove listener project from docker build, add graceful shutdown ([1422be1](https://github.com/bxr1nG/auth/commit/1422be1a0822e0cded5b7de91960a4b4f52b54b4))
+* **ui:** add filter by client to logs table ([f0e3c37](https://github.com/bxr1nG/auth/commit/f0e3c3706e0380aef9a6a2a57e8a57cbc3cb8375))
+
+
+### Bug Fixes
+
+* add default path for Login button ([a455447](https://github.com/bxr1nG/auth/commit/a455447aa8c3dd99785c0d314bab95703332f218))
+* add redirect to requested path while not authorized ([8ffb89b](https://github.com/bxr1nG/auth/commit/8ffb89b75aca61518f16b38e1efc235d4ed30073))
+* **historybutton:** change history modal styles ([10c9a33](https://github.com/bxr1nG/auth/commit/10c9a33d257a75499f582b9f91665b8cbaa30351))
+* **loginform:** add validation of semicolons in permissions field ([8d56f8a](https://github.com/bxr1nG/auth/commit/8d56f8aa844461312f73d1b30d7978fff0fbb858))
+* **loginform:** fix input in permissions field ([b1f6bff](https://github.com/bxr1nG/auth/commit/b1f6bff0a6a46dc8b00dd39f339583146ade254d))
+* **loginform:** fix state 'out of range' warning when using values from history ([cd97745](https://github.com/bxr1nG/auth/commit/cd97745afd7227d9e07c416ba3cb0ade45ec4226))
+* **logstable:** change logs table styles, add copy and open buttons ([7f667ec](https://github.com/bxr1nG/auth/commit/7f667ec384cafd3873fbc3c24aee88f58b97a547))
+* **logstable:** fix bug with counting rows in Logs table ([3791d5a](https://github.com/bxr1nG/auth/commit/3791d5af7f27a2e6123d32d020ba56289cf84083))
+* **logsview:** fix bug with logs page and table height, add pagination ([b930ef2](https://github.com/bxr1nG/auth/commit/b930ef2735d943ed2474e94fe03af19e00f2606d))
+* **proxy:** fix session middleware and dockerhub.md file ([2e3593e](https://github.com/bxr1nG/auth/commit/2e3593e6dd599252421bb1e72dce6214b4f42a64))
+
 ### [1.1.6](https://github.com/bxr1nG/auth/compare/v1.1.5...v1.1.6) (2023-01-17)
 
 

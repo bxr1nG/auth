@@ -12,7 +12,7 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build &&\
+RUN npm run dockerfile-build &&\
     rm -rf packages/*/src packages/*/tsconfig.json packages/ui/webpack.*.ts tsconfig.json
 
 EXPOSE 80
