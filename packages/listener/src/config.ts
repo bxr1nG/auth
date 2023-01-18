@@ -1,7 +1,10 @@
 import { config as dotenv } from "dotenv";
+import process from "process";
+
+const mode = process.env.NODE_ENV ?? "development";
 
 dotenv({
-    path: `./environments/.env.${process.env.NODE_ENV ?? "development"}`
+    path: `./environments/.env.${mode}`
 });
 
 const config = {

@@ -7,6 +7,16 @@ export const app = express();
 app.use(json());
 app.use(rootRouter);
 
-app.listen(config.port, () => {
+const server = app.listen(config.port, () => {
     console.info(`Server started at port ${config.port}`);
 });
+
+const startGracefulShutdown = () => {
+    console.log("Received kill signal, shutting down gracefully");
+    server.close(() => {
+        console.log("Closed out remaining connections");
+    });
+};
+
+process.on("SIGTERM", startGracefulShutdown);
+process.on("SIGINT", startGracefulShutdown);

@@ -1,0 +1,9 @@
+/node_modules
+/environments
+/build
+
+DOCKERHUB.md
+.eslintrc.js
+nodemon.json
+.dockerignore
+Dockerfile
