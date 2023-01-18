@@ -2,11 +2,11 @@ import { config as dotenv } from "dotenv";
 import path from "path";
 import * as process from "process";
 
-dotenv({
-    path: `./environments/.env.${process.env.NODE_ENV ?? "development"}`
-});
-
 const mode = process.env.NODE_ENV ?? "development";
+
+dotenv({
+    path: `./environments/.env.${mode}`
+});
 
 const config = {
     mode,

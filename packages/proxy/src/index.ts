@@ -35,7 +35,17 @@ app.use("/auth/manage", managementRouter);
 app.use("/auth", clientRouter);
 app.use("/", usageRouter);
 
-app.listen(config.port, () => {
+const server = app.listen(config.port, () => {
     console.log(`Server started at port ${config.port}`);
     console.log(`Login page: http://localhost:${config.port}/auth/login`);
 });
+
+const startGracefulShutdown = () => {
+    console.log("Received kill signal, shutting down gracefully");
+    server.close(() => {
+        console.log("Closed out remaining connections");
+    });
+};
+
+process.on("SIGTERM", startGracefulShutdown);
+process.on("SIGINT", startGracefulShutdown);

@@ -14,7 +14,7 @@ services:
     environment:
       - LOCAL_STORAGE_SCOPE=AP
       - TESTUSERS_INI_FILE=opt/file.ini
-      - PROXY_URL=http://localhost:10000
+      - PROXY_URL=https://www.google.com
       - APP_SCOPE=session
       - SESSION_SECRET=session secret
       - DEFAULT_CONTEXT=/
@@ -26,7 +26,9 @@ services:
 |---------------------|---------------------|--------------------------|------------------------------------------------------------------------|
 | LOCAL_STORAGE_SCOPE | `string`            | `null`                   | Scope for localStorage login history                                   |
 | TESTUSERS_INI_FILE  | `path`              | `null`                   | Path to .ini file describing users, their roles and permissions        |
-| PROXY_URL           | `string`            | "http://localhost:10000" | Proxy delivery URL                                                     |
+| PROXY_URL           | `string`            | "https://www.google.com" | Proxy delivery URL                                                     |
 | APP_SCOPE           | "session", "global" | "global"                 | Identity scope (globally for all requests or at browser session level) |
 | SESSION_SECRET      | `string`            | "session secret"         | Secret used to sign the session ID cookie when `APP_SCOPE=session`     |
 | DEFAULT_CONTEXT     | `string`            | "/"                      | Default path for Login button                                          |
+
+### You can use [testing delivery server](https://hub.docker.com/r/bxr1ng/auth-listener) if you don't have your own

@@ -8,8 +8,6 @@ COPY /packages/ui/package.json /app/packages/ui/package.json
 
 COPY /packages/proxy/package.json /app/packages/proxy/package.json
 
-COPY /packages/listener/package.json /app/packages/listener/package.json
-
 RUN npm install
 
 COPY . .
@@ -19,4 +17,8 @@ RUN npm run build &&\
 
 EXPOSE 80
 
-CMD ["npm", "run", "start"]
+ENV NODE_ENV=production
+
+ENV PROXY_URL=https://www.google.com
+
+CMD ["node", "packages/proxy/build/index.js"]

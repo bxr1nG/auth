@@ -4,6 +4,7 @@
 **/build
 /.git
 /.husky
+/packages/listener
 
 **/.env*
 **/testusers.ini
