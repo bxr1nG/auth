@@ -125,7 +125,9 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                             .map((log) => (
                                 <TableRow key={log.at}>
                                     <TableCell className={styles.urlColumn}>
-                                        <Link href={log.url}>{log.url}</Link>
+                                        <Link href={log.url}>
+                                            {decodeURI(log.url)}
+                                        </Link>
                                     </TableCell>
                                     <TableCell align="center">
                                         <InfoButton url={log.url} />

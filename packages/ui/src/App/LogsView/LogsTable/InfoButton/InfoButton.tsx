@@ -78,7 +78,7 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                                             align="center"
                                             className={styles.wordBreak}
                                         >
-                                            {param[1]}
+                                            {decodeURI(param[1])}
                                         </TableCell>
                                     </TableRow>
                                 )
