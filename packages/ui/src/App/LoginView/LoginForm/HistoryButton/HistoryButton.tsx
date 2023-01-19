@@ -71,7 +71,11 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                                         )
                                         .map((key, index) => (
                                             <TableRow key={index}>
-                                                <TableCell>
+                                                <TableCell
+                                                    className={
+                                                        styles.tableLeftColumn
+                                                    }
+                                                >
                                                     <Typography
                                                         variant="subtitle2"
                                                         className={
@@ -84,7 +88,11 @@ const HistoryButton: React.FC<HistoryButtonProps> = (props) => {
                                                             .join("-")}
                                                     </Typography>
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell
+                                                    className={
+                                                        styles.tableRightColumn
+                                                    }
+                                                >
                                                     {formatFields(
                                                         key as keyof FormikFields,
                                                         item
