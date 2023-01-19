@@ -16,3 +16,14 @@
 .urlColumn {
     word-break: break-all;
 }
+
+.timeColumn {
+    width: 4.5rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.iconColumn {
+    width: 2rem;
+}

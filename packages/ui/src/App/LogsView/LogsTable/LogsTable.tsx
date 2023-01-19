@@ -8,6 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -87,13 +88,14 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                             <TableCell sx={sx.whiteBackground}>URL</TableCell>
                             <TableCell
                                 align="center"
-                                sx={sx.whiteBackground}
+                                sx={{ ...sx.whiteBackground, width: "2rem" }}
                             >
                                 Info
                             </TableCell>
                             <TableCell
+                                className={styles.iconColumn}
                                 align="center"
-                                sx={sx.whiteBackground}
+                                sx={{ ...sx.whiteBackground, width: "2rem" }}
                             >
                                 Copy
                             </TableCell>
@@ -101,7 +103,8 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                                 align="right"
                                 sx={{
                                     ...sx.whiteBackground,
-                                    whiteSpace: "nowrap"
+                                    whiteSpace: "nowrap",
+                                    width: "2rem"
                                 }}
                             >
                                 Time (ms)
@@ -131,7 +134,12 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                                         <CopyButton copyText={log.url} />
                                     </TableCell>
                                     <TableCell align="right">
-                                        {Math.round(log.time * 1e3) / 1e3}
+                                        <Typography
+                                            className={styles.timeColumn}
+                                            variant="body2"
+                                        >
+                                            {Math.round(log.time * 1e3) / 1e3}
+                                        </Typography>
                                     </TableCell>
                                 </TableRow>
                             ))}
