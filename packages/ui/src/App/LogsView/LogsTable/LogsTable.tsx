@@ -56,7 +56,10 @@ const LogsTable: React.FC<LogsTableProps> = () => {
 
     return (
         <Paper className={styles.paper}>
-            {!(clients.length === 1 && clients[0] === "global") && (
+            {!(
+                (clients.length === 1 && clients[0] === "global") ||
+                !clients.length
+            ) && (
                 <FormControl
                     size="small"
                     sx={sx.clientSelectControl}
