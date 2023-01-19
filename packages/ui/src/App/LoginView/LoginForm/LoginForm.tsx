@@ -58,7 +58,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 .then(() => {
                     const path = searchParams.get("path");
                     window.location.href = `${config.proxy_url}${
-                        path || config.default_context
+                        path || environment.default_context
                     }`;
                 })
                 .catch(console.error);
