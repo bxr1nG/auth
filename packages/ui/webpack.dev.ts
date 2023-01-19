@@ -3,7 +3,6 @@ import merge from "webpack-merge";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import Dotenv from "dotenv-webpack";
 import webpack from "webpack";
-import process from "process";
 import "webpack-dev-server";
 
 import common from "./webpack.common";
@@ -19,11 +18,6 @@ const config: webpack.Configuration = merge(common, {
         compress: true,
         devMiddleware: {
             writeToDisk: true
-        },
-        proxy: {
-            "/": `http://localhost:${
-                process.env.APP_PORT ? +process.env.APP_PORT : 80
-            }`
         }
     },
     mode: "development",

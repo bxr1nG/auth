@@ -13,7 +13,6 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import type Logs from "~/types/Logs";
-import config from "~/config";
 
 import { fetchData } from "./LogsTable.helpers";
 import styles from "./LogsTable.scss";
@@ -123,9 +122,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                             .map((log) => (
                                 <TableRow key={log.at}>
                                     <TableCell className={styles.urlColumn}>
-                                        <Link href={config.proxy_url + log.url}>
-                                            {log.url}
-                                        </Link>
+                                        <Link href={log.url}>{log.url}</Link>
                                     </TableCell>
                                     <TableCell align="center">
                                         <InfoButton url={log.url} />

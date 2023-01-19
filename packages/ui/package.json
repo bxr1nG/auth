@@ -4,8 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "npx webpack serve --open --config webpack.dev.ts",
-        "start": "npx webpack serve --open --config webpack.prod.ts",
+        "dev": "npx webpack serve --config webpack.dev.ts",
+        "start": "npx webpack serve --config webpack.prod.ts",
         "build": "webpack-cli --config webpack.prod.ts"
     },
     "keywords": [],

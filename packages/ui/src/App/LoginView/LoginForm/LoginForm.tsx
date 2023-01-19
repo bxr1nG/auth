@@ -9,7 +9,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 import type FormikFields from "~/types/FormikFields";
-import config from "~/config";
 import Context from "~/context";
 import { stringToUsable } from "~/utils/parsePermissions";
 
@@ -57,9 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             fetchData(values)
                 .then(() => {
                     const path = searchParams.get("path");
-                    window.location.href = `${config.proxy_url}${
-                        path || environment.default_context
-                    }`;
+                    window.location.href = path || environment.default_context;
                 })
                 .catch(console.error);
         }
