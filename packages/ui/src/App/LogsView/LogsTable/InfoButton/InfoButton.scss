@@ -12,3 +12,7 @@
 .wordBreak {
     word-break: break-all;
 }
+
+.columnWidth {
+    width: calc(100% / 3);
+}

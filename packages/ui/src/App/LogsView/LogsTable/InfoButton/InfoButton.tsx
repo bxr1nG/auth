@@ -40,9 +40,24 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                     <Table size="small">
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Path</TableCell>
-                                <TableCell align="center">Param</TableCell>
-                                <TableCell align="center">Value</TableCell>
+                                <TableCell
+                                    align="center"
+                                    className={styles.columnWidth}
+                                >
+                                    Path
+                                </TableCell>
+                                <TableCell
+                                    align="center"
+                                    className={styles.columnWidth}
+                                >
+                                    Param
+                                </TableCell>
+                                <TableCell
+                                    align="center"
+                                    className={styles.columnWidth}
+                                >
+                                    Value
+                                </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody
