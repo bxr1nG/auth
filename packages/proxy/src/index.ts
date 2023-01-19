@@ -25,12 +25,7 @@ if (config.is_scoped) {
     );
 }
 app.use(json());
-app.use(
-    cors({
-        credentials: true,
-        origin: config.client_url
-    })
-);
+app.use(cors());
 app.use("/auth/manage", managementRouter);
 app.use("/auth", clientRouter);
 app.use("/", usageRouter);

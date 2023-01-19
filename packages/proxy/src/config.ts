@@ -1,6 +1,6 @@
 import { config as dotenv } from "dotenv";
 import path from "path";
-import * as process from "process";
+import process from "process";
 
 const mode = process.env.NODE_ENV ?? "development";
 
@@ -12,7 +12,6 @@ const config = {
     mode,
     port: process.env.APP_PORT ? +process.env.APP_PORT : 80,
     host_url: process.env.PROXY_URL ?? "http://localhost:10000",
-    client_url: "http://localhost:8080",
     testusers_file: process.env.TESTUSERS_INI_FILE
         ? path.resolve(
               __dirname,

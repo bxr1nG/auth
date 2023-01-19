@@ -8,11 +8,7 @@ function HeadersMiddleware(req: Request, res: Response, next: NextFunction) {
     const rightsStore = config.is_scoped ? req.session.rights : store.rights;
 
     if (!rightsStore) {
-        res.redirect(
-            config.mode === "production"
-                ? `/auth/login?path=${req.originalUrl}`
-                : `${config.client_url}/auth/login?path=${req.originalUrl}`
-        );
+        res.redirect(`/auth/login?path=${req.originalUrl}`);
         return;
     }
 
