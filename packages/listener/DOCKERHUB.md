@@ -7,8 +7,6 @@ version: "3.9"
 services:
   auth-listener:
     image: bxr1ng/auth-listener:latest
-    ports:
-      - "10000:10000"
 ```
 
 ## Need to be used with [bxr1ng/auth](https://hub.docker.com/r/bxr1ng/auth) image
