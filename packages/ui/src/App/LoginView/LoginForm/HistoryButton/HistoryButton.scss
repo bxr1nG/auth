@@ -27,3 +27,8 @@
 .wordBreak {
     word-break: break-word;
 }
+
+.authFieldContainer {
+    max-height: 200px;
+    overflow-y: scroll;
+}

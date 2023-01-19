@@ -1,4 +1,5 @@
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import type FormikFields from "~/types/FormikFields";
 
@@ -18,9 +19,17 @@ const sortMap = (item: Array<string>) =>
 export const formatFields = (key: keyof FormikFields, item: FormikFields) => {
     switch (key) {
         case "X-Shib-Authorization-Roles":
-            return sortMap(item[key].split(", "));
+            return (
+                <Box className={styles.authFieldContainer}>
+                    {sortMap(item[key].split(", "))}
+                </Box>
+            );
         case "X-Shib-Authorization-Permissions":
-            return sortMap(item[key].split("\n"));
+            return (
+                <Box className={styles.authFieldContainer}>
+                    {sortMap(item[key].split("\n"))}
+                </Box>
+            );
         default:
             return (
                 <Typography
