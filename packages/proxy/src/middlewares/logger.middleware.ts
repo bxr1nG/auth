@@ -15,7 +15,15 @@ function LoggerMiddleware(req: Request, res: Response, next: NextFunction) {
             time: totalTimeInMs,
             url: req.originalUrl,
             at: Date.now(),
-            client: config.is_scoped ? req.session.id : "global"
+            client: config.is_scoped
+                ? `${
+                      req.session.rights
+                          ? req.session.rights[
+                                "X-Shib-Profile-UserPrincipalName"
+                            ] || "Unnamed"
+                          : "Unnamed"
+                  }: ${req.session.id}`
+                : "global"
         });
     });
 

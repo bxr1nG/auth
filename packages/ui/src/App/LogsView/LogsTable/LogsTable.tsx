@@ -63,6 +63,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                 <FormControl
                     size="small"
                     sx={sx.clientSelectControl}
+                    className={styles.clientSelectControl}
                 >
                     <Select
                         value={currentClient}
@@ -88,14 +89,14 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                             <TableCell sx={sx.whiteBackground}>URL</TableCell>
                             <TableCell
                                 align="center"
-                                sx={{ ...sx.whiteBackground, width: "2rem" }}
+                                sx={{ ...sx.whiteBackground, width: "1.5rem" }}
                             >
                                 Info
                             </TableCell>
                             <TableCell
                                 className={styles.iconColumn}
                                 align="center"
-                                sx={{ ...sx.whiteBackground, width: "2rem" }}
+                                sx={{ ...sx.whiteBackground, width: "1.5rem" }}
                             >
                                 Copy
                             </TableCell>
@@ -104,7 +105,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                                 sx={{
                                     ...sx.whiteBackground,
                                     whiteSpace: "nowrap",
-                                    width: "2rem"
+                                    width: "4rem"
                                 }}
                             >
                                 Time (ms)
