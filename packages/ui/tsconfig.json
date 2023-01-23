@@ -22,7 +22,7 @@
         "webpack.prod.ts",
         "webpack.common.ts"
     ],
-    "exclude": ["node_modules", "build"],
+    "exclude": ["node_modules", "build", "public"],
     "ts-node": {
         "esm": true,
         "compilerOptions": {

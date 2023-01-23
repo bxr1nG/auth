@@ -56,7 +56,8 @@ const config: webpack.Configuration = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: "index.html",
-            template: "./src/index.html"
+            template: "./public/index.html",
+            favicon: "./public/favicon.ico"
         }),
         new CleanWebpackPlugin()
     ]
