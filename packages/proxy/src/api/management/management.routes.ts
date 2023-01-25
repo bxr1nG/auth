@@ -51,7 +51,7 @@ router.get("/logs", (req: Request, res: Response) => {
         .filter((log) =>
             filter && filter !== "All" ? log.client === filter : true
         )
-        .filter((log) => (search ? log.url.includes(search) : true));
+        .filter((log) => (search ? decodeURI(log.url).includes(search) : true));
     res.json({
         data:
             +limit > 0
