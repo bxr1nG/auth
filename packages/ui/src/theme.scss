@@ -1,0 +1,17 @@
+$primary-main: #0183da;
+$primary-light: lighten($primary-main, 20%);
+$primary-dark: darken($primary-main, 20%);
+
+$secondary-main: #76ff03;
+$secondary-light: lighten($secondary-main, 20%);
+$secondary-dark: darken($secondary-main, 20%);
+
+:export {
+    primaryMain: $primary-main;
+    primaryLight: $primary-light;
+    primaryDark: $primary-dark;
+
+    secondaryMain: $secondary-main;
+    secondaryLight: $secondary-light;
+    secondaryDark: $secondary-dark;
+}

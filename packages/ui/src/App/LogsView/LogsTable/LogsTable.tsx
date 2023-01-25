@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import Table from "@mui/material/Table";
 import Link from "@mui/material/Link";
 import TableBody from "@mui/material/TableBody";
@@ -12,61 +13,110 @@ import Typography from "@mui/material/Typography";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Fade from "@mui/material/Fade";
 
 import type Logs from "~/types/Logs";
+import type LogsParams from "~/types/LogsParams";
 
-import { fetchData } from "./LogsTable.helpers";
-import styles from "./LogsTable.scss";
+import { fetchLogs, fetchClients } from "./LogsTable.helpers";
 import { sx } from "./LogsTable.constants";
+import styles from "./LogsTable.scss";
 import CopyButton from "./CopyButton/CopyButton";
 import InfoButton from "./InfoButton/InfoButton";
 
 type LogsTableProps = Record<string, never>;
 
 const LogsTable: React.FC<LogsTableProps> = () => {
-    const [logs, setLogs] = useState<Logs>([]);
-    const [currentClient, setCurrentClient] = useState("All");
-    const [clients, setClients] = useState<string[]>([]);
-    const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const abortController = useRef<AbortController | null>(null);
+
+    const [logs, setLogs] = useState<{
+        data: Logs;
+        total: number;
+        isLoading: boolean;
+    }>({
+        data: [],
+        total: 0,
+        isLoading: true
+    });
+
+    const filterParam = searchParams.get("filter");
+    const pageParam = searchParams.get("page");
+    const limitParam = searchParams.get("limit");
+
+    const [params, setParams] = useState<LogsParams>({
+        page: pageParam ? +pageParam : 0,
+        limit: limitParam ? +limitParam : 10,
+        filter: filterParam ? filterParam : "All",
+        search: ""
+    });
+
+    const [clients, setClients] = useState<string[] | null>(null);
 
     useEffect(() => {
-        fetchData(setLogs).catch(console.error);
+        fetchLogs(setLogs, abortController).catch(console.error);
+        fetchClients(setClients).catch(console.error);
     }, []);
 
     useEffect(() => {
-        setClients([...new Set(logs.map((log) => log.client))]);
-    }, [logs]);
+        setLogs((prevLogs) => ({
+            ...prevLogs,
+            isLoading: true
+        }));
+        fetchLogs(setLogs, abortController, params).catch(console.error);
+    }, [params.limit, params.page, params.filter, params.search]);
 
     const handleChangePage = (_event: unknown, newPage: number) => {
-        setPage(newPage);
+        setParams((prevParams) => ({
+            ...prevParams,
+            page: newPage
+        }));
+        setSearchParams({
+            ...params,
+            page: newPage.toString(),
+            limit: params.limit.toString()
+        });
     };
 
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
-        setRowsPerPage(+event.target.value);
-        setPage(0);
+        setParams((prevParams) => ({
+            ...prevParams,
+            limit: +event.target.value,
+            page: 0
+        }));
+        setSearchParams({
+            ...params,
+            page: "0",
+            limit: event.target.value
+        });
     };
 
     const handleChangeClient = (event: SelectChangeEvent) => {
-        setCurrentClient(event.target.value);
-        setPage(0);
+        setParams((prevParams) => ({
+            ...prevParams,
+            filter: event.target.value,
+            page: 0
+        }));
+        setSearchParams({
+            ...params,
+            page: "0",
+            limit: params.limit.toString(),
+            filter: event.target.value
+        });
     };
 
     return (
         <Paper className={styles.paper}>
-            {!(
-                (clients.length === 1 && clients[0] === "global") ||
-                !clients.length
-            ) && (
+            {clients && (
                 <FormControl
                     size="small"
                     sx={sx.clientSelectControl}
                     className={styles.clientSelectControl}
                 >
                     <Select
-                        value={currentClient}
+                        value={params.filter}
                         onChange={handleChangeClient}
                         sx={sx.clientSelect}
                     >
@@ -83,6 +133,11 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                 </FormControl>
             )}
             <TableContainer className={styles.tableContainer}>
+                <Fade in={logs.isLoading}>
+                    <div className={styles.loaderContainer}>
+                        <div className={styles.loader} />
+                    </div>
+                </Fade>
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
@@ -113,39 +168,29 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {logs
-                            .filter((log) =>
-                                currentClient === "All"
-                                    ? true
-                                    : log.client === currentClient
-                            )
-                            .slice(
-                                page * rowsPerPage,
-                                page * rowsPerPage + rowsPerPage
-                            )
-                            .map((log) => (
-                                <TableRow key={log.at}>
-                                    <TableCell className={styles.urlColumn}>
-                                        <Link href={log.url}>
-                                            {decodeURI(log.url)}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <InfoButton url={log.url} />
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <CopyButton copyText={log.url} />
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <Typography
-                                            className={styles.timeColumn}
-                                            variant="body2"
-                                        >
-                                            {Math.round(log.time * 1e3) / 1e3}
-                                        </Typography>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                        {logs.data.map((log) => (
+                            <TableRow key={log.at}>
+                                <TableCell className={styles.urlColumn}>
+                                    <Link href={log.url}>
+                                        {decodeURI(log.url)}
+                                    </Link>
+                                </TableCell>
+                                <TableCell align="center">
+                                    <InfoButton url={log.url} />
+                                </TableCell>
+                                <TableCell align="center">
+                                    <CopyButton copyText={log.url} />
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Typography
+                                        className={styles.timeColumn}
+                                        variant="body2"
+                                    >
+                                        {Math.round(log.time * 1e3) / 1e3}
+                                    </Typography>
+                                </TableCell>
+                            </TableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -159,15 +204,9 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                     { label: "All", value: -1 }
                 ]}
                 component="div"
-                count={
-                    logs.filter((log) =>
-                        currentClient === "All"
-                            ? true
-                            : log.client === currentClient
-                    ).length
-                }
-                rowsPerPage={rowsPerPage}
-                page={page}
+                count={logs.total}
+                rowsPerPage={params.limit}
+                page={params.page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />

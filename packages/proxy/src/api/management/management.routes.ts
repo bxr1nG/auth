@@ -4,6 +4,7 @@ import fs from "fs";
 import ini from "ini";
 
 import type IRights from "~/types/IRights";
+import type ILogsParams from "~/types/ILogsParams";
 import store from "~/store";
 import config from "~/config";
 import CookiesCleanerMiddleware from "~/middlewares/cookiesCleaner.middleware";
@@ -39,8 +40,33 @@ router.post(
     }
 );
 
-router.get("/logs", (_req: Request, res: Response) => {
-    res.json(store.logs);
+router.get("/logs", (req: Request, res: Response) => {
+    const {
+        page = "0",
+        limit = "10",
+        filter = "",
+        search = ""
+    } = req.query as ILogsParams;
+    const logs = store.logs
+        .filter((log) =>
+            filter && filter !== "All" ? log.client === filter : true
+        )
+        .filter((log) => (search ? log.url.includes(search) : true));
+    res.json({
+        data:
+            +limit > 0
+                ? logs.slice(+page * +limit, (+page + 1) * +limit)
+                : logs,
+        total: logs.length
+    });
+});
+
+router.get("/clients", (_req: Request, res: Response) => {
+    const clients = store.logs
+        .map((log) => log.client)
+        .filter((v, i, a) => a.indexOf(v) === i)
+        .filter((client) => client !== "global");
+    res.json(clients.length ? clients : null);
 });
 
 router.get("/rights", (req: Request, res: Response) => {

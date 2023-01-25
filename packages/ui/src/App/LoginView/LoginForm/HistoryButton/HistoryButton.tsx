@@ -12,7 +12,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import type FormikFields from "~/types/FormikFields";
-import { theme } from "~/theme";
+import theme from "~/theme";
 
 import styles from "./HistoryButton.scss";
 import { formatFields } from "./HistoryButton.helpers";

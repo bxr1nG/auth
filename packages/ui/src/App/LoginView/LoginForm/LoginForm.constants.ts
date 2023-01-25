@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-import { theme } from "~/theme";
+import theme from "~/theme";
 
 export const defaultValues = {
     "X-Shib-Profile-UserPrincipalName": "user1",
