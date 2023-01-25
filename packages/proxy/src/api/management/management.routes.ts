@@ -84,7 +84,6 @@ router.get("/testusers", (_req: Request, res: Response) => {
     if (config.testusers_file) {
         try {
             if (fs.existsSync(config.testusers_file)) {
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
                 const data = ini.parse(
                     fs.readFileSync(config.testusers_file, "utf8")
                 );
