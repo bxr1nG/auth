@@ -7,26 +7,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* add URL parser and modal for logs table ([8d87475](https://github.com/bxr1nG/auth/commit/8d87475fc6bd9335a6666a223b66e1c1829a617a))
 * **listener:** separate listener project to different docker image ([69b352e](https://github.com/bxr1nG/auth/commit/69b352eb3d4d8f6ef6ceeed449a6d8cbb9703aad))
-* **proxy:** add browser session scoped mode for login rights ([7bcad2b](https://github.com/bxr1nG/auth/commit/7bcad2b8380c7125e52243cba962ba24c69c0b8f))
-* **proxy:** add client field to logs ([537ea9d](https://github.com/bxr1nG/auth/commit/537ea9df8faafc666f5a4dfbc21b4d92d6667bb3))
 * remove listener project from docker build, add graceful shutdown ([1422be1](https://github.com/bxr1nG/auth/commit/1422be1a0822e0cded5b7de91960a4b4f52b54b4))
-* **ui:** add filter by client to logs table ([f0e3c37](https://github.com/bxr1nG/auth/commit/f0e3c3706e0380aef9a6a2a57e8a57cbc3cb8375))
 
 
 ### Bug Fixes
 
 * add default path for Login button ([a455447](https://github.com/bxr1nG/auth/commit/a455447aa8c3dd99785c0d314bab95703332f218))
-* add redirect to requested path while not authorized ([8ffb89b](https://github.com/bxr1nG/auth/commit/8ffb89b75aca61518f16b38e1efc235d4ed30073))
-* **historybutton:** change history modal styles ([10c9a33](https://github.com/bxr1nG/auth/commit/10c9a33d257a75499f582b9f91665b8cbaa30351))
-* **loginform:** add validation of semicolons in permissions field ([8d56f8a](https://github.com/bxr1nG/auth/commit/8d56f8aa844461312f73d1b30d7978fff0fbb858))
-* **loginform:** fix input in permissions field ([b1f6bff](https://github.com/bxr1nG/auth/commit/b1f6bff0a6a46dc8b00dd39f339583146ade254d))
-* **loginform:** fix state 'out of range' warning when using values from history ([cd97745](https://github.com/bxr1nG/auth/commit/cd97745afd7227d9e07c416ba3cb0ade45ec4226))
-* **logstable:** change logs table styles, add copy and open buttons ([7f667ec](https://github.com/bxr1nG/auth/commit/7f667ec384cafd3873fbc3c24aee88f58b97a547))
-* **logstable:** fix bug with counting rows in Logs table ([3791d5a](https://github.com/bxr1nG/auth/commit/3791d5af7f27a2e6123d32d020ba56289cf84083))
-* **logsview:** fix bug with logs page and table height, add pagination ([b930ef2](https://github.com/bxr1nG/auth/commit/b930ef2735d943ed2474e94fe03af19e00f2606d))
-* **proxy:** fix session middleware and dockerhub.md file ([2e3593e](https://github.com/bxr1nG/auth/commit/2e3593e6dd599252421bb1e72dce6214b4f42a64))
 
 ### [1.1.6](https://github.com/bxr1nG/auth/compare/v1.1.5...v1.1.6) (2023-01-17)
 
@@ -60,12 +47,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [1.1.3](https://github.com/bxr1nG/auth/compare/v1.1.1...v1.1.3) (2023-01-09)
 
-
-### Features
-
-* **loginform:** save rarely used fields in localStorage ([7828678](https://github.com/bxr1nG/auth/commit/78286789d2d4e5011edcea931b37e040ed837522))
-
-
 ### Bug Fixes
 
 * **historybutton:** change history modal styles ([10c9a33](https://github.com/bxr1nG/auth/commit/10c9a33d257a75499f582b9f91665b8cbaa30351))
@@ -76,41 +57,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### 1.1.2 (2023-01-05)
 
-
-### ⚠ BREAKING CHANGES
-
-* **proxy:** Now there is no need to fill out all the fields of Login form
-* **ui:** Now there is no need to fill out all the fields of Login form
-* **loginform:** State select menu no longer shows values saved in localStorage
-
 ### Features
 
-* **loginform:** add History modal ([b987543](https://github.com/bxr1nG/auth/commit/b98754302169e2f3d56b5b2fe64795b162deb358))
-* **loginform:** remove history values from state select menu ([98d888a](https://github.com/bxr1nG/auth/commit/98d888a53c61f5004a71af22e5d5fd8f4d0feb59))
 * **loginform:** save rarely used fields in localStorage ([7828678](https://github.com/bxr1nG/auth/commit/78286789d2d4e5011edcea931b37e040ed837522))
-* **proxy:** make fields optional ([ee65824](https://github.com/bxr1nG/auth/commit/ee65824ad9cabbdbe416442626285cce917b81c1))
-* **ui:** make fields optional ([74c0dbe](https://github.com/bxr1nG/auth/commit/74c0dbe2ff6de181655f0223b08b1a1aeaa23a9c))
-
-
-### Bug Fixes
-
-* change number fields type to string ([b05f5cc](https://github.com/bxr1nG/auth/commit/b05f5ccffe8d2c2270dda28543081baa91bdce76))
-* **cookiescleaner:** fix cookie cleanup ([df04c93](https://github.com/bxr1nG/auth/commit/df04c93199a819977d1f8503352e6ec937d2a1fd))
-* **loginform:** add permissions sorting when displaying ([1f56748](https://github.com/bxr1nG/auth/commit/1f567482872e7cb77ac60866e9d61578acac9214))
-* **loginform:** change IAMUserID field width ([b62c661](https://github.com/bxr1nG/auth/commit/b62c6610ea2213b465dde9c8b0bf3803d22f8c7d))
-* **loginform:** change order of fields ([500e11c](https://github.com/bxr1nG/auth/commit/500e11c3bea1f66ab7b69ea938383f0486d19b30))
-* **loginform:** change styles for state menu and history button line ([50b660d](https://github.com/bxr1nG/auth/commit/50b660d39a245997f131cc4e12af3d3a35b2bd77))
-* **loginform:** create an accordion and move fields after divider into it ([73a0b6b](https://github.com/bxr1nG/auth/commit/73a0b6b73ed06d835ac381a96b73b60a997ecbc8))
-* **loginform:** move reverse formatting of permissions from onChange to onSubmit function ([d81530b](https://github.com/bxr1nG/auth/commit/d81530b51e4e88ec7d2c3f3714f674fb89165e09))
-* **loginform:** optimize process of inserting a new value into history ([b8b1051](https://github.com/bxr1nG/auth/commit/b8b10511444813ccc3ce14436f628be9f02d0d1a))
-* **loginform:** remove Logout button from Login form ([408b1cb](https://github.com/bxr1nG/auth/commit/408b1cbadb68e3b2dac92b06238e1eee26e19ac1))
-* **loginform:** replace IAMUserID field ([204281c](https://github.com/bxr1nG/auth/commit/204281cf34732aa484e1e5f7e2bcc592691e49d2))
-* **management:** fix bug with redirect to login page on development mode ([051c403](https://github.com/bxr1nG/auth/commit/051c4032e724c1292c117cb7559df58dac89750c))
-* **permissionsfield:** disable spellcheck on permissions field ([ffd16e4](https://github.com/bxr1nG/auth/commit/ffd16e4edba227bf17833f72138be2412d964e1e))
-* **proxy:** change onstart console logs ([a303e1f](https://github.com/bxr1nG/auth/commit/a303e1ff95fa95bc0e0fb97c131228d385c08004))
-* **statefield:** add default first name for values from testusers.ini file ([47f69c2](https://github.com/bxr1nG/auth/commit/47f69c2e21e4634ef5af72fadbb54e4910dff0e0))
-* **statefield:** change text format in select menu ([acbcba2](https://github.com/bxr1nG/auth/commit/acbcba26b8231e4ecc4b9390df7f8ee0134d8159))
-* **statefield:** remove Password1 value from roles in state menu ([0e349a8](https://github.com/bxr1nG/auth/commit/0e349a83f1335cb5252f64a989af8465ee31611b))
 
 ### [1.1.1](https://github.com/bxr1nG/auth/compare/v1.1.0...v1.1.1) (2023-01-04)
 
@@ -131,31 +80,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## 1.1.0 (2023-01-04)
 
-
-### ⚠ BREAKING CHANGES
-
-* **proxy:** Now there is no need to fill out all the fields of Login form
-* **ui:** Now there is no need to fill out all the fields of Login form
-* **loginform:** State select menu no longer shows values saved in localStorage
-
-### Features
-
-* **loginform:** add History modal ([b987543](https://github.com/bxr1nG/auth/commit/b98754302169e2f3d56b5b2fe64795b162deb358))
-* **loginform:** remove history values from state select menu ([98d888a](https://github.com/bxr1nG/auth/commit/98d888a53c61f5004a71af22e5d5fd8f4d0feb59))
-* **proxy:** make fields optional ([ee65824](https://github.com/bxr1nG/auth/commit/ee65824ad9cabbdbe416442626285cce917b81c1))
-* **ui:** make fields optional ([74c0dbe](https://github.com/bxr1nG/auth/commit/74c0dbe2ff6de181655f0223b08b1a1aeaa23a9c))
-
-
-### Bug Fixes
-
-* **loginform:** add permissions sorting when displaying ([1f56748](https://github.com/bxr1nG/auth/commit/1f567482872e7cb77ac60866e9d61578acac9214))
-* **loginform:** change order of fields ([500e11c](https://github.com/bxr1nG/auth/commit/500e11c3bea1f66ab7b69ea938383f0486d19b30))
-* **loginform:** move reverse formatting of permissions from onChange to onSubmit function ([d81530b](https://github.com/bxr1nG/auth/commit/d81530b51e4e88ec7d2c3f3714f674fb89165e09))
-* **loginform:** optimize process of inserting a new value into history ([b8b1051](https://github.com/bxr1nG/auth/commit/b8b10511444813ccc3ce14436f628be9f02d0d1a))
-* **loginform:** remove Logout button from Login form ([408b1cb](https://github.com/bxr1nG/auth/commit/408b1cbadb68e3b2dac92b06238e1eee26e19ac1))
-* **statefield:** change text format in select menu ([acbcba2](https://github.com/bxr1nG/auth/commit/acbcba26b8231e4ecc4b9390df7f8ee0134d8159))
-
-## [2.0.0](https://github.com/bxr1nG/auth/compare/v1.0.2...v2.0.0) (2023-01-03)
+## [1.0.3](https://github.com/bxr1nG/auth/compare/v1.0.2...v1.0.3) (2023-01-03)
 
 
 ### ⚠ BREAKING CHANGES
