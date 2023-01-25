@@ -52,6 +52,31 @@
     }
 }
 
+.horizontalBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+
+    @media (max-width: 575.98px) {
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+    }
+}
+
+.searchContainer {
+    width: 40%;
+    padding-left: 1rem;
+
+    @media (max-width: 575.98px) {
+        width: 100%;
+        padding: 0 1rem;
+    }
+}
+
 .clientSelectControl {
     max-width: 100%;
 }

@@ -5,7 +5,6 @@ export const sx = {
         backgroundColor: theme.palette.common.white
     },
     clientSelectControl: {
-        alignSelf: "flex-end",
         "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
             border: "none"
         }

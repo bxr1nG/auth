@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import Link from "@mui/material/Link";
 import TableBody from "@mui/material/TableBody";
@@ -14,6 +15,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Fade from "@mui/material/Fade";
+import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
 
 import type Logs from "~/types/Logs";
 import type LogsParams from "~/types/LogsParams";
@@ -43,15 +47,17 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     const filterParam = searchParams.get("filter");
     const pageParam = searchParams.get("page");
     const limitParam = searchParams.get("limit");
+    const searchParam = searchParams.get("search");
 
     const [params, setParams] = useState<LogsParams>({
         page: pageParam ? +pageParam : 0,
         limit: limitParam ? +limitParam : 10,
         filter: filterParam ? filterParam : "All",
-        search: ""
+        search: searchParam ? searchParam : ""
     });
 
     const [clients, setClients] = useState<string[] | null>(null);
+    const [search, setSearch] = useState(searchParam ? searchParam : "");
 
     useEffect(() => {
         fetchLogs(setLogs, abortController).catch(console.error);
@@ -59,23 +65,38 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     }, []);
 
     useEffect(() => {
-        setLogs((prevLogs) => ({
-            ...prevLogs,
-            isLoading: true
-        }));
-        fetchLogs(setLogs, abortController, params).catch(console.error);
-    }, [params.limit, params.page, params.filter, params.search]);
+        if (search === params.search) {
+            setSearchParams({
+                page: params.page.toString(),
+                limit: params.limit.toString(),
+                filter: params.filter,
+                search: params.search
+            });
+            setLogs((prevLogs) => ({
+                ...prevLogs,
+                isLoading: true
+            }));
+            fetchLogs(setLogs, abortController, params).catch(console.error);
+        }
+    }, [params.page, params.limit, params.filter, params.search]);
+
+    useEffect(() => {
+        const delayDebounceFn = setTimeout(() => {
+            setParams((prevParams) => ({
+                ...prevParams,
+                search,
+                page: 0
+            }));
+        }, 1000);
+
+        return () => clearTimeout(delayDebounceFn);
+    }, [search]);
 
     const handleChangePage = (_event: unknown, newPage: number) => {
         setParams((prevParams) => ({
             ...prevParams,
             page: newPage
         }));
-        setSearchParams({
-            ...params,
-            page: newPage.toString(),
-            limit: params.limit.toString()
-        });
     };
 
     const handleChangeRowsPerPage = (
@@ -86,11 +107,6 @@ const LogsTable: React.FC<LogsTableProps> = () => {
             limit: +event.target.value,
             page: 0
         }));
-        setSearchParams({
-            ...params,
-            page: "0",
-            limit: event.target.value
-        });
     };
 
     const handleChangeClient = (event: SelectChangeEvent) => {
@@ -99,41 +115,60 @@ const LogsTable: React.FC<LogsTableProps> = () => {
             filter: event.target.value,
             page: 0
         }));
-        setSearchParams({
-            ...params,
-            page: "0",
-            limit: params.limit.toString(),
-            filter: event.target.value
-        });
+    };
+
+    const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
+        setLogs((prevLogs) => ({
+            ...prevLogs,
+            isLoading: true
+        }));
     };
 
     return (
         <Paper className={styles.paper}>
-            {clients && (
-                <FormControl
-                    size="small"
-                    sx={sx.clientSelectControl}
-                    className={styles.clientSelectControl}
-                >
-                    <Select
-                        value={params.filter}
-                        onChange={handleChangeClient}
-                        sx={sx.clientSelect}
+            <Box className={styles.horizontalBox}>
+                <Box className={styles.searchContainer}>
+                    <TextField
+                        fullWidth
+                        variant="standard"
+                        value={search}
+                        onChange={handleChangeSearch}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            )
+                        }}
+                    />
+                </Box>
+                {clients && (
+                    <FormControl
+                        size="small"
+                        sx={sx.clientSelectControl}
+                        className={styles.clientSelectControl}
                     >
-                        <MenuItem value={"All"}>All</MenuItem>
-                        {clients.map((client) => (
-                            <MenuItem
-                                key={client}
-                                value={client}
-                            >
-                                {client}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            )}
+                        <Select
+                            value={params.filter}
+                            onChange={handleChangeClient}
+                            sx={sx.clientSelect}
+                        >
+                            <MenuItem value={"All"}>All</MenuItem>
+                            {clients.map((client) => (
+                                <MenuItem
+                                    key={client}
+                                    value={client}
+                                >
+                                    {client}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                )}
+            </Box>
             <TableContainer className={styles.tableContainer}>
-                <Fade in={logs.isLoading}>
+                <Fade in={logs.isLoading || search !== params.search}>
                     <div className={styles.loaderContainer}>
                         <div className={styles.loader} />
                     </div>
