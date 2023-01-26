@@ -5,6 +5,7 @@
 /.git
 /.husky
 /packages/listener
+/packages/cross-var
 
 **/.env*
 **/testusers.ini

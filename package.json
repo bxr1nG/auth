@@ -9,19 +9,13 @@
         "build": "concurrently \"npm run build -w packages/listener\" \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\"",
         "dockerfile-build": "concurrently \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\"",
         "deploy": "npm run docker-build && npm run docker-push",
-        "docker-build": "docker build -t bxr1ng/$npm_package_name:$npm_package_version -t bxr1ng/$npm_package_name:latest .",
+        "docker-build": "cross-var docker build -t bxr1ng/$npm_package_name:$npm_package_version -t bxr1ng/$npm_package_name:latest .",
         "docker-push": "npm run docker-push-version && npm run docker-push-latest",
-        "docker-push-version": "docker push bxr1ng/$npm_package_name:$npm_package_version",
-        "docker-push-latest": "docker push bxr1ng/$npm_package_name:latest",
-        "deploy-w": "npm run docker-build-w && npm run docker-push-w",
-        "docker-build-w": "docker build -t bxr1ng/%npm_package_name%:%npm_package_version% -t bxr1ng/%npm_package_name%:latest .",
-        "docker-push-w": "npm run docker-push-version-w && npm run docker-push-latest-w",
-        "docker-push-version-w": "docker push bxr1ng/%npm_package_name%:%npm_package_version%",
-        "docker-push-latest-w": "docker push bxr1ng/%npm_package_name%:latest",
+        "docker-push-version": "cross-var docker push bxr1ng/$npm_package_name:$npm_package_version",
+        "docker-push-latest": "cross-var docker push bxr1ng/$npm_package_name:latest",
         "deploy-listener": "npm run docker-build-listener && npm run docker-push-listener",
         "docker-build-listener": "npm run docker-build -w packages/listener",
         "docker-push-listener": "npm run docker-push -w packages/listener",
-        "release": "standard-version",
         "release-patch": "standard-version --release-as patch",
         "release-minor": "standard-version --release-as minor",
         "release-major": "standard-version --release-as major",
@@ -32,7 +26,8 @@
     "workspaces": [
         "packages\\ui",
         "packages\\proxy",
-        "packages\\listener"
+        "packages\\listener",
+        "packages\\cross-var"
     ],
     "devDependencies": {
         "@commitlint/cli": "^17.3.0",

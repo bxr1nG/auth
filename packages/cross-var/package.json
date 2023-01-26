@@ -1,0 +1,14 @@
+{
+    "name": "cross-var",
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "main": "index.js",
+    "bin": "./index.js",
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "cross-spawn": "^7.0.3",
+        "exit": "^0.1.2"
+    }
+}
