@@ -1,14 +1,13 @@
-import { config as dotenv } from "dotenv";
 import process from "process";
 
 const mode = process.env.NODE_ENV ?? "development";
-
-dotenv({
-    path: `./environments/.env.${mode}`
-});
+const isDev = mode === "development";
 
 const config = {
-    port: process.env.LISTENER_APP_PORT ? +process.env.LISTENER_APP_PORT : 10000
+    port:
+        process.env.LISTENER_APP_PORT && isDev
+            ? +process.env.LISTENER_APP_PORT
+            : 10000
 };
 
 export default config;

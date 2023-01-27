@@ -1,7 +1,6 @@
 import path from "path";
 import merge from "webpack-merge";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import Dotenv from "dotenv-webpack";
 import webpack from "webpack";
 import "webpack-dev-server";
 
@@ -25,9 +24,6 @@ const config: webpack.Configuration = merge(common, {
         new MiniCssExtractPlugin({
             filename: "[name].[contenthash].css",
             chunkFilename: "[id].css"
-        }),
-        new Dotenv({
-            path: "./environments/.env.development"
         })
     ]
 });

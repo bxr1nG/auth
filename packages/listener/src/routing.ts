@@ -8,8 +8,7 @@ apiRouter.all("*", (req: Request, res: Response) => {
     return res.send({
         ...req.headers,
         originalUrl: req.originalUrl,
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        body: req.body
+        body: req.body as unknown
     });
 });
 

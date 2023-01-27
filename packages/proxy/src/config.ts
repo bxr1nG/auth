@@ -1,4 +1,3 @@
-import { config as dotenv } from "dotenv";
 import path from "path";
 import process from "process";
 import fs from "fs";
@@ -8,10 +7,6 @@ import type IConfig from "./types/IConfig";
 
 const mode = process.env.NODE_ENV ?? "development";
 const isDev = mode === "development";
-
-dotenv({
-    path: `./environments/.env.${mode}`
-});
 
 const pathToConfigFile = process.env.CONFIG_FILE
     ? path.resolve(__dirname, "../../../../", process.env.CONFIG_FILE)
