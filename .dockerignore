@@ -8,6 +8,7 @@
 /packages/cross-var
 
 **/.env*
+**/config*.y*ml
 **/testusers.ini
 **/README.md
 **/.eslintrc.js
@@ -20,4 +21,4 @@ CHANGELOG.md
 .gitignore
 .dockerignore
 Dockerfile
-docker-compose.yml
+docker-compose.y*ml

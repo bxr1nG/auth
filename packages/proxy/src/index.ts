@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import MemoryStoreFactory from "memorystore";
 import cors from "cors";
 
 import managementRouter from "~/api/management/management.routes";
@@ -10,7 +11,7 @@ import config from "~/config";
 import "~/declarations";
 
 const app = express();
-const sessionStore = new session.MemoryStore();
+const MemoryStore = MemoryStoreFactory(session);
 
 app.use(cookieParser());
 if (config.is_scoped) {
@@ -18,7 +19,9 @@ if (config.is_scoped) {
         session({
             secret: config.session_secret,
             saveUninitialized: false,
-            store: sessionStore,
+            store: new MemoryStore({
+                checkPeriod: 1000 * 60 * 60 * 24
+            }),
             resave: false,
             cookie: { maxAge: 1000 * 60 * 60 * 24 }
         })

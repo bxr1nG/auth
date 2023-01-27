@@ -19,6 +19,4 @@ EXPOSE 80
 
 ENV NODE_ENV=production
 
-ENV PROXY_URL=https://www.google.com
-
 CMD ["node", "packages/proxy/build/index.js"]

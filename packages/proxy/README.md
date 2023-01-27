@@ -20,7 +20,11 @@
 
 **ini** - an ini format parser and serializer for testusers
 
+**memorystore** - express-session full-featured MemoryStore module without leaks
+
 **winston** - logger for usage route
+
+**yaml** - YAML parser and serializer for app configuration
 
 # Dev dependencies
 

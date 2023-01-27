@@ -1,32 +1,49 @@
 import { config as dotenv } from "dotenv";
 import path from "path";
 import process from "process";
+import fs from "fs";
+import YAML from "yaml";
+
+import type IConfig from "./types/IConfig";
 
 const mode = process.env.NODE_ENV ?? "development";
+const isDev = mode === "development";
 
 dotenv({
     path: `./environments/.env.${mode}`
 });
 
+const pathToConfigFile = process.env.CONFIG_FILE
+    ? path.resolve(__dirname, "../../../../", process.env.CONFIG_FILE)
+    : isDev
+    ? path.resolve(__dirname, "./config.yml")
+    : path.resolve(__dirname, "../../../../opt/config.yml");
+
+let configFromFile: IConfig | null = null;
+if (fs.existsSync(pathToConfigFile)) {
+    configFromFile = YAML.parse(
+        fs.readFileSync(pathToConfigFile, "utf8")
+    ) as IConfig;
+}
+
 const config = {
     mode,
-    port: process.env.APP_PORT ? +process.env.APP_PORT : 80,
-    host_url: process.env.PROXY_URL ?? "http://localhost:10000",
-    testusers_file: process.env.TESTUSERS_INI_FILE
-        ? path.resolve(
-              __dirname,
-              "../../../../",
-              process.env.TESTUSERS_INI_FILE
-          )
-        : mode === "development"
+    port: process.env.APP_PORT && isDev ? +process.env.APP_PORT : 80,
+    host_url:
+        configFromFile?.proxyURL ?? isDev
+            ? "http://localhost:10000"
+            : "https://www.google.com",
+    testusers_file: isDev
         ? path.resolve(__dirname, "./testusers.ini")
+        : configFromFile?.testusers
+        ? path.resolve(__dirname, "../../../../", configFromFile?.testusers)
         : null,
-    ls_scope: process.env.LOCAL_STORAGE_SCOPE
-        ? `${process.env.LOCAL_STORAGE_SCOPE}-history`
+    ls_scope: configFromFile?.localStorage
+        ? `${configFromFile?.localStorage}-history`
         : "history",
-    session_secret: process.env.SESSION_SECRET ?? "session secret",
-    is_scoped: process.env.APP_SCOPE === "session",
-    default_context: process.env.DEFAULT_CONTEXT ?? "/"
+    is_scoped: configFromFile?.identity.scope === "session",
+    session_secret: configFromFile?.identity.secret ?? "session secret",
+    default_context: configFromFile?.defaultContext ?? "/"
 };
 
 export default config;
