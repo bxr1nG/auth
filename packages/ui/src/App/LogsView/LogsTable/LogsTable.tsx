@@ -8,18 +8,10 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import TablePagination from "@mui/material/TablePagination";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Fade from "@mui/material/Fade";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import SearchIcon from "@mui/icons-material/Search";
 
-import type Logs from "~/types/Logs";
+import type LogsObject from "~/types/LogsObject";
 import type LogsParams from "~/types/LogsParams";
 
 import { fetchLogs, fetchClients } from "./LogsTable.helpers";
@@ -27,6 +19,10 @@ import { sx } from "./LogsTable.constants";
 import styles from "./LogsTable.scss";
 import CopyButton from "./CopyButton/CopyButton";
 import InfoButton from "./InfoButton/InfoButton";
+import TablePagination from "./TablePagination/TablePagination";
+import SearchField from "./SearchField/SearchField";
+import ClientSelect from "./ClientSelect/ClientSelect";
+import Loader from "./Loader/Loader";
 
 type LogsTableProps = Record<string, never>;
 
@@ -34,15 +30,12 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const abortController = useRef<AbortController | null>(null);
 
-    const [logs, setLogs] = useState<{
-        data: Logs;
-        total: number;
-        isLoading: boolean;
-    }>({
+    const [logs, setLogs] = useState<LogsObject>({
         data: [],
         total: 0,
         isLoading: true
     });
+    const [isSearchSynced, setIsSearchSynced] = useState(true);
 
     const filterParam = searchParams.get("filter");
     const pageParam = searchParams.get("page");
@@ -57,7 +50,6 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     });
 
     const [clients, setClients] = useState<string[] | null>(null);
-    const [search, setSearch] = useState(searchParam ? searchParam : "");
 
     useEffect(() => {
         fetchLogs(setLogs, abortController).catch(console.error);
@@ -65,7 +57,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     }, []);
 
     useEffect(() => {
-        if (search === params.search) {
+        if (isSearchSynced) {
             setSearchParams({
                 page: params.page.toString(),
                 limit: params.limit.toString(),
@@ -76,103 +68,38 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                 ...prevLogs,
                 isLoading: true
             }));
-            fetchLogs(setLogs, abortController, params).catch(console.error);
+            fetchLogs(setLogs, abortController, params)
+                .then((newLogs) => {
+                    if (newLogs.data.length === 0 && params.page !== 0) {
+                        setParams((prevParams) => ({
+                            ...prevParams,
+                            page: 0
+                        }));
+                    }
+                })
+                .catch(console.error);
         }
     }, [params.page, params.limit, params.filter, params.search]);
-
-    useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
-            setParams((prevParams) => ({
-                ...prevParams,
-                search,
-                page: 0
-            }));
-        }, 1000);
-
-        return () => clearTimeout(delayDebounceFn);
-    }, [search]);
-
-    const handleChangePage = (_event: unknown, newPage: number) => {
-        setParams((prevParams) => ({
-            ...prevParams,
-            page: newPage
-        }));
-    };
-
-    const handleChangeRowsPerPage = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        setParams((prevParams) => ({
-            ...prevParams,
-            limit: +event.target.value,
-            page: 0
-        }));
-    };
-
-    const handleChangeClient = (event: SelectChangeEvent) => {
-        setParams((prevParams) => ({
-            ...prevParams,
-            filter: event.target.value,
-            page: 0
-        }));
-    };
-
-    const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearch(event.target.value);
-        setLogs((prevLogs) => ({
-            ...prevLogs,
-            isLoading: true
-        }));
-    };
 
     return (
         <Paper className={styles.paper}>
             <Box className={styles.horizontalBox}>
-                <Box className={styles.searchContainer}>
-                    <TextField
-                        fullWidth
-                        variant="standard"
-                        value={search}
-                        onChange={handleChangeSearch}
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon />
-                                </InputAdornment>
-                            )
-                        }}
-                    />
-                </Box>
+                <SearchField
+                    searchParam={searchParam}
+                    setParams={setParams}
+                    setLogs={setLogs}
+                    setIsSearchSynced={setIsSearchSynced}
+                />
                 {clients && (
-                    <FormControl
-                        size="small"
-                        sx={sx.clientSelectControl}
-                        className={styles.clientSelectControl}
-                    >
-                        <Select
-                            value={params.filter}
-                            onChange={handleChangeClient}
-                            sx={sx.clientSelect}
-                        >
-                            <MenuItem value={"All"}>All</MenuItem>
-                            {clients.map((client) => (
-                                <MenuItem
-                                    key={client}
-                                    value={client}
-                                >
-                                    {client}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
+                    <ClientSelect
+                        clients={clients}
+                        filter={params.filter}
+                        setParams={setParams}
+                    />
                 )}
             </Box>
             <TableContainer className={styles.tableContainer}>
-                <Fade in={logs.isLoading || search !== params.search}>
-                    <div className={styles.loaderContainer}>
-                        <div className={styles.loader} />
-                    </div>
-                </Fade>
+                <Loader isLoading={logs.isLoading || !isSearchSynced} />
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
@@ -230,20 +157,10 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                 </Table>
             </TableContainer>
             <TablePagination
-                className={styles.tablePagination}
-                rowsPerPageOptions={[
-                    10,
-                    25,
-                    50,
-                    100,
-                    { label: "All", value: -1 }
-                ]}
-                component="div"
-                count={logs.total}
-                rowsPerPage={params.limit}
+                total={logs.total}
                 page={params.page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
+                limit={params.limit}
+                setParams={setParams}
             />
         </Paper>
     );

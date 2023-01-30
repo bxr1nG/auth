@@ -25,9 +25,8 @@ const config = {
     mode,
     port: process.env.APP_PORT && isDev ? +process.env.APP_PORT : 80,
     host_url:
-        configFromFile?.proxyURL ?? isDev
-            ? "http://localhost:10000"
-            : "https://www.google.com",
+        configFromFile?.proxyURL ??
+        (isDev ? "http://localhost:10000" : "https://www.google.com"),
     testusers_file: isDev
         ? path.resolve(__dirname, "./testusers.ini")
         : configFromFile?.testusers

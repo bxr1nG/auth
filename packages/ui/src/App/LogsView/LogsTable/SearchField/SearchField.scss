@@ -1,0 +1,9 @@
+.searchContainer {
+    width: 40%;
+    padding-left: 1rem;
+
+    @media (max-width: 575.98px) {
+        width: 100%;
+        padding: 0 1rem;
+    }
+}
