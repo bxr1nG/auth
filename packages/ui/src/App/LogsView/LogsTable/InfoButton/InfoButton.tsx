@@ -8,6 +8,7 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Fade from "@mui/material/Fade";
 
 import styles from "./InfoButton.scss";
 import { parseUrl } from "./InfoButton.helpers";
@@ -36,51 +37,53 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                 open={open}
                 onClose={handleClose}
             >
-                <Paper className={styles.modal}>
-                    <Table size="small">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell
-                                    align="center"
-                                    className={styles.columnWidth}
-                                >
-                                    Path
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    className={styles.columnWidth}
-                                >
-                                    Param
-                                </TableCell>
-                                <TableCell
-                                    align="center"
-                                    className={styles.columnWidth}
-                                >
-                                    Value
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody
-                            sx={{
-                                "& tr:last-child td, & tr:last-child th": {
-                                    border: 0
-                                }
-                            }}
-                        >
-                            {paths.map((path) => (
-                                <TableRow key={path}>
+                <Fade in={open}>
+                    <Paper className={styles.modal}>
+                        <Table size="small">
+                            <TableHead>
+                                <TableRow>
                                     <TableCell
                                         align="center"
-                                        className={styles.wordBreak}
+                                        className={styles.columnWidth}
                                     >
-                                        {path}
+                                        Path
                                     </TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
+                                    <TableCell
+                                        align="center"
+                                        className={styles.columnWidth}
+                                    >
+                                        Param
+                                    </TableCell>
+                                    <TableCell
+                                        align="center"
+                                        className={styles.columnWidth}
+                                    >
+                                        Value
+                                    </TableCell>
                                 </TableRow>
-                            ))}
-                            {(params as [string, string][] | undefined)?.map(
-                                (param) => (
+                            </TableHead>
+                            <TableBody
+                                sx={{
+                                    "& tr:last-child td, & tr:last-child th": {
+                                        border: 0
+                                    }
+                                }}
+                            >
+                                {paths.map((path) => (
+                                    <TableRow key={path}>
+                                        <TableCell
+                                            align="center"
+                                            className={styles.wordBreak}
+                                        >
+                                            {path}
+                                        </TableCell>
+                                        <TableCell></TableCell>
+                                        <TableCell></TableCell>
+                                    </TableRow>
+                                ))}
+                                {(
+                                    params as [string, string][] | undefined
+                                )?.map((param) => (
                                     <TableRow key={`${param[0]}=${param[1]}`}>
                                         <TableCell></TableCell>
                                         <TableCell
@@ -96,11 +99,11 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                                             {decodeURI(param[1])}
                                         </TableCell>
                                     </TableRow>
-                                )
-                            )}
-                        </TableBody>
-                    </Table>
-                </Paper>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </Paper>
+                </Fade>
             </Modal>
         </>
     );
