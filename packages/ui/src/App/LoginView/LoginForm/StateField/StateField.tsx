@@ -1,15 +1,9 @@
-import React, {
-    Dispatch,
-    SetStateAction,
-    useContext,
-    useEffect,
-    useState
-} from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 
+import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
-import Context from "~/context";
 
 import { fetchData } from "./StateField.helpers";
 import styles from "./StateField.scss";
@@ -18,18 +12,21 @@ type HistoryFieldProps = {
     initialValues: FormikFields;
     setInitialValues: Dispatch<SetStateAction<FormikFields>>;
     emptyValues: FormikFields;
+    environment: Environment;
 };
 
 const StateField: React.FC<HistoryFieldProps> = (props) => {
-    const { initialValues, setInitialValues, emptyValues } = props;
+    const { initialValues, setInitialValues, emptyValues, environment } = props;
     const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
-    const { environment } = useContext(Context);
 
     useEffect(() => {
-        fetchData(setTestusers, emptyValues, environment.ls_scope).catch(
-            console.error
-        );
-    }, []);
+        fetchData(
+            setTestusers,
+            emptyValues,
+            environment.ls_scope,
+            environment.extra_fields
+        ).catch(console.error);
+    }, [environment]);
 
     return (
         <TextField

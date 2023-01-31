@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -8,16 +8,18 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
+import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
-import Context from "~/context";
 import { stringToUsable } from "~/utils/parsePermissions";
 
-import { emptyValues, validationSchema, sx } from "./LoginForm.constants";
+import { sx } from "./LoginForm.constants";
 import {
     getStored,
     addValues,
     fetchData,
-    storeRarelyUsedValues
+    storeRarelyUsedValues,
+    createEmptyValues,
+    createValidationSchema
 } from "./LoginForm.helpers";
 import styles from "./LoginForm.scss";
 import StateField from "./StateField/StateField";
@@ -26,17 +28,31 @@ import PermissionsField from "./PermissionsField/PermissionsField";
 import LoginButton from "./LoginButton/LoginButton";
 import HistoryButton from "./HistoryButton/HistoryButton";
 import Link from "./Link/Link";
+import { OptionalObjectSchema } from "yup/lib/object";
+import StringSchema from "yup/lib/string";
 
-type LoginFormProps = Record<string, never>;
+type LoginFormProps = {
+    environment: Environment;
+};
 
-const LoginForm: React.FC<LoginFormProps> = () => {
+const LoginForm: React.FC<LoginFormProps> = (props) => {
+    const { environment } = props;
     const [searchParams] = useSearchParams();
-    const { environment } = useContext(Context);
+
     const [history, setHistory] = useState<Array<FormikFields>>(
         getStored(environment.ls_scope)
     );
-    const [initialValues, setInitialValues] =
-        useState<FormikFields>(emptyValues);
+    const [initialValues, setInitialValues] = useState<FormikFields>(
+        createEmptyValues(environment.extra_fields)
+    );
+    const [validationSchema, setValidationSchema] = useState<
+        OptionalObjectSchema<{ [key: string]: StringSchema }>
+    >(createValidationSchema(environment.extra_fields));
+
+    useEffect(() => {
+        setInitialValues(createEmptyValues(environment.extra_fields));
+        setValidationSchema(createValidationSchema(environment.extra_fields));
+    }, [environment]);
 
     const formik = useFormik<FormikFields>({
         enableReinitialize: true,
@@ -48,7 +64,11 @@ const LoginForm: React.FC<LoginFormProps> = () => {
             );
             const newHistory = addValues(values, history);
             setHistory(newHistory);
-            storeRarelyUsedValues(values);
+            storeRarelyUsedValues(
+                values,
+                environment.extra_fields,
+                environment.ls_scope
+            );
             localStorage.setItem(
                 environment.ls_scope,
                 JSON.stringify(newHistory)
@@ -71,12 +91,15 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 <StateField
                     initialValues={initialValues}
                     setInitialValues={setInitialValues}
-                    emptyValues={emptyValues}
+                    emptyValues={createEmptyValues(environment.extra_fields)}
+                    environment={environment}
                 />
-                <HistoryButton
-                    history={history}
-                    setInitialValues={setInitialValues}
-                />
+                {history.length > 0 && (
+                    <HistoryButton
+                        history={history}
+                        setInitialValues={setInitialValues}
+                    />
+                )}
             </Box>
 
             <Box className={styles.horizontalMiniBox}>
@@ -104,86 +127,42 @@ const LoginForm: React.FC<LoginFormProps> = () => {
                 formik={formik}
             />
 
-            <Accordion
-                disableGutters
-                sx={sx.accordion}
-            >
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    sx={sx.accordionSummary}
+            {!!environment.extra_fields.length && (
+                <Accordion
+                    disableGutters
+                    sx={sx.accordion}
                 >
-                    <Typography
-                        variant="button"
-                        color="grey"
+                    <AccordionSummary
+                        expandIcon={<ExpandMoreIcon />}
+                        sx={sx.accordionSummary}
                     >
-                        Extra fields
-                    </Typography>
-                </AccordionSummary>
-                <AccordionDetails
-                    className={styles.verticalBox}
-                    sx={sx.accordionDetails}
-                >
-                    <Box className={styles.horizontalBox}>
-                        <Box className={styles.horizontalMiniBox}>
-                            <TextField
-                                name="X-Shib-Profile-FirstName"
-                                label="FirstName"
-                                formik={formik}
-                            />
-                            <TextField
-                                name="X-Shib-Profile-LastName"
-                                label="LastName"
-                                formik={formik}
-                            />
-                        </Box>
-                        <Box className={styles.horizontalMiniBox}>
-                            <TextField
-                                name="X-Shib-Profile-BoxUserID"
-                                label="BoxUserID"
-                                formik={formik}
-                            />
-                            <TextField
-                                name="X-Shib-Profile-Email"
-                                label="Email"
-                                formik={formik}
-                            />
-                        </Box>
-                    </Box>
-
-                    <TextField
-                        name="X-Shib-Profile-ApplicationNames"
-                        label="ApplicationNames"
-                        formik={formik}
-                    />
-
-                    <Box className={styles.horizontalBox}>
-                        <Box className={styles.horizontalMiniBox}>
-                            <TextField
-                                name="X-Shib-Profile-Affiliation"
-                                label="Affiliation"
-                                formik={formik}
-                            />
-                            <TextField
-                                name="X-Shib-Profile-AffiliatedNHLTeam-ID"
-                                label="AffiliatedNHLTeam-ID"
-                                formik={formik}
-                            />
-                        </Box>
-                        <Box className={styles.horizontalMiniBox}>
-                            <TextField
-                                name="X-Shib-Profile-AffiliatedNHLTeam-Abbrev"
-                                label="AffiliatedNHLTeam-Abbrev"
-                                formik={formik}
-                            />
-                            <TextField
-                                name="X-Shib-Profile-AffiliatedNHLTeam-FullName"
-                                label="AffiliatedNHLTeam-FullName"
-                                formik={formik}
-                            />
-                        </Box>
-                    </Box>
-                </AccordionDetails>
-            </Accordion>
+                        <Typography
+                            variant="button"
+                            color="grey"
+                        >
+                            Extra fields
+                        </Typography>
+                    </AccordionSummary>
+                    <AccordionDetails
+                        className={styles.verticalBox}
+                        sx={sx.accordionDetails}
+                    >
+                        {environment.extra_fields
+                            .filter(
+                                (field) =>
+                                    formik.values[field.name] !== undefined
+                            )
+                            .map((field) => (
+                                <TextField
+                                    key={field.name}
+                                    name={field.name}
+                                    label={field.label}
+                                    formik={formik}
+                                />
+                            ))}
+                    </AccordionDetails>
+                </Accordion>
+            )}
 
             <LoginButton />
 

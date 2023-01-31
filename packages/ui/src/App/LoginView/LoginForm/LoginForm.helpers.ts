@@ -1,9 +1,10 @@
+import type { OptionalObjectSchema } from "yup/lib/object";
+import * as yup from "yup";
+
+import type ExtraField from "~/types/ExtraField";
 import type FormikFields from "~/types/FormikFields";
 import login from "~/api/login";
-import config from "~/config";
 import { objectToDisplayable } from "~/utils/parsePermissions";
-
-import { defaultValues } from "./LoginForm.constants";
 
 export const getStored: (ls_scope: string) => Array<FormikFields> = (
     ls_scope
@@ -11,10 +12,10 @@ export const getStored: (ls_scope: string) => Array<FormikFields> = (
     return localStorage.getItem(ls_scope)
         ? (
               JSON.parse(
-                  localStorage.getItem(config.ls_scope) as string
+                  localStorage.getItem(ls_scope) as string
               ) as Array<FormikFields>
           ).map(objectToDisplayable)
-        : ([defaultValues] as Array<FormikFields>);
+        : ([] as Array<FormikFields>);
 };
 
 export const addValues: (
@@ -43,19 +44,52 @@ export const fetchData: (values: FormikFields) => Promise<void> = async (
     await login(values);
 };
 
-export function storeRarelyUsedValues(values: FormikFields): void {
-    const rarelyUsedValues = {
-        "X-Shib-Profile-BoxUserID": values["X-Shib-Profile-BoxUserID"],
-        "X-Shib-Profile-Email": values["X-Shib-Profile-Email"],
-        "X-Shib-Profile-Affiliation": values["X-Shib-Profile-Affiliation"],
-        "X-Shib-Profile-ApplicationNames":
-            values["X-Shib-Profile-ApplicationNames"],
-        "X-Shib-Profile-AffiliatedNHLTeam-ID":
-            values["X-Shib-Profile-AffiliatedNHLTeam-ID"],
-        "X-Shib-Profile-AffiliatedNHLTeam-Abbrev":
-            values["X-Shib-Profile-AffiliatedNHLTeam-Abbrev"],
-        "X-Shib-Profile-AffiliatedNHLTeam-FullName":
-            values["X-Shib-Profile-AffiliatedNHLTeam-FullName"]
+export const storeRarelyUsedValues: (
+    values: FormikFields,
+    extraFields: Array<ExtraField>,
+    scope: string
+) => void = (values, extraFields, scope) => {
+    const names = extraFields.map((field) => field.name);
+    localStorage.setItem(
+        `${scope}-rarelyUsedValues`,
+        JSON.stringify(names.map((key) => values[key]))
+    );
+};
+
+export const createEmptyValues: (
+    extraFields: Array<ExtraField>
+) => FormikFields = (extraFields) => {
+    const obj: { [key: string]: string } = {};
+    const names = extraFields.map((field) => field.name);
+    names.forEach((key) => {
+        obj[key] = "";
+    });
+    return {
+        ...obj,
+        "X-Shib-Profile-IAMUserID": "",
+        "X-Shib-Profile-UserPrincipalName": "",
+        "X-Shib-Authorization-Roles": "",
+        "X-Shib-Authorization-Permissions": ""
     };
-    localStorage.setItem("rarelyUsedValues", JSON.stringify(rarelyUsedValues));
-}
+};
+
+export const createValidationSchema: (
+    extraFields: Array<ExtraField>
+) => OptionalObjectSchema<{ [key: string]: yup.StringSchema }> = (
+    extraFields
+) => {
+    const obj: { [key: string]: yup.StringSchema } = {};
+    const names = extraFields.map((field) => field.name);
+    names.forEach((key) => {
+        obj[key] = yup.string();
+    });
+    return yup.object({
+        ...obj,
+        "X-Shib-Profile-IAMUserID": yup.string(),
+        "X-Shib-Profile-UserPrincipalName": yup.string(),
+        "X-Shib-Authorization-Roles": yup.string(),
+        "X-Shib-Authorization-Permissions": yup
+            .string()
+            .matches(/^[^;]*$/, "Use 'new line' instead of semicolons")
+    });
+};
