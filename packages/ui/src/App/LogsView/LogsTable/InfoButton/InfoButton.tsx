@@ -30,6 +30,7 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
             <IconButton
                 color="primary"
                 onClick={handleOpen}
+                disabled={paths.length === 0}
             >
                 <InfoOutlinedIcon />
             </IconButton>
@@ -48,18 +49,22 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                                     >
                                         Path
                                     </TableCell>
-                                    <TableCell
-                                        align="center"
-                                        className={styles.columnWidth}
-                                    >
-                                        Param
-                                    </TableCell>
-                                    <TableCell
-                                        align="center"
-                                        className={styles.columnWidth}
-                                    >
-                                        Value
-                                    </TableCell>
+                                    {!!params && (
+                                        <>
+                                            <TableCell
+                                                align="center"
+                                                className={styles.columnWidth}
+                                            >
+                                                Param
+                                            </TableCell>
+                                            <TableCell
+                                                align="center"
+                                                className={styles.columnWidth}
+                                            >
+                                                Value
+                                            </TableCell>
+                                        </>
+                                    )}
                                 </TableRow>
                             </TableHead>
                             <TableBody
@@ -77,8 +82,12 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                                         >
                                             {path}
                                         </TableCell>
-                                        <TableCell></TableCell>
-                                        <TableCell></TableCell>
+                                        {!!params && (
+                                            <>
+                                                <TableCell></TableCell>
+                                                <TableCell></TableCell>
+                                            </>
+                                        )}
                                     </TableRow>
                                 ))}
                                 {(
