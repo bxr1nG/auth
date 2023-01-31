@@ -76,7 +76,8 @@ router.get("/rights", (req: Request, res: Response) => {
 router.get("/environment", (_req: Request, res: Response) => {
     res.json({
         ls_scope: config.ls_scope,
-        default_context: config.default_context
+        default_context: config.default_context,
+        extra_fields: config.extra_fields
     });
 });
 

@@ -37,7 +37,8 @@ const config = {
         : "history",
     is_scoped: configFromFile?.identity.scope === "session",
     session_secret: configFromFile?.identity.secret ?? "session secret",
-    default_context: configFromFile?.defaultContext ?? "/"
+    default_context: configFromFile?.defaultContext ?? "/",
+    extra_fields: configFromFile?.extraFields ?? []
 };
 
 export default config;
