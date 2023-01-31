@@ -18,7 +18,7 @@
 
 .verticalBox {
     @include flexGap;
-    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .alwaysHorizontalBox {

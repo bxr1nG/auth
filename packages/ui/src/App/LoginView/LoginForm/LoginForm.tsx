@@ -52,6 +52,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     useEffect(() => {
         setInitialValues(createEmptyValues(environment.extra_fields));
         setValidationSchema(createValidationSchema(environment.extra_fields));
+        setHistory(getStored(environment.ls_scope));
     }, [environment]);
 
     const formik = useFormik<FormikFields>({
@@ -157,6 +158,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
                                     key={field.name}
                                     name={field.name}
                                     label={field.label}
+                                    size={field.size ?? "large"}
                                     formik={formik}
                                 />
                             ))}

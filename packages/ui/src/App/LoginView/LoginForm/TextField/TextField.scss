@@ -1,0 +1,23 @@
+.small {
+    flex: 1 1 calc(25% - 1.5rem * 3);
+
+    @media (max-width: 767.98px) {
+        flex: 2 1 calc(50% - 1.5rem);
+    }
+
+    @media (max-width: 575.98px) {
+        flex: 4 1 100%;
+    }
+}
+
+.medium {
+    flex: 2 1 calc(50% - 1.5rem);
+
+    @media (max-width: 767.98px) {
+        flex: 4 1 100%;
+    }
+}
+
+.large {
+    flex: 4 1 100%;
+}
