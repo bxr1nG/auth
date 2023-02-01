@@ -73,7 +73,7 @@ Default path for Login button.
 
 ### extraFields
 
-`object[] = []: <array of objects`
+`object[] = []: <array of objects>`
 
 ### extraFields[].name
 
