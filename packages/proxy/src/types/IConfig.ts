@@ -5,10 +5,7 @@ type IConfig = {
     localStorage: string | undefined;
     proxyURL: string | undefined;
     defaultContext: string | undefined;
-    identity: {
-        scope: "global" | "session" | undefined;
-        secret: string | undefined;
-    };
+    scope: "global" | "session" | undefined;
     extraFields: Array<IExtraField> | undefined;
 };
 

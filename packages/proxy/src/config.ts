@@ -8,9 +8,7 @@ import type IConfig from "./types/IConfig";
 const mode = process.env.NODE_ENV ?? "development";
 const isDev = mode === "development";
 
-const pathToConfigFile = process.env.CONFIG_FILE
-    ? path.resolve(__dirname, "../../../../", process.env.CONFIG_FILE)
-    : isDev
+const pathToConfigFile = isDev
     ? path.resolve(__dirname, "./config.yml")
     : path.resolve(__dirname, "../../../../opt/config.yml");
 
@@ -35,8 +33,8 @@ const config = {
     ls_scope: configFromFile?.localStorage
         ? `${configFromFile?.localStorage}-history`
         : "history",
-    is_scoped: configFromFile?.identity.scope === "session",
-    session_secret: configFromFile?.identity.secret ?? "session secret",
+    is_scoped: configFromFile?.scope === "session",
+    session_secret: "session secret",
     default_context: configFromFile?.defaultContext ?? "/",
     extra_fields: configFromFile?.extraFields ?? []
 };
