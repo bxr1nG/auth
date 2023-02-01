@@ -9,8 +9,10 @@
     overflow-x: hidden;
 }
 
-.wordBreak {
+.cell {
     word-break: break-all;
+    max-height: 200px;
+    overflow-y: scroll;
 }
 
 .columnWidth {

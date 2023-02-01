@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import IconButton from "@mui/material/IconButton";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -9,6 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Fade from "@mui/material/Fade";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 
 import styles from "./InfoButton.scss";
 import { parseUrl } from "./InfoButton.helpers";
@@ -76,11 +77,10 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                             >
                                 {paths.map((path) => (
                                     <TableRow key={path}>
-                                        <TableCell
-                                            align="center"
-                                            className={styles.wordBreak}
-                                        >
-                                            {path}
+                                        <TableCell align="center">
+                                            <Box className={styles.cell}>
+                                                {path}
+                                            </Box>
                                         </TableCell>
                                         {!!params && (
                                             <>
@@ -95,17 +95,15 @@ const InfoButton: React.FC<InfoButtonProps> = (props) => {
                                 )?.map((param) => (
                                     <TableRow key={`${param[0]}=${param[1]}`}>
                                         <TableCell></TableCell>
-                                        <TableCell
-                                            align="center"
-                                            className={styles.wordBreak}
-                                        >
-                                            {param[0]}
+                                        <TableCell align="center">
+                                            <Box className={styles.cell}>
+                                                {param[0]}
+                                            </Box>
                                         </TableCell>
-                                        <TableCell
-                                            align="center"
-                                            className={styles.wordBreak}
-                                        >
-                                            {decodeURI(param[1])}
+                                        <TableCell align="center">
+                                            <Box className={styles.cell}>
+                                                {decodeURI(param[1])}
+                                            </Box>
                                         </TableCell>
                                     </TableRow>
                                 ))}
