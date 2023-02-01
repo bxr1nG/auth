@@ -6,12 +6,12 @@ import { objectToDisplayable } from "~/utils/parsePermissions";
 
 export const parseTestusers: (
     response: TestusersFields,
-    values: FormikFields,
+    emptyValues: FormikFields,
     ls_scope: string,
     extraFields: Array<ExtraField>
-) => Array<FormikFields> = (response, values, ls_scope, extraFields) => {
+) => Array<FormikFields> = (response, emptyValues, ls_scope, extraFields) => {
     const { users, roles } = response;
-    const rarelyUsedValues = JSON.parse(
+    const values = JSON.parse(
         localStorage.getItem(`${ls_scope}-rarelyUsedValues`) ?? "{}"
     ) as { [objKey: string]: string };
     const testusers: Array<FormikFields> = [];
@@ -38,11 +38,10 @@ export const parseTestusers: (
             })
             .join("");
 
-        // Variables can be used in config file (lsScope, number)
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        const lsScope = ls_scope.slice(0, -8);
-        const number = +(key.match(/\d/g) ?? [0]).join("");
+        const scope = ls_scope.slice(0, -8);
+        const index = +(key.match(/\d/g) ?? [0]).join("");
 
         const extraFieldsValues = extraFields
             .filter((field) => field.value)
@@ -56,12 +55,12 @@ export const parseTestusers: (
 
         testusers.push(
             objectToDisplayable({
-                ...values,
-                "X-Shib-Profile-IAMUserID": (500 + number).toString(),
+                ...emptyValues,
+                "X-Shib-Profile-IAMUserID": (500 + index).toString(),
                 "X-Shib-Profile-UserPrincipalName": key,
                 "X-Shib-Authorization-Roles": users[key] as string,
                 "X-Shib-Authorization-Permissions": permissions,
-                ...rarelyUsedValues,
+                ...values,
                 ...extraFieldsValues
             })
         );
@@ -71,12 +70,17 @@ export const parseTestusers: (
 
 export const fetchData: (
     setTestusers: (testusers: Array<FormikFields>) => void,
-    values: FormikFields,
+    emptyValues: FormikFields,
     ls_scope: string,
     extraFields: Array<ExtraField>
-) => Promise<void> = async (setTestusers, values, ls_scope, extraFields) => {
+) => Promise<void> = async (
+    setTestusers,
+    emptyValues,
+    ls_scope,
+    extraFields
+) => {
     const data = await getTestusers();
     if (data) {
-        setTestusers(parseTestusers(data, values, ls_scope, extraFields));
+        setTestusers(parseTestusers(data, emptyValues, ls_scope, extraFields));
     }
 };
