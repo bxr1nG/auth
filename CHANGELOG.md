@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.9](https://github.com/bxr1nG/auth/compare/v1.1.8...v1.1.9) (2023-02-01)
+
+
+### Features
+
+* add usage of config YAML file ([bc3c71f](https://github.com/bxr1nG/auth/commit/bc3c71fddc7a90b6422635edc28c324329279e29))
+* **proxy:** use extra fields from config ([1d25526](https://github.com/bxr1nG/auth/commit/1d255262adbd0636a8a25398b203c05be9682295))
+* **ui:** get extra fields from server and use them instead of hardcoded extra fields ([34acc47](https://github.com/bxr1nG/auth/commit/34acc47a282daa89fac7477745b8eb1f39d38981))
+
+
+### Bug Fixes
+
+* add responsibility to extra fields ([e51d7af](https://github.com/bxr1nG/auth/commit/e51d7af33983b75c72f35d66461fb481fef4a1ae))
+* **changelog.md:** fix bug with updating CHANGELOG.md file ([6cac05b](https://github.com/bxr1nG/auth/commit/6cac05b8e9af425f65338b7b461fd82ee3fc7670))
+* create library that unifies access to variables from npm scripts ([91b1508](https://github.com/bxr1nG/auth/commit/91b1508f042454102c0bb3cf14f8e14aba75362f))
+* **dockerhub.md:** update DOCKERHUB.md file ([aaf1207](https://github.com/bxr1nG/auth/commit/aaf12077a8f5e1f23b47bb8ef24418953b0d7502))
+* **infobutton:** add scroll to long strings in info table ([a13f43a](https://github.com/bxr1nG/auth/commit/a13f43ac435391042aa0fe087ddf1a65a44c217a))
+* **infobutton:** disable button when path is root and hide columns in table if they are empty ([d918b04](https://github.com/bxr1nG/auth/commit/d918b04fcec9192f14caf771e42bf3ee027a4466))
+* **logstable:** refactor and divide сode into components ([d0e0c0c](https://github.com/bxr1nG/auth/commit/d0e0c0c2f4b8e6fc7dcf4156d084d42e49b1267b))
+* **management.routes.ts:** remove comment ([137d877](https://github.com/bxr1nG/auth/commit/137d877a924f1e382a488b26757ca0aa63bc4a99))
+* **proxy:** remove unnecessary config variables ([e37c123](https://github.com/bxr1nG/auth/commit/e37c1237c47c51eb38a1e22fe9d757bc1ee9cce2))
+* remove dotenv packages ([08820df](https://github.com/bxr1nG/auth/commit/08820df7e28f6688c253d6b4c0536cdf9cb53b75))
+* **statefield:** change possibly used in config variables names ([2b76c58](https://github.com/bxr1nG/auth/commit/2b76c58779290207590cfe7f456316768ba3d6cb))
+* **ui:** add fade animations for modals ([d5785ee](https://github.com/bxr1nG/auth/commit/d5785ee3123c8e4a488abfb7b715c5a6e54b004c))
+
 ### [1.1.8](https://github.com/bxr1nG/auth/compare/v1.1.7...v1.1.8) (2023-01-25)
 
 
