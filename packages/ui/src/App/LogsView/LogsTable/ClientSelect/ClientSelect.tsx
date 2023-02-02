@@ -1,6 +1,8 @@
+import type { SelectChangeEvent } from "@mui/material/Select";
+
 import React from "react";
 import FormControl from "@mui/material/FormControl";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 import type LogsParams from "~/types/LogsParams";

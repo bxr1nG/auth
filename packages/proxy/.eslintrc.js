@@ -3,7 +3,12 @@ module.exports = {
         es2021: true,
         node: true
     },
-    extends: ["eslint:recommended", "prettier"],
+    extends: [
+        "eslint:recommended",
+        "prettier",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
     overrides: [
         {
             files: ["*.ts", "*.tsx"],
@@ -22,9 +27,39 @@ module.exports = {
         ecmaVersion: "latest",
         sourceType: "module"
     },
-    plugins: ["@typescript-eslint"],
+    plugins: ["@typescript-eslint", "import"],
     rules: {
         "@typescript-eslint/no-unused-vars": "error",
-        "import/no-unresolved": "off"
+        "@typescript-eslint/consistent-type-imports": "error",
+        "import/no-unresolved": "off",
+        "import/order": [
+            "error",
+            {
+                groups: [
+                    "type",
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index",
+                    "object"
+                ],
+                pathGroups: [
+                    {
+                        pattern: "~/types/**",
+                        group: "parent",
+                        position: "before"
+                    },
+                    {
+                        pattern: "~/**",
+                        group: "parent",
+                        position: "before"
+                    }
+                ],
+                "newlines-between": "always",
+                distinctGroup: false
+            }
+        ]
     }
 };

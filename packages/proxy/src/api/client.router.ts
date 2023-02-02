@@ -1,6 +1,8 @@
 import type { Request, Response } from "express";
-import express, { Router } from "express";
+
 import path from "path";
+
+import express, { Router } from "express";
 
 import config from "~/config";
 

@@ -1,5 +1,4 @@
 import type Log from "~/types/Log";
-
 import store from "~/store";
 
 function StateLogger(log: Log): void {

@@ -22,6 +22,8 @@
 
 **eslint-config-prettier** - turns off all rules that are unnecessary or might conflict with Prettier
 
+**eslint-plugin-import** - adds linting rules for imports
+
 **husky** - provides pre-commit hook
 
 **lint-staged** - lint files staged by git

@@ -1,9 +1,10 @@
 import path from "path";
 import process from "process";
 import fs from "fs";
+
 import YAML from "yaml";
 
-import type Config from "./types/Config";
+import type Config from "~/types/Config";
 
 const mode = process.env.NODE_ENV ?? "development";
 const isDev = mode === "development";

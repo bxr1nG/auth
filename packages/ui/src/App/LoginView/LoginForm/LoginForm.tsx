@@ -7,6 +7,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { OptionalObjectSchema } from "yup/lib/object";
+import StringSchema from "yup/lib/string";
 
 import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
@@ -28,8 +30,6 @@ import PermissionsField from "./PermissionsField/PermissionsField";
 import LoginButton from "./LoginButton/LoginButton";
 import HistoryButton from "./HistoryButton/HistoryButton";
 import Link from "./Link/Link";
-import { OptionalObjectSchema } from "yup/lib/object";
-import StringSchema from "yup/lib/string";
 
 type LoginFormProps = {
     environment: Environment;

@@ -9,7 +9,6 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 import App from "./App/App";
-
 import "./styles.css";
 import theme from "./theme";
 
