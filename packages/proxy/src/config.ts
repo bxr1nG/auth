@@ -21,6 +21,7 @@ if (fs.existsSync(pathToConfigFile)) {
 
 const config = {
     mode,
+    srcPath: path.resolve(__dirname, "."),
     port: process.env.APP_PORT && isDev ? +process.env.APP_PORT : 80,
     host_url:
         configFromFile?.proxyURL ??
