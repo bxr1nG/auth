@@ -9,7 +9,8 @@ import "webpack-dev-server";
 const config: webpack.Configuration = {
     entry: "./src/index.tsx",
     output: {
-        filename: "main.js",
+        filename: "[name].[contenthash].js",
+        chunkFilename: "[name].[contenthash].js",
         path: path.resolve(__dirname, "build")
     },
     module: {

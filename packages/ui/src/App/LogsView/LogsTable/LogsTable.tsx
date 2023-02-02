@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 
 import type LogsObject from "~/types/LogsObject";
 import type LogsParams from "~/types/LogsParams";
+import Loader from "~/components/Loader/Loader";
 
 import { fetchLogs, fetchClients } from "./LogsTable.helpers";
 import { sx } from "./LogsTable.constants";
@@ -22,7 +23,6 @@ import InfoButton from "./InfoButton/InfoButton";
 import TablePagination from "./TablePagination/TablePagination";
 import SearchField from "./SearchField/SearchField";
 import ClientSelect from "./ClientSelect/ClientSelect";
-import Loader from "./Loader/Loader";
 
 type LogsTableProps = Record<string, never>;
 

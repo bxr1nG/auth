@@ -1,6 +1,6 @@
-@import "../../../../theme.scss";
+@import "../../theme";
 
-.loaderContainer {
+@mixin container {
     position: absolute;
     top: 0;
     left: 0;
@@ -9,8 +9,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.75);
     z-index: 1;
+}
+
+.container {
+    @include container;
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+.transparentContainer {
+    @include container;
 }
 
 .loader {

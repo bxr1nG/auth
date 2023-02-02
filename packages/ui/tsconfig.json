@@ -6,6 +6,7 @@
         "baseUrl": "./src",
         /* Language and Environment */
         "target": "ES6",
+        "module": "ESNext",
         "lib": ["DOM", "DOM.Iterable"],
         "jsx": "react-jsx",
         /* Emit */

@@ -5,14 +5,21 @@ import styles from "./Loader.scss";
 
 type LogsTableProps = {
     isLoading: boolean;
+    isTransparent?: boolean;
 };
 
 const Loader: React.FC<LogsTableProps> = (props) => {
-    const { isLoading } = props;
+    const { isLoading, isTransparent } = props;
 
     return (
         <Fade in={isLoading}>
-            <div className={styles.loaderContainer}>
+            <div
+                className={
+                    isTransparent
+                        ? styles.transparentContainer
+                        : styles.container
+                }
+            >
                 <div className={styles.loader} />
             </div>
         </Fade>

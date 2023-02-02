@@ -7,23 +7,6 @@ import common from "./webpack.common";
 
 const config: webpack.Configuration = merge(common, {
     devtool: false,
-    performance: {
-        hints: false,
-        maxEntrypointSize: 512000,
-        maxAssetSize: 512000
-    },
-    optimization: {
-        splitChunks: {
-            cacheGroups: {
-                styles: {
-                    name: "styles",
-                    type: "css/mini-extract",
-                    chunks: "all",
-                    enforce: true
-                }
-            }
-        }
-    },
     mode: "production",
     plugins: [
         new MiniCssExtractPlugin({
