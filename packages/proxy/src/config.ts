@@ -3,7 +3,7 @@ import process from "process";
 import fs from "fs";
 import YAML from "yaml";
 
-import type IConfig from "./types/IConfig";
+import type Config from "./types/Config";
 
 const mode = process.env.NODE_ENV ?? "development";
 const isDev = mode === "development";
@@ -12,11 +12,11 @@ const pathToConfigFile = isDev
     ? path.resolve(__dirname, "./config.yml")
     : path.resolve(__dirname, "../../../../opt/config.yml");
 
-let configFromFile: IConfig | null = null;
+let configFromFile: Config | null = null;
 if (fs.existsSync(pathToConfigFile)) {
     configFromFile = YAML.parse(
         fs.readFileSync(pathToConfigFile, "utf8")
-    ) as IConfig;
+    ) as Config;
 }
 
 const config = {

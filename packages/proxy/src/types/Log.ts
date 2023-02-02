@@ -1,8 +1,8 @@
-type ILog = {
+type Log = {
     time: number;
     url: string;
     at: number;
     client: string;
 };
 
-export default ILog;
+export default Log;

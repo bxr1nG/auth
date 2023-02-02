@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
 
-import type ILogsParams from "~/types/ILogsParams";
+import type LogsParams from "~/types/LogsParams";
 import LogsParamsParser from "~/helpers/LogsParamsParser";
 import store from "~/store";
 
 const GetLogsAction = (req: Request, res: Response) => {
     const { page, limit, filter, search } = LogsParamsParser(
-        req.query as ILogsParams
+        req.query as LogsParams
     );
 
     const logs = store.logs

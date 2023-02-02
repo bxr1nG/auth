@@ -1,9 +1,9 @@
 import "express-session";
 
-import type IRights from "~/types/IRights";
+import type Rights from "~/types/Rights";
 
 declare module "express-session" {
     export interface SessionData {
-        rights: IRights;
+        rights: Rights;
     }
 }

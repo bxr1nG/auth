@@ -1,6 +1,6 @@
-import type IStore from "~/types/IStore";
+import type Store from "~/types/Store";
 
-const store: IStore = {
+const store: Store = {
     rights: null,
     logs: []
 };

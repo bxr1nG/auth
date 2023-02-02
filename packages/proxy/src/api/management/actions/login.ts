@@ -1,14 +1,14 @@
 import type { Request, Response } from "express";
 
-import type IRights from "~/types/IRights";
+import type Rights from "~/types/Rights";
 import config from "~/config";
 import store from "~/store";
 
 const LoginAction = (req: Request, res: Response) => {
     if (config.is_scoped) {
-        req.session.rights = req.body as IRights;
+        req.session.rights = req.body as Rights;
     } else {
-        store.rights = req.body as IRights;
+        store.rights = req.body as Rights;
     }
     res.json(req.body);
 };

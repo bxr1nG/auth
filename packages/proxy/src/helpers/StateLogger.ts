@@ -1,8 +1,8 @@
-import type ILog from "~/types/ILog";
+import type Log from "~/types/Log";
 
 import store from "~/store";
 
-function StateLogger(log: ILog): void {
+function StateLogger(log: Log): void {
     store.logs.unshift(log);
     store.logs = store.logs.slice(0, 10000);
 }

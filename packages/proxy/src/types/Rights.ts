@@ -1,4 +1,4 @@
-type IRights = {
+type Rights = {
     "X-Shib-Profile-IAMUserID": string | undefined;
     "X-Shib-Profile-UserPrincipalName": string | undefined;
     "X-Shib-Authorization-Roles": string | undefined;
@@ -6,4 +6,4 @@ type IRights = {
     [key: string]: string | undefined;
 };
 
-export default IRights;
+export default Rights;

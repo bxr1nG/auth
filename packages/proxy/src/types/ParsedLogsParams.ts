@@ -1,8 +1,8 @@
-type IParsedLogsParams = {
+type ParsedLogsParams = {
     page: number;
     limit: number;
     filter: string;
     search: string;
 };
 
-export default IParsedLogsParams;
+export default ParsedLogsParams;
