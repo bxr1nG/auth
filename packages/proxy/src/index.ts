@@ -4,9 +4,9 @@ import session from "express-session";
 import MemoryStoreFactory from "memorystore";
 import cors from "cors";
 
-import managementRouter from "~/api/management/management.routes";
-import clientRouter from "~/api/management/client.routes";
-import usageRouter from "~/api/usage/usage.routes";
+import managementRouter from "~/api/management/router";
+import clientRouter from "~/api/client.router";
+import usageRouter from "~/api/usage.router";
 import config from "~/config";
 import "~/declarations";
 
