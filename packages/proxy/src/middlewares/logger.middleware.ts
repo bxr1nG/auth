@@ -1,8 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 
-import StateLogger from "~/helpers/StateLogger";
 import logger from "~/logger";
-import config from "~/config";
+import StateLogger from "~/helpers/StateLogger";
+import rightsStrategy from "~/helpers/strategies/rights";
 
 function LoggerMiddleware(req: Request, res: Response, next: NextFunction) {
     logger.info(req.originalUrl);
@@ -15,15 +15,7 @@ function LoggerMiddleware(req: Request, res: Response, next: NextFunction) {
             time: totalTimeInMs,
             url: req.originalUrl,
             at: Date.now(),
-            client: config.is_scoped
-                ? `${
-                      req.session.rights
-                          ? req.session.rights[
-                                "X-Shib-Profile-UserPrincipalName"
-                            ] || "Unnamed"
-                          : "Unnamed"
-                  }: ${req.session.id}`
-                : "global"
+            client: rightsStrategy.getClient(req.session)
         });
     });
 

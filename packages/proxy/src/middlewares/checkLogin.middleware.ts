@@ -1,16 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
 
-import config from "~/config";
-import store from "~/store";
+import rightsStrategy from "~/helpers/strategies/rights";
 
 function CheckLoginMiddleware(req: Request, res: Response, next: NextFunction) {
-    const rightsStore = config.is_scoped ? req.session.rights : store.rights;
-
-    if (!rightsStore) {
+    if (!rightsStrategy.checkLogin(req.session)) {
         res.redirect(`/auth/login?path=${req.originalUrl}`);
         return;
     }
-
     next();
 }
 

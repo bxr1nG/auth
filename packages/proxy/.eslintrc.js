@@ -41,8 +41,8 @@ module.exports = {
                     "external",
                     "internal",
                     "parent",
-                    "sibling",
                     "index",
+                    "sibling",
                     "object"
                 ],
                 pathGroups: [
@@ -54,6 +54,11 @@ module.exports = {
                     {
                         pattern: "~/**",
                         group: "parent",
+                        position: "before"
+                    },
+                    {
+                        pattern: "./**",
+                        group: "sibling",
                         position: "before"
                     }
                 ],

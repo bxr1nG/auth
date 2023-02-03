@@ -35,6 +35,11 @@ const config = {
     ls_scope: configFromFile?.localStorage
         ? `${configFromFile?.localStorage}-history`
         : "history",
+    scope: configFromFile?.scope
+        ? ["global", "session"].includes(configFromFile?.scope)
+            ? configFromFile?.scope
+            : "global"
+        : "global",
     is_scoped: configFromFile?.scope === "session",
     session_secret: "session secret",
     default_context: configFromFile?.defaultContext ?? "/",

@@ -1,10 +1,9 @@
 import type { Request, Response } from "express";
 
-import config from "~/config";
-import store from "~/store";
+import rightsStrategy from "~/helpers/strategies/rights";
 
 const GetRightsAction = (req: Request, res: Response) => {
-    res.json(config.is_scoped ? req.session.rights : store.rights);
+    res.json(rightsStrategy.getRights(req.session));
 };
 
 export default GetRightsAction;
