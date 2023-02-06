@@ -10,6 +10,8 @@
 
 **@mui/material** - library of React UI components
 
+**axios** - HTTP client
+
 **formik** - forms library for React
 
 **react** - library for building user interfaces

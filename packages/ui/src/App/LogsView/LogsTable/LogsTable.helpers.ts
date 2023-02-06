@@ -4,7 +4,7 @@ import type LogsObject from "~/types/LogsObject";
 import type LogsParams from "~/types/LogsParams";
 import type Logs from "~/types/Logs";
 import getLogs from "~/api/getLogs";
-import getClients from "~/api/getClients";
+import getSomething from "~/api/getSomething";
 
 export const fetchLogs: (
     setLogs: (logs: LogsObject) => void,
@@ -30,6 +30,8 @@ export const fetchLogs: (
 export const fetchClients: (
     setClients: (clients: Array<string> | null) => void
 ) => Promise<void> = async (setClients) => {
-    const clients = await getClients();
+    const clients = await getSomething<Array<string> | null>(
+        "/auth/manage/clients"
+    );
     setClients(clients);
 };

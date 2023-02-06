@@ -1,8 +1,8 @@
 import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
 import type ExtraField from "~/types/ExtraField";
-import getTestusers from "~/api/getTestusers";
 import { objectToDisplayable } from "~/utils/parsePermissions";
+import getSomething from "~/api/getSomething";
 
 export const parseTestusers: (
     response: TestusersFields,
@@ -79,7 +79,9 @@ export const fetchData: (
     ls_scope,
     extraFields
 ) => {
-    const data = await getTestusers();
+    const data = await getSomething<TestusersFields | null>(
+        "/auth/manage/testusers"
+    );
     if (data) {
         setTestusers(parseTestusers(data, emptyValues, ls_scope, extraFields));
     }
