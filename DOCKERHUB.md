@@ -34,9 +34,11 @@ extraFields:
 
 ### testusers
 
-`string = null: <any string>`
+`string: <any string>`
 
 Path to .ini file describing users, their roles and permissions.
+
+> **ATTENTION:**  This field is required.
 
 ### scope
 
@@ -59,11 +61,13 @@ Scope for localStorage login history and storage of extra fields.
 
 ### proxyURL
 
-`string = 'https://www.google.com': <any string>`
+`string: <any string>`
 
 Proxy delivery URL.
 
 > **NOTE:**  You can use [testing delivery server](https://hub.docker.com/r/bxr1ng/auth-listener) if you don't have your own.
+
+> **ATTENTION:**  This field is required.
 
 ### defaultContext
 
@@ -131,3 +135,20 @@ extraFields:
 | `'large'`  | Each field occupies the entire width of the block |
 
 > **NOTE:**  If the width of the block is reduced, the fields will be moved to the next line if possible.
+
+## You still can use environment variables
+
+```
+version: "3.9"
+  services:
+    ports:
+      - "80:80"
+    volumes:
+      - /path/to/file/testusers.ini:/opt/testusers.ini
+    environment:
+      - TESTUSERS_INI_FILE=opt/testusers.ini
+      - APP_SCOPE=session
+      - LOCAL_STORAGE_SCOPE=APP
+      - PROXY_URL=https://www.google.com
+      - DEFAULT_CONTEXT=/
+```
