@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.10](https://github.com/bxr1nG/auth/compare/v1.1.9...v1.1.10) (2023-02-06)
+
+
+### Bug Fixes
+
+* add import order rules to ESLint ([222018b](https://github.com/bxr1nG/auth/commit/222018bf148e26f113a65b968df3c53b6c018a09))
+* **config.ts:** return environment variables for backward compatibility ([eb86244](https://github.com/bxr1nG/auth/commit/eb86244fc28f0fce2ea45b2e6229981ff9217563)), closes [#2](https://github.com/bxr1nG/auth/issues/2)
+* **proxy:** add check login middleware ([91dfe07](https://github.com/bxr1nG/auth/commit/91dfe07a35052fdcd10f3d997fdbb927101402b1))
+* **proxy:** add strategy pattern for rights ([c6b7292](https://github.com/bxr1nG/auth/commit/c6b729238bd3c5743bda1fdd7266d4967767bcd5))
+* **proxy:** change types names (remove I at the beginning) ([13c019c](https://github.com/bxr1nG/auth/commit/13c019cc10ce3abdf043b14404b5b12a01402337))
+* **proxy:** create logs params parser ([6466209](https://github.com/bxr1nG/auth/commit/646620994b9948f5256fd3611b89c21e4bcdb87e))
+* **proxy:** split management routes to files ([4346b76](https://github.com/bxr1nG/auth/commit/4346b764fd1344a26a3740ee9245223380fd6405))
+* **proxy:** use config variable instead of __dirname ([b136318](https://github.com/bxr1nG/auth/commit/b1363187bbc1e27c1eb7e0819fe762f57c77536a))
+* **strategies/rights:** add usage of generics to StrategyFactory ([574f5f8](https://github.com/bxr1nG/auth/commit/574f5f8fffb8a5119d881f32cea656ce0d8599ba))
+* **ui:** add lazy load of routes ([8863560](https://github.com/bxr1nG/auth/commit/8863560834662e5565e50daafb54089f2ed5c653))
+
 ### [1.1.9](https://github.com/bxr1nG/auth/compare/v1.1.8...v1.1.9) (2023-02-01)
 
 
