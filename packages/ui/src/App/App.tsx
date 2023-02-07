@@ -1,43 +1,44 @@
-import React, { Suspense, lazy } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 
 import Loader from "~/components/Loader/Loader";
 
-const LoginView = lazy(() => import("./LoginView/LoginView"));
-const LogsView = lazy(() => import("./LogsView/LogsView"));
-const LogoutView = lazy(() => import("./LogoutView/LogoutView"));
+import Router from "./Router/Router";
+
+const ReactQueryDevtoolsProduction = lazy(() =>
+    import("@tanstack/react-query-devtools/build/lib/index.prod.js").then(
+        (d) => ({
+            default: d.ReactQueryDevtools
+        })
+    )
+);
 
 type AppProps = Record<string, never>;
 
 const App: React.FC<AppProps> = () => {
+    const [showDevtools, setShowDevtools] = useState(false);
+
+    useEffect(() => {
+        window.toggleDevtools = () => setShowDevtools((old) => !old);
+    }, []);
+
     return (
-        <Suspense
-            fallback={
-                <Loader
-                    isLoading
-                    isTransparent
-                />
-            }
-        >
-            <Routes>
-                <Route
-                    path="/auth/login"
-                    element={<LoginView />}
-                />
-                <Route
-                    path="/auth/logs"
-                    element={<LogsView />}
-                />
-                <Route
-                    path="/auth/logout"
-                    element={<LogoutView />}
-                />
-                <Route
-                    path="*"
-                    element={<Navigate to="/auth/login" />}
-                />
-            </Routes>
-        </Suspense>
+        <>
+            <Suspense
+                fallback={
+                    <Loader
+                        isLoading
+                        isTransparent
+                    />
+                }
+            >
+                <Router />
+            </Suspense>
+            {showDevtools && (
+                <Suspense fallback={null}>
+                    <ReactQueryDevtoolsProduction />
+                </Suspense>
+            )}
+        </>
     );
 };
 

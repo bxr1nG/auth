@@ -1,29 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Box from "@mui/material/Box";
+import { useQuery } from "@tanstack/react-query";
 
-import type Environment from "~/types/Environment";
-import config from "~/config";
+import Loader from "~/components/Loader/Loader";
+import useAlert from "~/hooks/useAlert";
 
-import { fetchData } from "./LoginView.helpers";
-import LoginForm from "./LoginForm/LoginForm";
+import { getEnvironment } from "./LoginView.helpers";
 import styles from "./LoginView.scss";
+import LoginForm from "./LoginForm/LoginForm";
 
 type LoginViewProps = Record<string, never>;
 
 const LoginView: React.FC<LoginViewProps> = () => {
-    const [environment, setEnvironment] = useState<Environment>({
-        ls_scope: config.ls_scope,
-        default_context: config.default_context,
-        extra_fields: []
-    });
+    const { setAlert } = useAlert();
 
-    useEffect(() => {
-        fetchData(setEnvironment).catch(console.error);
-    }, []);
+    const { isLoading, data } = useQuery({
+        queryKey: ["environment"],
+        queryFn: getEnvironment,
+        onError: () => {
+            setAlert(
+                "An error occurred during the Environment request",
+                "error"
+            );
+        }
+    });
 
     return (
         <Box className={styles.formWrapper}>
-            <LoginForm environment={environment} />
+            {isLoading && (
+                <Loader
+                    isLoading
+                    isTransparent
+                />
+            )}
+            {data && <LoginForm environment={data} />}
         </Box>
     );
 };

@@ -10,6 +10,10 @@
 
 **@mui/material** - library of React UI components
 
+**@tanstack/react-query** - hooks for fetching, caching and updating asynchronous data
+
+**@tanstack/react-query-devtools** - developer tools to interact with and visualize the TanStack/react-query cache
+
 **axios** - HTTP client
 
 **formik** - forms library for React

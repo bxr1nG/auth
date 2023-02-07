@@ -1,9 +1,11 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
+import { useQuery } from "@tanstack/react-query";
 
 import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
+import useAlert from "~/hooks/useAlert";
 
 import { fetchData } from "./StateField.helpers";
 import styles from "./StateField.scss";
@@ -17,16 +19,21 @@ type HistoryFieldProps = {
 
 const StateField: React.FC<HistoryFieldProps> = (props) => {
     const { initialValues, setInitialValues, emptyValues, environment } = props;
-    const [testusers, setTestusers] = useState<Array<FormikFields>>([]);
 
-    useEffect(() => {
-        fetchData(
-            setTestusers,
-            emptyValues,
-            environment.ls_scope,
-            environment.extra_fields
-        ).catch(console.error);
-    }, [environment]);
+    const { setAlert } = useAlert();
+
+    const { data } = useQuery({
+        queryKey: ["testusers"],
+        queryFn: () =>
+            fetchData(
+                emptyValues,
+                environment.ls_scope,
+                environment.extra_fields
+            ),
+        onError: () => {
+            setAlert("An error occurred during the Testusers request", "error");
+        }
+    });
 
     return (
         <TextField
@@ -39,7 +46,7 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
                 setInitialValues(state);
             }}
         >
-            {![...testusers, emptyValues]
+            {![...(data || []), emptyValues]
                 .map((state) => JSON.stringify(state))
                 .includes(JSON.stringify(initialValues)) && (
                 <MenuItem value={JSON.stringify(initialValues)}>
@@ -49,20 +56,21 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
             <MenuItem value={JSON.stringify(emptyValues)}>
                 Empty values
             </MenuItem>
-            {testusers.map((state) => (
-                <MenuItem
-                    key={JSON.stringify(state)}
-                    value={JSON.stringify(state)}
-                >
-                    {state["X-Shib-Profile-UserPrincipalName"]}&nbsp;
-                    <div className={styles.helpText}>
-                        {state["X-Shib-Authorization-Roles"]
-                            .split(", ")
-                            .filter((item) => item !== "Password1")
-                            .join(", ")}
-                    </div>
-                </MenuItem>
-            ))}
+            {data &&
+                data.map((state) => (
+                    <MenuItem
+                        key={JSON.stringify(state)}
+                        value={JSON.stringify(state)}
+                    >
+                        {state["X-Shib-Profile-UserPrincipalName"]}&nbsp;
+                        <div className={styles.helpText}>
+                            {state["X-Shib-Authorization-Roles"]
+                                .split(", ")
+                                .filter((item) => item !== "Password1")
+                                .join(", ")}
+                        </div>
+                    </MenuItem>
+                ))}
         </TextField>
     );
 };

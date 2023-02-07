@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useFormik } from "formik";
 import Box from "@mui/material/Box";
@@ -7,18 +7,18 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { OptionalObjectSchema } from "yup/lib/object";
-import StringSchema from "yup/lib/string";
+import { useMutation } from "@tanstack/react-query";
 
 import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
 import { stringToUsable } from "~/utils/parsePermissions";
+import useAlert from "~/hooks/useAlert";
+import login from "~/api/login";
 
 import { sx } from "./LoginForm.constants";
 import {
     getStored,
     addValues,
-    fetchData,
     storeRarelyUsedValues,
     createEmptyValues,
     createValidationSchema
@@ -38,6 +38,18 @@ type LoginFormProps = {
 const LoginForm: React.FC<LoginFormProps> = (props) => {
     const { environment } = props;
     const [searchParams] = useSearchParams();
+    const { setAlert } = useAlert();
+
+    const mutation = useMutation({
+        mutationFn: login,
+        onError: () => {
+            setAlert("An error occurred during the Login", "error");
+        },
+        onSuccess: () => {
+            const path = searchParams.get("path");
+            window.location.href = path || environment.default_context;
+        }
+    });
 
     const [history, setHistory] = useState<Array<FormikFields>>(
         getStored(environment.ls_scope)
@@ -45,41 +57,30 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const [initialValues, setInitialValues] = useState<FormikFields>(
         createEmptyValues(environment.extra_fields)
     );
-    const [validationSchema, setValidationSchema] = useState<
-        OptionalObjectSchema<{ [key: string]: StringSchema }>
-    >(createValidationSchema(environment.extra_fields));
-
-    useEffect(() => {
-        setInitialValues(createEmptyValues(environment.extra_fields));
-        setValidationSchema(createValidationSchema(environment.extra_fields));
-        setHistory(getStored(environment.ls_scope));
-    }, [environment]);
 
     const formik = useFormik<FormikFields>({
         enableReinitialize: true,
         initialValues,
-        validationSchema,
-        onSubmit: (values) => {
-            values["X-Shib-Authorization-Permissions"] = stringToUsable(
-                values["X-Shib-Authorization-Permissions"]
-            );
-            const newHistory = addValues(values, history);
-            setHistory(newHistory);
+        validationSchema: createValidationSchema(environment.extra_fields),
+        onSubmit: (loginValues) => {
+            const values = {
+                ...loginValues,
+                "X-Shib-Authorization-Permissions": stringToUsable(
+                    loginValues["X-Shib-Authorization-Permissions"]
+                )
+            };
             storeRarelyUsedValues(
                 values,
                 environment.extra_fields,
                 environment.ls_scope
             );
+            const newHistory = addValues(values, history);
+            setHistory(newHistory);
             localStorage.setItem(
                 environment.ls_scope,
                 JSON.stringify(newHistory)
             );
-            fetchData(values)
-                .then(() => {
-                    const path = searchParams.get("path");
-                    window.location.href = path || environment.default_context;
-                })
-                .catch(console.error);
+            mutation.mutate(values);
         }
     });
 

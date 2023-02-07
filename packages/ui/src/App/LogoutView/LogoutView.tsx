@@ -2,14 +2,25 @@ import React, { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Box from "@mui/material/Box";
 import StyledLink from "@mui/material/Link";
+import { useMutation } from "@tanstack/react-query";
 
-import { fetchData } from "./LogoutView.helpers";
+import useAlert from "~/hooks/useAlert";
+import logout from "~/api/logout";
 
 type LogoutViewProps = Record<string, never>;
 
 const LogoutView: React.FC<LogoutViewProps> = () => {
+    const { setAlert } = useAlert();
+
+    const mutation = useMutation({
+        mutationFn: logout,
+        onError: () => {
+            setAlert("An error occurred during the Logout", "error");
+        }
+    });
+
     useEffect(() => {
-        fetchData().catch(console.error);
+        mutation.mutate();
     }, []);
 
     return (

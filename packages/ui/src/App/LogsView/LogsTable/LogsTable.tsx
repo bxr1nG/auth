@@ -10,10 +10,11 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { useQuery } from "@tanstack/react-query";
 
-import type LogsObject from "~/types/LogsObject";
 import type LogsParams from "~/types/LogsParams";
 import Loader from "~/components/Loader/Loader";
+import useAlert from "~/hooks/useAlert";
 
 import { fetchLogs, fetchClients } from "./LogsTable.helpers";
 import { sx } from "./LogsTable.constants";
@@ -30,12 +31,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const abortController = useRef<AbortController | null>(null);
 
-    const [logs, setLogs] = useState<LogsObject>({
-        data: [],
-        total: 0,
-        isLoading: true
-    });
-    const [isSearchSynced, setIsSearchSynced] = useState(true);
+    const { setAlert } = useAlert();
 
     const filterParam = searchParams.get("filter");
     const pageParam = searchParams.get("page");
@@ -49,37 +45,42 @@ const LogsTable: React.FC<LogsTableProps> = () => {
         search: searchParam ? searchParam : ""
     });
 
-    const [clients, setClients] = useState<string[] | null>(null);
-
     useEffect(() => {
-        fetchLogs(setLogs, abortController).catch(console.error);
-        fetchClients(setClients).catch(console.error);
-    }, []);
+        setSearchParams({
+            page: params.page.toString(),
+            limit: params.limit.toString(),
+            filter: params.filter,
+            search: params.search
+        });
+    }, [params]);
 
-    useEffect(() => {
-        if (isSearchSynced) {
-            setSearchParams({
-                page: params.page.toString(),
-                limit: params.limit.toString(),
-                filter: params.filter,
-                search: params.search
-            });
-            setLogs((prevLogs) => ({
-                ...prevLogs,
-                isLoading: true
-            }));
-            fetchLogs(setLogs, abortController, params)
-                .then((newLogs) => {
-                    if (newLogs.data.length === 0 && params.page !== 0) {
-                        setParams((prevParams) => ({
-                            ...prevParams,
-                            page: 0
-                        }));
-                    }
-                })
-                .catch(console.error);
+    const [isSearchSynced, setIsSearchSynced] = useState(true);
+
+    const { isLoading: isLogsLoading, data: logs } = useQuery({
+        queryKey: ["logs", params],
+        queryFn: () => fetchLogs(abortController, params),
+        onError: () => {
+            setAlert("An error occurred during the Logs request", "error");
+        },
+        keepPreviousData: true
+    });
+
+    const { isLoading: isClientsLoading, data: clients } = useQuery({
+        queryKey: ["clients"],
+        queryFn: fetchClients,
+        onError: () => {
+            setAlert("An error occurred during the Clients request", "error");
         }
-    }, [params.page, params.limit, params.filter, params.search]);
+    });
+
+    useEffect(() => {
+        if (logs?.data.length === 0 && params.page !== 0) {
+            setParams((prevParams) => ({
+                ...prevParams,
+                page: 0
+            }));
+        }
+    }, [logs?.data]);
 
     return (
         <Paper className={styles.paper}>
@@ -87,10 +88,9 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                 <SearchField
                     searchParam={searchParam}
                     setParams={setParams}
-                    setLogs={setLogs}
                     setIsSearchSynced={setIsSearchSynced}
                 />
-                {clients && (
+                {!isClientsLoading && clients && (
                     <ClientSelect
                         clients={clients}
                         filter={params.filter}
@@ -99,7 +99,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                 )}
             </Box>
             <TableContainer className={styles.tableContainer}>
-                <Loader isLoading={logs.isLoading || !isSearchSynced} />
+                <Loader isLoading={isLogsLoading || !isSearchSynced} />
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
@@ -130,35 +130,40 @@ const LogsTable: React.FC<LogsTableProps> = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {logs.data.map((log) => (
-                            <TableRow key={log.at}>
-                                <TableCell className={styles.urlColumn}>
-                                    <Link href={log.url}>
-                                        {decodeURI(log.url)}
-                                    </Link>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <InfoButton url={log.url} />
-                                </TableCell>
-                                <TableCell align="center">
-                                    <CopyButton copyText={log.url} />
-                                </TableCell>
-                                <TableCell align="right">
-                                    <Typography
-                                        className={styles.timeColumn}
-                                        variant="body2"
-                                    >
-                                        {Math.round(log.time * 1e3) / 1e3}
-                                    </Typography>
-                                </TableCell>
-                            </TableRow>
-                        ))}
+                        {logs &&
+                            logs.data.map((log) => (
+                                <TableRow key={log.at}>
+                                    <TableCell className={styles.urlColumn}>
+                                        <Link href={log.url}>
+                                            {decodeURI(log.url)}
+                                        </Link>
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <InfoButton url={log.url} />
+                                    </TableCell>
+                                    <TableCell align="center">
+                                        <CopyButton copyText={log.url} />
+                                    </TableCell>
+                                    <TableCell align="right">
+                                        <Typography
+                                            className={styles.timeColumn}
+                                            variant="body2"
+                                        >
+                                            {Math.round(log.time * 1e3) / 1e3}
+                                        </Typography>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
             <TablePagination
-                total={logs.total}
-                page={params.page}
+                total={logs?.total || 0}
+                page={
+                    params.page > (logs?.total || 1) / params.limit
+                        ? 0
+                        : params.page
+                }
                 limit={params.limit}
                 setParams={setParams}
             />

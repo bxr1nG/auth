@@ -69,12 +69,10 @@ export const parseTestusers: (
 };
 
 export const fetchData: (
-    setTestusers: (testusers: Array<FormikFields>) => void,
     emptyValues: FormikFields,
     ls_scope: string,
     extraFields: Array<ExtraField>
-) => Promise<void> = async (
-    setTestusers,
+) => Promise<Array<FormikFields> | null> = async (
     emptyValues,
     ls_scope,
     extraFields
@@ -82,7 +80,7 @@ export const fetchData: (
     const data = await getSomething<TestusersFields | null>(
         "/auth/manage/testusers"
     );
-    if (data) {
-        setTestusers(parseTestusers(data, emptyValues, ls_scope, extraFields));
-    }
+    return data
+        ? parseTestusers(data, emptyValues, ls_scope, extraFields)
+        : null;
 };

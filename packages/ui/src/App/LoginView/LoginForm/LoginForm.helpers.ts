@@ -4,7 +4,6 @@ import * as yup from "yup";
 
 import type ExtraField from "~/types/ExtraField";
 import type FormikFields from "~/types/FormikFields";
-import login from "~/api/login";
 import { objectToDisplayable } from "~/utils/parsePermissions";
 
 export const getStored: (ls_scope: string) => Array<FormikFields> = (
@@ -37,12 +36,6 @@ export const addValues: (
                 ).length > 0
         )
         .slice(0, 10);
-};
-
-export const fetchData: (values: FormikFields) => Promise<void> = async (
-    values
-) => {
-    await login(values);
 };
 
 export const storeRarelyUsedValues: (
