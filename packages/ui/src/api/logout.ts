@@ -1,10 +1,11 @@
+import axios from "axios";
+
 import FormikFields from "~/types/FormikFields";
 
-const logout: () => Promise<FormikFields> = async () => {
-    const response = await fetch("/auth/manage/logout", {
-        method: "POST"
-    });
-    return (await response.json()) as FormikFields;
+const logout = async (): Promise<FormikFields> => {
+    const response = await axios.post("/auth/manage/logout");
+
+    return response.data as FormikFields;
 };
 
 export default logout;

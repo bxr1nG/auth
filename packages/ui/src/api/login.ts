@@ -1,16 +1,11 @@
+import axios from "axios";
+
 import type FormikFields from "~/types/FormikFields";
 
-const login: (values: FormikFields) => Promise<FormikFields> = async (
-    values
-) => {
-    const response = await fetch("/auth/manage/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(values)
-    });
-    return (await response.json()) as FormikFields;
+const login = async (values: FormikFields): Promise<FormikFields> => {
+    const response = await axios.post("/auth/manage/login", values);
+
+    return response.data as FormikFields;
 };
 
 export default login;
