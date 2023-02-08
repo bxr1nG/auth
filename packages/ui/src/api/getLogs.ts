@@ -4,7 +4,6 @@ import axios from "axios";
 
 import type Logs from "~/types/Logs";
 import type LogsParams from "~/types/LogsParams";
-import stringifyQueryParams from "~/utils/stringifyQueryParams";
 
 const getLogs = async <
     T extends {
@@ -15,16 +14,9 @@ const getLogs = async <
     abortController: MutableRefObject<AbortController | null>,
     params?: LogsParams
 ): Promise<T> => {
-    const paramsString = stringifyQueryParams({
-        page: 0,
-        limit: 10,
-        filter: "",
-        search: "",
-        ...params
-    });
-
-    const response = await axios.get(`/auth/manage/logs?${paramsString}`, {
-        signal: abortController.current?.signal
+    const response = await axios.get("/auth/manage/logs", {
+        signal: abortController.current?.signal,
+        params
     });
 
     return response.data as T;
