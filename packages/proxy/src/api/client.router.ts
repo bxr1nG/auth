@@ -8,10 +8,10 @@ import config from "~/config";
 
 const router = Router();
 
-router.use(express.static(path.resolve(config.srcPath, "../../ui/build/")));
+router.use(express.static(path.resolve(config.src, "../../ui/build/")));
 
 router.get("*", (_req: Request, res: Response) => {
-    res.sendFile(path.resolve(config.srcPath, "../../ui/build/", "index.html"));
+    res.sendFile(path.resolve(config.src, "../../ui/build/", "index.html"));
 });
 
 export default router;

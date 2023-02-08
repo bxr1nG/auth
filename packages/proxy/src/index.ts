@@ -11,10 +11,12 @@ import config from "~/config";
 import "~/declarations";
 
 const app = express();
-const MemoryStore = MemoryStoreFactory(session);
 
 app.use(cookieParser());
+
 if (config.is_scoped) {
+    const MemoryStore = MemoryStoreFactory(session);
+
     app.use(
         session({
             secret: config.session_secret,
@@ -27,8 +29,10 @@ if (config.is_scoped) {
         })
     );
 }
+
 app.use(json());
 app.use(cors());
+
 app.use("/auth/manage", managementRouter);
 app.use("/auth", clientRouter);
 app.use("/", usageRouter);
