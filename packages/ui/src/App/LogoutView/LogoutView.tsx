@@ -5,7 +5,7 @@ import StyledLink from "@mui/material/Link";
 import { useMutation } from "@tanstack/react-query";
 
 import useAlert from "~/hooks/useAlert";
-import logout from "~/api/logout";
+import api from "~/api";
 
 type LogoutViewProps = Record<string, never>;
 
@@ -13,7 +13,7 @@ const LogoutView: React.FC<LogoutViewProps> = () => {
     const { setAlert } = useAlert();
 
     const mutation = useMutation({
-        mutationFn: logout,
+        mutationFn: api.auth.logout,
         onError: () => {
             setAlert("An error occurred during the Logout", "error");
         }

@@ -6,8 +6,9 @@ import { useQuery } from "@tanstack/react-query";
 import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
 import useAlert from "~/hooks/useAlert";
+import api from "~/api";
 
-import { fetchData } from "./StateField.helpers";
+import { parseTestusers } from "./StateField.helpers";
 import styles from "./StateField.scss";
 
 type HistoryFieldProps = {
@@ -24,12 +25,17 @@ const StateField: React.FC<HistoryFieldProps> = (props) => {
 
     const { data } = useQuery({
         queryKey: ["testusers"],
-        queryFn: () =>
-            fetchData(
-                emptyValues,
-                environment.ls_scope,
-                environment.extra_fields
-            ),
+        queryFn: async () => {
+            const data = await api.testusers.get();
+            return data
+                ? parseTestusers(
+                      data,
+                      emptyValues,
+                      environment.ls_scope,
+                      environment.extra_fields
+                  )
+                : null;
+        },
         onError: () => {
             setAlert("An error occurred during the Testusers request", "error");
         }

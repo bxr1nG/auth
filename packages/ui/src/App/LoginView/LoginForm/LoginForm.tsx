@@ -13,7 +13,7 @@ import type Environment from "~/types/Environment";
 import type FormikFields from "~/types/FormikFields";
 import { stringToUsable } from "~/utils/parsePermissions";
 import useAlert from "~/hooks/useAlert";
-import login from "~/api/login";
+import api from "~/api";
 
 import { sx } from "./LoginForm.constants";
 import {
@@ -41,7 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
     const { setAlert } = useAlert();
 
     const mutation = useMutation({
-        mutationFn: login,
+        mutationFn: api.auth.login,
         onError: () => {
             setAlert("An error occurred during the Login", "error");
         },

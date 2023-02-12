@@ -2,7 +2,6 @@ import type FormikFields from "~/types/FormikFields";
 import type TestusersFields from "~/types/TestusersFields";
 import type ExtraField from "~/types/ExtraField";
 import { objectToDisplayable } from "~/utils/parsePermissions";
-import getSomething from "~/api/getSomething";
 
 export const parseTestusers: (
     response: TestusersFields,
@@ -66,21 +65,4 @@ export const parseTestusers: (
         );
     }
     return testusers;
-};
-
-export const fetchData: (
-    emptyValues: FormikFields,
-    ls_scope: string,
-    extraFields: Array<ExtraField>
-) => Promise<Array<FormikFields> | null> = async (
-    emptyValues,
-    ls_scope,
-    extraFields
-) => {
-    const data = await getSomething<TestusersFields | null>(
-        "/auth/manage/testusers"
-    );
-    return data
-        ? parseTestusers(data, emptyValues, ls_scope, extraFields)
-        : null;
 };

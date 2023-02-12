@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 
 import Loader from "~/components/Loader/Loader";
 import useAlert from "~/hooks/useAlert";
+import api from "~/api";
 
-import { getEnvironment } from "./LoginView.helpers";
 import styles from "./LoginView.scss";
 import LoginForm from "./LoginForm/LoginForm";
 
@@ -16,7 +16,7 @@ const LoginView: React.FC<LoginViewProps> = () => {
 
     const { isLoading, data } = useQuery({
         queryKey: ["environment"],
-        queryFn: getEnvironment,
+        queryFn: api.environment.get,
         onError: () => {
             setAlert(
                 "An error occurred during the Environment request",

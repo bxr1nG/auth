@@ -15,8 +15,8 @@ import { useQuery } from "@tanstack/react-query";
 import type LogsParams from "~/types/LogsParams";
 import Loader from "~/components/Loader/Loader";
 import useAlert from "~/hooks/useAlert";
+import api from "~/api";
 
-import { fetchLogs, fetchClients } from "./LogsTable.helpers";
 import { sx } from "./LogsTable.constants";
 import styles from "./LogsTable.scss";
 import CopyButton from "./CopyButton/CopyButton";
@@ -58,7 +58,17 @@ const LogsTable: React.FC<LogsTableProps> = () => {
 
     const { isLoading: isLogsLoading, data: logs } = useQuery({
         queryKey: ["logs", params],
-        queryFn: () => fetchLogs(abortController, params),
+        queryFn: async () => {
+            if (abortController.current) {
+                abortController.current.abort();
+            }
+            abortController.current = new AbortController();
+            const data = await api.logs.get({
+                signal: abortController.current?.signal,
+                params
+            });
+            return data;
+        },
         onError: () => {
             setAlert("An error occurred during the Logs request", "error");
         },
@@ -67,7 +77,7 @@ const LogsTable: React.FC<LogsTableProps> = () => {
 
     const { isLoading: isClientsLoading, data: clients } = useQuery({
         queryKey: ["clients"],
-        queryFn: fetchClients,
+        queryFn: api.clients.get,
         onError: () => {
             setAlert("An error occurred during the Clients request", "error");
         }
