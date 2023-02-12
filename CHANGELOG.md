@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.11](https://github.com/bxr1nG/auth/compare/v1.1.10...v1.1.11) (2023-02-12)
+
+
+### Features
+
+* **ui:** create request builder ([df180f2](https://github.com/bxr1nG/auth/commit/df180f24ef5a9a6034b1eeaec1d60425374c2326)), closes [#4](https://github.com/bxr1nG/auth/issues/4)
+* **ui:** start using react query for managing fetching data ([b9b0567](https://github.com/bxr1nG/auth/commit/b9b0567681fef223ef693e1bdbce1f2b71ce652f))
+
+
+### Bug Fixes
+
+* **api/getlogs:** use axios params instead of stringifying them manually ([70ff518](https://github.com/bxr1nG/auth/commit/70ff518a0342afe62997a433c592197d4dc86eb0))
+* **api/login:** add headers to request ([7f9eeb4](https://github.com/bxr1nG/auth/commit/7f9eeb4c969fafa7e8022d027a54fffc6d38d389))
+* **index.html:** fix front drop when using hot reload ([0be8be3](https://github.com/bxr1nG/auth/commit/0be8be37b386d3cf58b09736d85d426050bfeeec))
+* **logstable:** fix unique rows keys problem ([b5a4607](https://github.com/bxr1nG/auth/commit/b5a4607bb59f43607745d0c2a4143dd5ef1bfba1))
+* **proxy:** refactor config object ([7da0e2e](https://github.com/bxr1nG/auth/commit/7da0e2e9c18ad78acc9aaf13b551adb671981bbe)), closes [#3](https://github.com/bxr1nG/auth/issues/3)
+* **ui/src/api:** rewrite login and logout fetches using axios ([a0fda58](https://github.com/bxr1nG/auth/commit/a0fda5887d0d8f5de3f50af8afb418277a746a4f))
+* **ui:** use axios instead of fetch ([f37a4e0](https://github.com/bxr1nG/auth/commit/f37a4e03a2f622102369c9572c0080d0bb15339e))
+
 ### [1.1.10](https://github.com/bxr1nG/auth/compare/v1.1.9...v1.1.10) (2023-02-06)
 
 
