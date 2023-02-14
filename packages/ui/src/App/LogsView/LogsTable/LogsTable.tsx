@@ -72,7 +72,8 @@ const LogsTable: React.FC<LogsTableProps> = () => {
         onError: () => {
             setAlert("An error occurred during the Logs request", "error");
         },
-        keepPreviousData: true
+        keepPreviousData: true,
+        enabled: isSearchSynced
     });
 
     const { isLoading: isClientsLoading, data: clients } = useQuery({
