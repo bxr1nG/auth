@@ -2,11 +2,8 @@
     "extends": "../../tsconfig.json",
     "compilerOptions": {
         "rootDir": "./src",
-        "outDir": "./build",
-        "target": "ES6",
-        "module": "NodeNext",
-        "sourceMap": true,
-        "removeComments": true
+        "target": "ESNext",
+        "noEmit": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "build"],

@@ -5,8 +5,10 @@
     "main": "./build/index.js",
     "bin": "./bin/cross-var",
     "scripts": {
-        "build": "rimraf ./build && npx tsc",
-        "postinstall": "npm run build"
+        "build:compile": "rimraf ./build && babel ./src --extensions .ts --out-dir ./build",
+        "build:types": "npx tsc",
+        "build": "concurrently npm:build:*",
+        "postinstall": "npm run build:compile"
     },
     "author": "",
     "license": "ISC",
@@ -15,6 +17,10 @@
         "exit": "^0.1.2"
     },
     "devDependencies": {
+        "@babel/cli": "^7.20.7",
+        "@babel/core": "^7.20.12",
+        "@babel/preset-env": "^7.20.2",
+        "@babel/preset-typescript": "^7.18.6",
         "@types/cross-spawn": "^6.0.2",
         "@types/exit": "^0.1.31"
     }
