@@ -9,10 +9,10 @@
         "build": "concurrently \"npm run build -w packages/listener\" \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\"",
         "dockerfile-build": "concurrently \"npm run build -w packages/proxy\" \"npm run build -w packages/ui\"",
         "deploy": "npm run docker-build && npm run docker-push",
-        "docker-build": "cross-var docker build -t bxr1ng/$npm_package_name:$npm_package_version -t bxr1ng/$npm_package_name:latest .",
+        "docker-build": "cross-env-shell docker build -t bxr1ng/$npm_package_name:$npm_package_version -t bxr1ng/$npm_package_name:latest .",
         "docker-push": "npm run docker-push-version && npm run docker-push-latest",
-        "docker-push-version": "cross-var docker push bxr1ng/$npm_package_name:$npm_package_version",
-        "docker-push-latest": "cross-var docker push bxr1ng/$npm_package_name:latest",
+        "docker-push-version": "cross-env-shell docker push bxr1ng/$npm_package_name:$npm_package_version",
+        "docker-push-latest": "cross-env-shell docker push bxr1ng/$npm_package_name:latest",
         "deploy-listener": "npm run docker-build-listener && npm run docker-push-listener",
         "docker-build-listener": "npm run docker-build -w packages/listener",
         "docker-push-listener": "npm run docker-push -w packages/listener",
@@ -26,8 +26,7 @@
     "workspaces": [
         "packages\\ui",
         "packages\\proxy",
-        "packages\\listener",
-        "packages\\cross-var"
+        "packages\\listener"
     ],
     "devDependencies": {
         "@commitlint/cli": "^17.3.0",
