@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.12](https://github.com/bxr1nG/auth/compare/v1.1.11...v1.1.12) (2023-02-18)
+
+
+### Features
+
+* **cross-var:** add typescript ([0364884](https://github.com/bxr1nG/auth/commit/036488461c9238535a55a82cc4684a447d04f34a)), closes [#1](https://github.com/bxr1nG/auth/issues/1)
+
+
+### Bug Fixes
+
+* **cross-var:** add Babel ([4f9c063](https://github.com/bxr1nG/auth/commit/4f9c0632eb2e5ff07a75bc6ae3b4cdc89cfa5a89)), closes [#5](https://github.com/bxr1nG/auth/issues/5)
+* **logstable:** fix sending requests while waiting search sync ([362a6d4](https://github.com/bxr1nG/auth/commit/362a6d455cc4a6ede8f4cdddd7012874b5c8dbf6))
+
 ### [1.1.11](https://github.com/bxr1nG/auth/compare/v1.1.10...v1.1.11) (2023-02-12)
 
 
