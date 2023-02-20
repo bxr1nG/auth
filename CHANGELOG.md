@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.13](https://github.com/bxr1nG/auth/compare/v1.1.12...v1.1.13) (2023-02-20)
+
+
+### Bug Fixes
+
+* **proxy:** do not cache index.html, testusers and environment on client ([c4953b8](https://github.com/bxr1nG/auth/commit/c4953b829c626e9075f20feb6749c2fa89c5e79e)), closes [#6](https://github.com/bxr1nG/auth/issues/6)
+
+
+### Others
+
+* **.versionrc.json:** record any type commits to CHANGELOG.md ([6c0abb4](https://github.com/bxr1nG/auth/commit/6c0abb4bc5183f575bfe04588c163884d7d17581))
+
 ### [1.1.12](https://github.com/bxr1nG/auth/compare/v1.1.11...v1.1.12) (2023-02-18)
 
 
