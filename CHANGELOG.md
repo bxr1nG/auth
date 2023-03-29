@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.14](https://github.com/bxr1nG/auth/compare/v1.1.13...v1.1.14) (2023-03-29)
+
+
+### Features
+
+* **proxy/config:** add cache property to config ([f3c773b](https://github.com/bxr1nG/auth/commit/f3c773be2953c7f8600e38789d87550633866db3))
+
+
+### Bug Fixes
+
+* **package-lock.json:** fix webpack vulnerability ([43d5429](https://github.com/bxr1nG/auth/commit/43d5429aa0485ce7102b9c83c5cc5d7044f32c9b))
+
 ### [1.1.13](https://github.com/bxr1nG/auth/compare/v1.1.12...v1.1.13) (2023-02-20)
 
 
