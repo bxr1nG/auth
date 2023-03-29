@@ -38,8 +38,8 @@ const createConfig = (src: string) => {
     })();
 
     const cache = (() => {
-        if (configFile?.cache) {
-            return configFile.cache !== "false";
+        if (configFile?.cache !== undefined) {
+            return configFile.cache;
         }
         if (process.env.CACHE) {
             return process.env.CACHE !== "false";

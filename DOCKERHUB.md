@@ -17,12 +17,12 @@ services:
 ## config.yml
 
 ```
-testusers: "opt/testusers.ini"
+testusers: "/opt/testusers.ini"
 scope: "session"
 localStorage: "APP"
 proxyURL: "https://www.google.com"
 defaultContext: "/"
-cache: "false"
+cache: False
 extraFields:
   -
     name: "Extra-Field-Name"
@@ -78,12 +78,12 @@ Default path for Login button.
 
 ### cache
 
-`string = 'true': 'true' | 'false'`
+`boolean = True: True | False`
 
 | Option  | Description                          |
 |---------|--------------------------------------|
-| `true`  | Cache config file data on first load |
-| `false` | Check for updates in config file     |
+| `True`  | Cache config file data on first load |
+| `False` | Check for updates in config file     |
 
 ### extraFields
 
