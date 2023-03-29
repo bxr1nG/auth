@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.15](https://github.com/bxr1nG/auth/compare/v1.1.14...v1.1.15) (2023-03-29)
+
+
+### Bug Fixes
+
+* **proxy/config:** use boolean type of cache property in config.yml instead of string ([d52654b](https://github.com/bxr1nG/auth/commit/d52654b80e7d8b1ebacb1a84e2c2799388db16c6))
+
 ### [1.1.14](https://github.com/bxr1nG/auth/compare/v1.1.13...v1.1.14) (2023-03-29)
 
 
