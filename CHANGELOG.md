@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.16](https://github.com/bxr1nG/auth/compare/v1.1.15...v1.1.16) (2023-03-29)
+
+
+### Bug Fixes
+
+* **proxy/config:** change yaml parser package ([b7079ca](https://github.com/bxr1nG/auth/commit/b7079ca1650c2ce73a08932f4df322fdf7d09781))
+
+
+### Build System
+
+* **package-lock.json:** update dependencies ([3f990e2](https://github.com/bxr1nG/auth/commit/3f990e2207756ac1ad73cf3c5a4e95091c079c9b))
+
 ### [1.1.15](https://github.com/bxr1nG/auth/compare/v1.1.14...v1.1.15) (2023-03-29)
 
 
