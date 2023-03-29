@@ -20,15 +20,17 @@
 
 **ini** - an ini format parser and serializer for testusers
 
+**js-yaml** - YAML parser and serializer for app configuration
+
 **memorystore** - express-session full-featured MemoryStore module without leaks
 
 **winston** - logger for usage route
 
-**yaml** - YAML parser and serializer for app configuration
-
 # Dev dependencies
 
 **@types/express** - type declarations for express
+
+**@types/js-yaml** - type declarations for js-yaml
 
 **http-proxy-middleware** - gives the option of forwarding HTTP or HTTPS URLs to a specific path using ProxyTable
 

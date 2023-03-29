@@ -1,7 +1,7 @@
 import path from "path";
 import fs from "fs";
 
-import YAML from "yaml";
+import yaml from "js-yaml";
 
 import type Config from "~/types/Config";
 
@@ -13,7 +13,7 @@ const getConfigFile = (src: string, isDev: boolean): Config | null => {
     );
 
     if (fs.existsSync(pathToConfigFile)) {
-        return YAML.parse(fs.readFileSync(pathToConfigFile, "utf8")) as Config;
+        return yaml.load(fs.readFileSync(pathToConfigFile, "utf8")) as Config;
     }
 
     return null;

@@ -22,7 +22,7 @@ scope: "session"
 localStorage: "APP"
 proxyURL: "https://www.google.com"
 defaultContext: "/"
-cache: False
+cache: false
 extraFields:
   -
     name: "Extra-Field-Name"
@@ -78,12 +78,12 @@ Default path for Login button.
 
 ### cache
 
-`boolean = True: True | False`
+`boolean = true: true | false`
 
 | Option  | Description                          |
 |---------|--------------------------------------|
-| `True`  | Cache config file data on first load |
-| `False` | Check for updates in config file     |
+| `true`  | Cache config file data on first load |
+| `false` | Check for updates in config file     |
 
 ### extraFields
 
