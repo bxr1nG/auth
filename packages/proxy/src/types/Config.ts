@@ -6,6 +6,7 @@ type Config = {
     proxyURL: string | undefined;
     defaultContext: string | undefined;
     scope: "global" | "session" | undefined;
+    cache: string | undefined;
     extraFields: Array<ExtraField> | undefined;
 };
 

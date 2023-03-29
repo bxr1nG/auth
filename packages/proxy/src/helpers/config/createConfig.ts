@@ -37,6 +37,16 @@ const createConfig = (src: string) => {
         return "https://www.google.com";
     })();
 
+    const cache = (() => {
+        if (configFile?.cache) {
+            return configFile.cache !== "false";
+        }
+        if (process.env.CACHE) {
+            return process.env.CACHE !== "false";
+        }
+        return true;
+    })();
+
     const testusers_file = (() => {
         if (isDev) {
             return path.resolve(src, "./testusers.ini");
@@ -103,6 +113,7 @@ const createConfig = (src: string) => {
         src,
         mode,
         port,
+        cache,
         host_url,
         testusers,
         ls_scope,

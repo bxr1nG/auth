@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import CookiesCleanerMiddleware from "~/middlewares/cookiesCleaner.middleware";
 import CacheRemoverMiddleware from "~/middlewares/cacheRemover.middleware";
+import ReloadConfig from "~/middlewares/reloadConfig.middleware";
 
 import LoginAction from "./actions/login";
 import LogoutAction from "./actions/logout";
@@ -12,6 +13,8 @@ import GetEnvironmentAction from "./actions/getEnvironment";
 import GetTestusersAction from "./actions/getTestusers";
 
 const router = Router();
+
+router.use(ReloadConfig);
 
 router.post("/login", CookiesCleanerMiddleware, LoginAction);
 router.post("/logout", CookiesCleanerMiddleware, LogoutAction);

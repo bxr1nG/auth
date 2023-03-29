@@ -22,6 +22,7 @@ scope: "session"
 localStorage: "APP"
 proxyURL: "https://www.google.com"
 defaultContext: "/"
+cache: "false"
 extraFields:
   -
     name: "Extra-Field-Name"
@@ -74,6 +75,15 @@ Proxy delivery URL.
 `string = '/': <any string>`
 
 Default path for Login button.
+
+### cache
+
+`string = 'true': 'true' | 'false'`
+
+| Option  | Description                          |
+|---------|--------------------------------------|
+| `true`  | Cache config file data on first load |
+| `false` | Check for updates in config file     |
 
 ### extraFields
 
@@ -151,4 +161,5 @@ version: "3.9"
       - LOCAL_STORAGE_SCOPE=APP
       - PROXY_URL=https://www.google.com
       - DEFAULT_CONTEXT=/
+      - CACHE=false
 ```
