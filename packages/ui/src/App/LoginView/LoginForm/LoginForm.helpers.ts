@@ -44,9 +44,15 @@ export const storeRarelyUsedValues: (
     scope: string
 ) => void = (values, extraFields, scope) => {
     const names = extraFields.map((field) => field.name);
+    const rarelyUsedValues: Record<string, string> = {};
+
+    names.forEach((name) => {
+        rarelyUsedValues[name] = values[name] as string;
+    });
+
     localStorage.setItem(
         `${scope}-rarelyUsedValues`,
-        JSON.stringify(names.map((key) => values[key]))
+        JSON.stringify(rarelyUsedValues)
     );
 };
 
