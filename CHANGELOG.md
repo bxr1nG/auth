@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.17](https://github.com/bxr1nG/auth/compare/v1.1.16...v1.1.17) (2023-04-10)
+
+
+### Bug Fixes
+
+* **loginform:** fix phantom fields ([11172ae](https://github.com/bxr1nG/auth/commit/11172aef80a0d0796a6dc376b71f617d8286564b))
+
 ### [1.1.16](https://github.com/bxr1nG/auth/compare/v1.1.15...v1.1.16) (2023-03-29)
 
 
