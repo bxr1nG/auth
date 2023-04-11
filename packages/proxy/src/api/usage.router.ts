@@ -5,6 +5,7 @@ import config from "~/config";
 import CheckLoginMiddleware from "~/middlewares/checkLogin.middleware";
 import HeadersMiddleware from "~/middlewares/headers.middleware";
 import LoggerMiddleware from "~/middlewares/logger.middleware";
+import changeOriginOnRedirect from "~/helpers/changeOriginOnRedirect";
 
 const router = Router();
 
@@ -16,7 +17,8 @@ router.use(
     createProxyMiddleware({
         target: config.host_url,
         changeOrigin: true,
-        onProxyReq: fixRequestBody
+        onProxyReq: fixRequestBody,
+        onProxyRes: changeOriginOnRedirect
     })
 );
 
