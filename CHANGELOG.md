@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.18](https://github.com/bxr1nG/auth/compare/v1.1.17...v1.1.18) (2023-04-11)
+
+
+### Bug Fixes
+
+* **proxy:** fix unexpected redirect to proxied host on HTTP 302 ([bfa21dd](https://github.com/bxr1nG/auth/commit/bfa21dddf047b8e8ff8939446288e776fe96ece7)), closes [#7](https://github.com/bxr1nG/auth/issues/7)
+
 ### [1.1.17](https://github.com/bxr1nG/auth/compare/v1.1.16...v1.1.17) (2023-04-10)
 
 
