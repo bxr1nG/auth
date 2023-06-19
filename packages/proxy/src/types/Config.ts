@@ -8,6 +8,7 @@ type Config = {
     scope: "global" | "session" | undefined;
     cache: boolean | undefined;
     extraFields: Array<ExtraField> | undefined;
+    router: Record<string, string> | undefined;
 };
 
 export default Config;

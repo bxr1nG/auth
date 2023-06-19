@@ -16,6 +16,7 @@ router.use(
     LoggerMiddleware,
     createProxyMiddleware({
         target: config.host_url,
+        router: config.router,
         changeOrigin: true,
         onProxyReq: fixRequestBody,
         onProxyRes: changeOriginOnRedirect

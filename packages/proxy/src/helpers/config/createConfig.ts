@@ -109,6 +109,13 @@ const createConfig = (src: string) => {
         return [];
     })();
 
+    const router = (() => {
+        if (configFile?.router) {
+            return configFile.router;
+        }
+        return undefined;
+    })();
+
     return {
         src,
         mode,
@@ -121,7 +128,8 @@ const createConfig = (src: string) => {
         is_scoped,
         session_secret,
         default_context,
-        extra_fields
+        extra_fields,
+        router
     };
 };
 
