@@ -17,6 +17,13 @@ router.use(
     createProxyMiddleware({
         target: config.host_url,
         router: config.router,
+        pathRewrite: (() => {
+            const paths: Record<string, string> = {};
+            for (const prop in config.router) {
+                paths[`^${prop}`] = "";
+            }
+            return paths;
+        })(),
         changeOrigin: true,
         onProxyReq: fixRequestBody,
         onProxyRes: changeOriginOnRedirect
