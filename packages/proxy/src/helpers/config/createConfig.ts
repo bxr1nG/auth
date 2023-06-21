@@ -4,19 +4,46 @@ import fs from "fs";
 
 import ini from "ini";
 
-import getConfigFile from "./getConfigFile";
+import type Config from "~/types/Config";
+import getYamlFile from "~/helpers/getYamlFile";
+
+const flattenObjectArrayToString = (obj: Record<string, Array<string>>) => {
+    const result: Record<string, string> = {};
+    for (const prop in obj) {
+        const values = obj[prop];
+        if (values) {
+            result[prop] = values
+                .map((value) => (value.includes(",") ? `"${value}"` : value))
+                .join(", ");
+        }
+    }
+    return result;
+};
 
 const createConfig = (src: string) => {
     const mode = process.env.NODE_ENV ?? "development";
     const isDev = mode === "development";
-    const configFile = getConfigFile(src, isDev);
+    const configFile = getYamlFile<Config>(
+        src,
+        isDev ? "config.yml" : "/opt/config.yml",
+        isDev
+    );
     const scopes = ["global", "session"];
     const session_secret = "session secret";
 
-    if (!configFile?.proxyURL && !process.env.PROXY_URL) {
+    if (
+        !configFile?.proxyURL &&
+        !process.env.PROXY_URL &&
+        !configFile?.router
+    ) {
         throw new Error("Proxy URL is not set");
     }
-    if (!configFile?.testusers && !process.env.TESTUSERS_INI_FILE) {
+    if (
+        !configFile?.testusers &&
+        !process.env.TESTUSERS_INI_FILE &&
+        (!configFile?.permissions || !configFile?.users) &&
+        (!process.env.PERMISSIONS_YAML_FILE || !process.env.USERS_YAML_FILE)
+    ) {
         throw new Error("Test users file is not set");
     }
 
@@ -34,7 +61,7 @@ const createConfig = (src: string) => {
         if (process.env.PROXY_URL) {
             return process.env.PROXY_URL;
         }
-        return "https://www.google.com";
+        return "";
     })();
 
     const cache = (() => {
@@ -62,6 +89,23 @@ const createConfig = (src: string) => {
     })();
 
     const testusers = (() => {
+        if (configFile?.permissions && configFile?.users) {
+            const roles = getYamlFile<Record<string, string[]>>(
+                src,
+                configFile.permissions,
+                isDev
+            );
+            const users = getYamlFile<Record<string, string[]>>(
+                src,
+                configFile.users,
+                isDev
+            );
+            if (roles && users)
+                return {
+                    roles: flattenObjectArrayToString(roles),
+                    users: flattenObjectArrayToString(users)
+                };
+        }
         if (testusers_file) {
             if (fs.existsSync(testusers_file)) {
                 return ini.parse(fs.readFileSync(testusers_file, "utf8"));
@@ -113,7 +157,7 @@ const createConfig = (src: string) => {
         if (configFile?.router) {
             return configFile.router;
         }
-        return undefined;
+        return {};
     })();
 
     return {

@@ -2,6 +2,8 @@ import type ExtraField from "~/types/ExtraField";
 
 type Config = {
     testusers: string | undefined;
+    permissions: string | undefined;
+    users: string | undefined;
     localStorage: string | undefined;
     proxyURL: string | undefined;
     defaultContext: string | undefined;
