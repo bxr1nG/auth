@@ -1,7 +1,7 @@
 import type { IncomingMessage } from "http";
 import type { Request, Response } from "express";
 
-import config from "~/config";
+import configModule from "~/config";
 
 const changeOriginOnRedirect = (
     proxyRes: IncomingMessage,
@@ -14,7 +14,10 @@ const changeOriginOnRedirect = (
     if (!proxyRes.headers["location"]) {
         return;
     }
-    if (new URL(proxyRes.headers["location"]).origin !== config.host_url) {
+    if (
+        new URL(proxyRes.headers["location"]).origin !==
+        configModule.getInstance().getConfig().host_url
+    ) {
         return;
     }
     proxyRes.headers["location"] = `${req.protocol}://${

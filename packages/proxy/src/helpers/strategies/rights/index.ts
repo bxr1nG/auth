@@ -1,5 +1,5 @@
 import type RequestSession from "~/types/RequestSession";
-import config from "~/config";
+import configModule from "~/config";
 
 import globalStrategy from "./global";
 import sessionStrategy from "./session";
@@ -13,6 +13,8 @@ const strategyFactory = StrategyFactory<
 strategyFactory.add("global", globalStrategy);
 strategyFactory.add("session", sessionStrategy);
 
-const selectedStrategy = strategyFactory.select(config.scope);
+const selectedStrategy = strategyFactory.select(
+    configModule.getInstance().getConfig().scope
+);
 
 export default selectedStrategy;

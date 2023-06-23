@@ -5,6 +5,5 @@
 **/.env.*
 **/testusers.ini
 **/config*.y*ml
-**/permissions.y*ml
-**/users.y*ml
+**/testusers.y*ml
 docker-compose.y*ml

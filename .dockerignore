@@ -8,8 +8,7 @@
 
 **/.env*
 **/config*.y*ml
-**/permissions.y*ml
-**/users.y*ml
+**/testusers.y*ml
 **/testusers.ini
 **/README.md
 **/.eslintrc.js

@@ -39,10 +39,10 @@ const createConfig = (src: string) => {
         throw new Error("Proxy URL is not set");
     }
     if (
-        !configFile?.testusers &&
+        !configFile?.testusersIni &&
         !process.env.TESTUSERS_INI_FILE &&
-        (!configFile?.permissions || !configFile?.users) &&
-        (!process.env.PERMISSIONS_YAML_FILE || !process.env.USERS_YAML_FILE)
+        !configFile?.testusersYaml &&
+        !process.env.TESTUSERS_YAML_FILE
     ) {
         throw new Error("Test users file is not set");
     }
@@ -78,8 +78,8 @@ const createConfig = (src: string) => {
         if (isDev) {
             return path.resolve(src, "./testusers.ini");
         }
-        if (configFile?.testusers) {
-            return path.resolve(src, "../../../../", configFile.testusers);
+        if (configFile?.testusersIni) {
+            return path.resolve(src, "../../../../", configFile.testusersIni);
         }
         if (process.env.TESTUSERS_INI_FILE) {
             const users = process.env.TESTUSERS_INI_FILE;
@@ -89,21 +89,15 @@ const createConfig = (src: string) => {
     })();
 
     const testusers = (() => {
-        if (configFile?.permissions && configFile?.users) {
-            const roles = getYamlFile<Record<string, string[]>>(
-                src,
-                configFile.permissions,
-                isDev
-            );
-            const users = getYamlFile<Record<string, string[]>>(
-                src,
-                configFile.users,
-                isDev
-            );
-            if (roles && users)
+        if (configFile?.testusersYaml) {
+            const yaml = getYamlFile<{
+                users_roles: Record<string, string[]>;
+                roles_permissions: Record<string, string[]>;
+            }>(src, configFile.testusersYaml, isDev);
+            if (yaml)
                 return {
-                    roles: flattenObjectArrayToString(roles),
-                    users: flattenObjectArrayToString(users)
+                    roles: flattenObjectArrayToString(yaml.roles_permissions),
+                    users: flattenObjectArrayToString(yaml.users_roles)
                 };
         }
         if (testusers_file) {

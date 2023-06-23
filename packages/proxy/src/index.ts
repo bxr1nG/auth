@@ -7,19 +7,19 @@ import cors from "cors";
 import managementRouter from "~/api/management/router";
 import clientRouter from "~/api/client.router";
 import usageRouter from "~/api/usage.router";
-import config from "~/config";
+import configModule from "~/config";
 import "~/declarations";
 
 const app = express();
 
 app.use(cookieParser());
 
-if (config.is_scoped) {
+if (configModule.getInstance().getConfig().is_scoped) {
     const MemoryStore = MemoryStoreFactory(session);
 
     app.use(
         session({
-            secret: config.session_secret,
+            secret: configModule.getInstance().getConfig().session_secret,
             saveUninitialized: false,
             store: new MemoryStore({
                 checkPeriod: 1000 * 60 * 60 * 24
@@ -37,9 +37,15 @@ app.use("/auth/manage", managementRouter);
 app.use("/auth", clientRouter);
 app.use("/", usageRouter);
 
-const server = app.listen(config.port, () => {
-    console.log(`Server started at port ${config.port}`);
-    console.log(`Login page: http://localhost:${config.port}/auth/login`);
+const server = app.listen(configModule.getInstance().getConfig().port, () => {
+    console.log(
+        `Server started at port ${configModule.getInstance().getConfig().port}`
+    );
+    console.log(
+        `Login page: http://localhost:${
+            configModule.getInstance().getConfig().port
+        }/auth/login`
+    );
 });
 
 const startGracefulShutdown = () => {
