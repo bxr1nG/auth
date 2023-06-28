@@ -11,6 +11,7 @@ import "@fontsource/roboto/700.css";
 
 import { AlertProvider } from "~/contexts/AlertContext";
 import AlertPopup from "~/components/AlertPopup/AlertPopup";
+import WarningsPopupProvider from "~/components/WarningsPopupProvider/WarningsPopupProvider";
 
 import App from "./App/App";
 import "./styles.css";
@@ -31,13 +32,15 @@ root.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <AlertProvider>
-                <BrowserRouter>
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline />
-                        <AlertPopup />
-                        <App />
-                    </ThemeProvider>
-                </BrowserRouter>
+                <WarningsPopupProvider>
+                    <BrowserRouter>
+                        <ThemeProvider theme={theme}>
+                            <CssBaseline />
+                            <AlertPopup />
+                            <App />
+                        </ThemeProvider>
+                    </BrowserRouter>
+                </WarningsPopupProvider>
             </AlertProvider>
         </QueryClientProvider>
     </React.StrictMode>
