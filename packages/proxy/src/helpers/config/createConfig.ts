@@ -20,16 +20,31 @@ const flattenObjectArrayToString = (obj: Record<string, Array<string>>) => {
     return result;
 };
 
-const createConfig = (src: string) => {
-    const mode = process.env.NODE_ENV ?? "development";
-    const isDev = mode === "development";
-    const configFile = getYamlFile<Config>(
-        src,
-        isDev ? "config.yml" : "/opt/config.yml",
-        isDev
-    );
+const makeid = (length: number) => {
+    let result = "";
+    const characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+        result += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+        counter += 1;
+    }
+    return result;
+};
+
+const createConfig = (
+    src: string,
+    mode: string,
+    isDev: boolean,
+    configPath: string
+) => {
+    const configFile = getYamlFile<Config>(src, configPath, isDev);
     const scopes = ["global", "session"];
     const session_secret = "session secret";
+    const session_name = `auth_session_${makeid(10)}`;
 
     if (
         !configFile?.proxyURL &&
@@ -165,6 +180,7 @@ const createConfig = (src: string) => {
         scope,
         is_scoped,
         session_secret,
+        session_name,
         default_context,
         extra_fields,
         router

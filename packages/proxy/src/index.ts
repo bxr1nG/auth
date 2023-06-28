@@ -19,6 +19,7 @@ if (configModule.getInstance().getConfig().is_scoped) {
 
     app.use(
         session({
+            name: configModule.getInstance().getConfig().session_name,
             secret: configModule.getInstance().getConfig().session_secret,
             saveUninitialized: false,
             store: new MemoryStore({
