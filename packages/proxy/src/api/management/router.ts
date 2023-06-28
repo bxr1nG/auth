@@ -11,6 +11,7 @@ import GetClientsAction from "./actions/getClients";
 import GetRightsAction from "./actions/getRights";
 import GetEnvironmentAction from "./actions/getEnvironment";
 import GetTestusersAction from "./actions/getTestusers";
+import GetWarningsAction from "./actions/getWarnings";
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.get("/clients", GetClientsAction);
 router.get("/rights", GetRightsAction);
 router.get("/environment", CacheRemoverMiddleware, GetEnvironmentAction);
 router.get("/testusers", CacheRemoverMiddleware, GetTestusersAction);
+router.get("/warnings", GetWarningsAction);
 
 export default router;

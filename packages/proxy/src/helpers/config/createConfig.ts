@@ -46,19 +46,10 @@ const createConfig = (
     const session_secret = "session secret";
     const session_name = `auth_session_${makeid(10)}`;
 
-    if (
-        !configFile?.proxyURL &&
-        !process.env.PROXY_URL &&
-        !configFile?.router
-    ) {
+    if (!configFile?.router) {
         throw new Error("Proxy URL is not set");
     }
-    if (
-        !configFile?.testusersIni &&
-        !process.env.TESTUSERS_INI_FILE &&
-        !configFile?.testusersYaml &&
-        !process.env.TESTUSERS_YAML_FILE
-    ) {
+    if (!configFile?.testusers) {
         throw new Error("Test users file is not set");
     }
 
@@ -73,9 +64,6 @@ const createConfig = (
         if (configFile?.proxyURL) {
             return configFile.proxyURL;
         }
-        if (process.env.PROXY_URL) {
-            return process.env.PROXY_URL;
-        }
         return "";
     })();
 
@@ -83,32 +71,28 @@ const createConfig = (
         if (configFile?.cache !== undefined) {
             return configFile.cache;
         }
-        if (process.env.CACHE) {
-            return process.env.CACHE !== "false";
-        }
         return true;
     })();
 
     const testusers_file = (() => {
-        if (isDev) {
-            return path.resolve(src, "./testusers.ini");
-        }
-        if (configFile?.testusersIni) {
-            return path.resolve(src, "../../../../", configFile.testusersIni);
-        }
-        if (process.env.TESTUSERS_INI_FILE) {
-            const users = process.env.TESTUSERS_INI_FILE;
-            return path.resolve(src, "../../../../", users);
+        if (configFile?.testusers && configFile.testusers.endsWith(".ini")) {
+            return isDev
+                ? path.resolve(src, configFile.testusers)
+                : path.resolve(src, "../../../../", configFile.testusers);
         }
         return null;
     })();
 
     const testusers = (() => {
-        if (configFile?.testusersYaml) {
+        if (
+            configFile?.testusers &&
+            (configFile.testusers.endsWith(".yml") ||
+                configFile.testusers.endsWith(".yaml"))
+        ) {
             const yaml = getYamlFile<{
                 users_roles: Record<string, string[]>;
                 roles_permissions: Record<string, string[]>;
-            }>(src, configFile.testusersYaml, isDev);
+            }>(src, configFile.testusers, isDev);
             if (yaml)
                 return {
                     roles: flattenObjectArrayToString(yaml.roles_permissions),
@@ -127,18 +111,12 @@ const createConfig = (
         if (configFile?.localStorage) {
             return `${configFile.localStorage}-history`;
         }
-        if (process.env.LOCAL_STORAGE_SCOPE) {
-            return `${process.env.LOCAL_STORAGE_SCOPE}-history`;
-        }
         return "history";
     })();
 
     const scope = (() => {
         if (configFile?.scope && scopes.includes(configFile.scope)) {
             return configFile.scope;
-        }
-        if (process.env.APP_SCOPE && scopes.includes(process.env.APP_SCOPE)) {
-            return process.env.APP_SCOPE;
         }
         return "global";
     })();
@@ -148,9 +126,6 @@ const createConfig = (
     const default_context = (() => {
         if (configFile?.defaultContext) {
             return configFile.defaultContext;
-        }
-        if (process.env.DEFAULT_CONTEXT) {
-            return process.env.DEFAULT_CONTEXT;
         }
         return "/";
     })();

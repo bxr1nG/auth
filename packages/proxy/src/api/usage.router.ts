@@ -20,7 +20,6 @@ router.use(
     LoggerMiddleware,
     (req: Request, res: Response, next: NextFunction) => {
         createProxyMiddleware({
-            target: configModule.getInstance().getConfig().host_url,
             router: configModule.getInstance().getConfig().router,
             pathRewrite: (() => {
                 const paths: Record<string, string> = {};

@@ -1,8 +1,7 @@
 import type ExtraField from "~/types/ExtraField";
 
 type Config = {
-    testusersIni: string | undefined;
-    testusersYaml: string | undefined;
+    testusers: string | undefined;
     localStorage: string | undefined;
     proxyURL: string | undefined;
     defaultContext: string | undefined;
