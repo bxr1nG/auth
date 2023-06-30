@@ -46,25 +46,11 @@ const createConfig = (
     const session_secret = "session secret";
     const session_name = `auth_session_${makeid(10)}`;
 
-    if (!configFile?.router) {
-        throw new Error("Proxy URL is not set");
-    }
-    if (!configFile?.testusers) {
-        throw new Error("Test users file is not set");
-    }
-
     const port = (() => {
         if (isDev && process.env.APP_PORT) {
             return parseInt(process.env.APP_PORT);
         }
         return 80;
-    })();
-
-    const host_url = (() => {
-        if (configFile?.proxyURL) {
-            return configFile.proxyURL;
-        }
-        return "";
     })();
 
     const cache = (() => {
@@ -149,7 +135,6 @@ const createConfig = (
         mode,
         port,
         cache,
-        host_url,
         testusers,
         ls_scope,
         scope,

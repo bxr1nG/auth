@@ -4,7 +4,10 @@ import session from "express-session";
 import MemoryStoreFactory from "memorystore";
 import cors from "cors";
 
+import { SystemHealthCheck } from "~/api/management/actions/getWarnings";
+import logger from "~/logger";
 import managementRouter from "~/api/management/router";
+import errorRouter from "~/api/error.router";
 import clientRouter from "~/api/client.router";
 import usageRouter from "~/api/usage.router";
 import configModule from "~/config";
@@ -34,6 +37,7 @@ if (configModule.getInstance().getConfig().is_scoped) {
 app.use(json());
 app.use(cors());
 
+app.use("/auth/error", errorRouter);
 app.use("/auth/manage", managementRouter);
 app.use("/auth", clientRouter);
 app.use("/", usageRouter);
@@ -48,6 +52,9 @@ const server = app.listen(configModule.getInstance().getConfig().port, () => {
         }/auth/login`
     );
 });
+
+const warnings = SystemHealthCheck.scan();
+warnings.map((warning) => logger.warn(warning.message));
 
 const startGracefulShutdown = () => {
     console.log("Received kill signal, shutting down gracefully");

@@ -15,8 +15,13 @@ const changeOriginOnRedirect = (
         return;
     }
     if (
-        new URL(proxyRes.headers["location"]).origin !==
-        configModule.getInstance().getConfig().host_url
+        Object.values(configModule.getInstance().getConfig().router)
+            .map((value) =>
+                value.includes(
+                    new URL(proxyRes.headers["location"] as string).origin
+                )
+            )
+            .indexOf(true) === -1
     ) {
         return;
     }
