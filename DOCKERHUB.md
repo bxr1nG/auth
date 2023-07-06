@@ -10,8 +10,8 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /path/to/file/testusers.ini:/opt/testusers.ini
       - /path/to/file/config.yml:/opt/config.yml
+      - /path/to/file/testusers.ini:/opt/testusers.yml
 ```
 
 ## config.yml
@@ -20,9 +20,13 @@ services:
 testusers: "/opt/testusers.ini"
 scope: "session"
 localStorage: "APP"
-proxyURL: "https://www.google.com"
 defaultContext: "/"
 cache: false
+router:
+  "/a": "http://localhost:10000/hello"
+  "/b/hello": "http://localhost:10000/hello"
+  "/c/hello": "http://localhost:10000"
+  "/": "https://www.google.com"
 extraFields:
   -
     name: "Extra-Field-Name"
@@ -37,9 +41,9 @@ extraFields:
 
 `string: <any string>`
 
-Path to .ini file describing users, their roles and permissions.
+Path to .ini or .yml (.yaml) file describing users, their roles and permissions.
 
-> **ATTENTION:**  This field is required.
+> **ATTENTION:**  Using the ini format for testusers is outdated, suggest using yaml format.
 
 ### scope
 
@@ -60,16 +64,6 @@ Scope for localStorage login history and storage of extra fields.
 
 > **NOTE:**  It is recommended to use different values for different sets of extra fields.
 
-### proxyURL
-
-`string: <any string>`
-
-Proxy delivery URL.
-
-> **NOTE:**  You can use [testing delivery server](https://hub.docker.com/r/bxr1ng/auth-listener) if you don't have your own.
-
-> **ATTENTION:**  This field is required.
-
 ### defaultContext
 
 `string = '/': <any string>`
@@ -84,6 +78,22 @@ Default path for Login button.
 |---------|--------------------------------------|
 | `true`  | Cache config file data on first load |
 | `false` | Check for updates in config file     |
+
+### router
+
+`object = {}: <string key-value pairs>`
+
+The proxyURL of previous versions has been replaced by router, making it possible to specify multiple proxy targets.
+
+**Examples**
+
+```
+router:
+  "/a": "http://localhost:10000/hello"       # /a/world       => http://localhost:10000/hello/world
+  "/b/hello": "http://localhost:10000/hello" # /b/hello/world => http://localhost:10000/hello/world
+  "/c/hello": "http://localhost:10000"       # /c/hello/world => http://localhost:10000/world
+  "/": "https://www.google.com"              # /something     => https://www.google.com/something
+```
 
 ### extraFields
 
@@ -146,20 +156,4 @@ extraFields:
 
 > **NOTE:**  If the width of the block is reduced, the fields will be moved to the next line if possible.
 
-## You still can use environment variables
-
-```
-version: "3.9"
-  services:
-    ports:
-      - "80:80"
-    volumes:
-      - /path/to/file/testusers.ini:/opt/testusers.ini
-    environment:
-      - TESTUSERS_INI_FILE=opt/testusers.ini
-      - APP_SCOPE=session
-      - LOCAL_STORAGE_SCOPE=APP
-      - PROXY_URL=https://www.google.com
-      - DEFAULT_CONTEXT=/
-      - CACHE=false
-```
+## If you want to use the old functionality, we suggest using [bxr1ng/auth@1.1.18](https://hub.docker.com/layers/bxr1ng/auth/1.1.18/images/sha256-62837039b2ea8629a8bb0e87a93ea558119b74ebeee3cd5f98c083b8d7443202?context=repo)
