@@ -9,7 +9,7 @@ const findRoute = (url: string) => {
     const router = configModule.getInstance().getConfig().router;
     for (const prop in router) {
         if (url.startsWith(prop)) {
-            return url.replace(prop, `${router[prop] as string}/`);
+            return url.replace(prop, router[prop] as string);
         }
     }
     return null;
