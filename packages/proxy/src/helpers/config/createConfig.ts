@@ -3,8 +3,24 @@ import path from "path";
 import fs from "fs";
 
 import ini from "ini";
+import yaml from "js-yaml";
+
+import logger from "~/logger";
 
 import getConfigFile from "./getConfigFile";
+
+const flattenObjectArrayToString = (obj: Record<string, Array<string>>) => {
+    const result: Record<string, string> = {};
+    for (const prop in obj) {
+        const values = obj[prop];
+        if (values) {
+            result[prop] = values
+                .map((value) => (value.includes(",") ? `"${value}"` : value))
+                .join(", ");
+        }
+    }
+    return result;
+};
 
 const createConfig = (src: string) => {
     const mode = process.env.NODE_ENV ?? "development";
@@ -16,7 +32,7 @@ const createConfig = (src: string) => {
     if (!configFile?.proxyURL && !process.env.PROXY_URL) {
         throw new Error("Proxy URL is not set");
     }
-    if (!configFile?.testusers && !process.env.TESTUSERS_INI_FILE) {
+    if (!configFile?.testusers && !process.env.TESTUSERS_FILE) {
         throw new Error("Test users file is not set");
     }
 
@@ -54,8 +70,8 @@ const createConfig = (src: string) => {
         if (configFile?.testusers) {
             return path.resolve(src, "../../../../", configFile.testusers);
         }
-        if (process.env.TESTUSERS_INI_FILE) {
-            const users = process.env.TESTUSERS_INI_FILE;
+        if (process.env.TESTUSERS_FILE) {
+            const users = process.env.TESTUSERS_FILE;
             return path.resolve(src, "../../../../", users);
         }
         return null;
@@ -64,7 +80,27 @@ const createConfig = (src: string) => {
     const testusers = (() => {
         if (testusers_file) {
             if (fs.existsSync(testusers_file)) {
-                return ini.parse(fs.readFileSync(testusers_file, "utf8"));
+                if (testusers_file.endsWith(".ini")) {
+                    logger.warn(
+                        "Using the ini format for testusers is outdated, suggest switching to the yaml format"
+                    );
+                    return ini.parse(fs.readFileSync(testusers_file, "utf8"));
+                } else {
+                    const file = yaml.load(
+                        fs.readFileSync(testusers_file, "utf8")
+                    ) as {
+                        users_roles: Record<string, Array<string>>;
+                        roles_permissions: Record<string, Array<string>>;
+                    };
+                    return {
+                        users: flattenObjectArrayToString(file.users_roles),
+                        roles: flattenObjectArrayToString(
+                            file.roles_permissions
+                        )
+                    };
+                }
+            } else {
+                logger.warn("Test users file not found");
             }
         }
         return null;
