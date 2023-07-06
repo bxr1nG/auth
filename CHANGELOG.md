@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.19](https://github.com/bxr1nG/auth/compare/v1.1.18...v1.1.19) (2023-07-06)
+
+
+### Features
+
+* **proxy:** add yaml test user file support ([d247113](https://github.com/bxr1nG/auth/commit/d2471132575845a85faa7c6b4d72f647be32ff64))
+
+
+### Build System
+
+* add test users yaml file to ignore ([25c721b](https://github.com/bxr1nG/auth/commit/25c721b769d7b693effda7ca1e7268a7d78e94bc))
+
+
+### Docs
+
+* **dockerhub.md:** change documentation ([46a2864](https://github.com/bxr1nG/auth/commit/46a28645b2071e4e5aa250ebf896ce52e99143e3))
+
 ### [1.1.18](https://github.com/bxr1nG/auth/compare/v1.1.17...v1.1.18) (2023-04-11)
 
 
