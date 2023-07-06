@@ -10,14 +10,14 @@ services:
     ports:
       - "80:80"
     volumes:
-      - /path/to/file/testusers.ini:/opt/testusers.ini
+      - /path/to/file/testusers.yml:/opt/testusers.yml
       - /path/to/file/config.yml:/opt/config.yml
 ```
 
 ## config.yml
 
 ```
-testusers: "/opt/testusers.ini"
+testusers: "/opt/testusers.yml"
 scope: "session"
 localStorage: "APP"
 proxyURL: "https://www.google.com"
@@ -37,9 +37,11 @@ extraFields:
 
 `string: <any string>`
 
-Path to .ini file describing users, their roles and permissions.
+Path to .yaml (.yml) or .ini file describing users, their roles and permissions.
 
 > **ATTENTION:**  This field is required.
+
+> **ATTENTION:**  Using the ini format for testusers is outdated, suggest switching to the yaml format.
 
 ### scope
 
@@ -156,7 +158,7 @@ version: "3.9"
     volumes:
       - /path/to/file/testusers.ini:/opt/testusers.ini
     environment:
-      - TESTUSERS_INI_FILE=opt/testusers.ini
+      - TESTUSERS_FILE=opt/testusers.ini
       - APP_SCOPE=session
       - LOCAL_STORAGE_SCOPE=APP
       - PROXY_URL=https://www.google.com
